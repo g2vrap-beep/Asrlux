@@ -1,0 +1,448 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>ASRLUX — конструктор часов</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500&display=swap">
+<style>
+:root{--bg:#fff;--fg:#1a1a1a;--mu:#666;--ln:#e0dccf;--ac:#a37e2c;--cd:#f5f2ea;--pr:#1a1a1a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0b0c;--fg:#f0ede6;--mu:#9a9690;--ln:#26262a;--ac:#c4a25a;--cd:#141416;--pr:#ece7dc;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b0b0c;--fg:#f0ede6;--mu:#9a9690;--ln:#26262a;--ac:#c4a25a;--cd:#141416;--pr:#ece7dc;color-scheme:dark}
+html{scroll-padding-top:80px;scroll-behavior:smooth}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 Inter,system-ui,sans-serif}
+h1,h2,.lg{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500}
+h1{font-size:clamp(42px,7vw,88px);line-height:1;margin:0 0 20px}h2{font-size:clamp(28px,4vw,44px);margin:0 0 6px}
+small{color:var(--mu);font-size:.6em;font-weight:400}
+header{display:flex;justify-content:space-between;align-items:center;padding:18px 5vw}
+.logo{font-size:26px;letter-spacing:.14em}nav{display:flex;gap:18px;align-items:center}nav a{color:var(--fg);text-decoration:none}
+.bt,.chip{border:1px solid var(--fg);background:none;color:var(--fg);padding:11px 20px;border-radius:2px;font:inherit;cursor:pointer}
+.bt.p{background:var(--fg);color:var(--bg)}.chip{border-color:var(--ln);padding:8px 14px;margin:0 6px 6px 0}.chip.on{border-color:var(--ac);color:var(--ac)}
+button:focus-visible,a:focus-visible,#stage:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:4vw;align-items:center;padding:5vh 5vw 8vh}
+.hero p{max-width:46ch;color:var(--mu);margin:0 0 26px}.hv{background:#050807;border-radius:4px;height:clamp(320px,62vh,560px);display:flex;justify-content:center;padding:14px}
+.hv svg{height:100%}
+section{padding:7vh 0}.hd{padding:0 5vw 18px}.hd p{margin:0;color:var(--mu)}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:0 5vw 14px}.tabs .chip{flex:none;text-align:left;margin:0}.tabs small{display:block}
+.wrap{position:relative}#stage{position:relative;height:clamp(380px,62vh,560px);display:flex;justify-content:center;align-items:center;overflow:hidden;background:radial-gradient(circle at 50% 40%,var(--cd),var(--bg));touch-action:none;user-select:none;cursor:grab}
+#stage.n{background:radial-gradient(circle at 50% 40%,#18181b,#030303)}
+#stage>div{flex:none;transition:height .25s,opacity .25s}#stage svg{height:100%;width:auto;display:block}
+.mini{position:absolute;right:3vw;bottom:10px;height:120px;opacity:.95}#stage .o0 svg{max-width:88vw}.o1{opacity:.55;cursor:pointer}.o2{opacity:.28}
+.ar{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:44px;height:44px;border-radius:50%;padding:0}.ar.l{left:2vw}.ar.r{right:2vw}
+.n .b{filter:brightness(.4)}.n .l{fill:#fff3d6;stroke:#fff3d6;filter:drop-shadow(0 0 4px #ffd98a)}
+.bar{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;padding:16px 5vw 0}
+.info{padding:14px 5vw 0;display:flex;justify-content:space-between;color:var(--mu)}.info b{color:var(--fg);font-weight:500}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;padding:0 5vw}
+.card{background:var(--cd);border:1px solid var(--ln);padding:16px;text-align:center}.card svg{height:230px}.card .bt{margin:4px 2px 0;padding:8px 12px;font-size:13px}
+footer{padding:30px 5vw;color:var(--mu);border-top:1px solid var(--ln)}
+#cp{position:fixed;inset:0 0 0 auto;width:min(430px,100%);background:var(--cd);border-left:1px solid var(--ln);transform:translateX(100%);transition:transform .3s;z-index:20;padding:calc(20px + env(safe-area-inset-top,0px)) 20px calc(20px + env(safe-area-inset-bottom,0px));overflow:auto}#cp.on{transform:none}
+.ci{display:flex;gap:14px;border-bottom:1px solid var(--ln);padding:12px 0}.ci svg{height:110px;flex:none}
+.in{width:100%;padding:12px;background:var(--bg);border:1px solid var(--ln);color:var(--fg);border-radius:2px;font:inherit;margin-bottom:10px}
+@media(max-width:760px){.hero{grid-template-columns:1fr}.ar{display:none}nav a{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.bt.p{background:var(--pr);border-color:var(--pr);color:var(--bg)}.bt{letter-spacing:.08em;text-transform:uppercase;font-size:12px}
+header{border-bottom:1px solid var(--ln);position:sticky;top:0;background:var(--bg);z-index:5}.logo{letter-spacing:.3em;text-transform:uppercase;color:var(--ac)}
+nav a{text-transform:uppercase;letter-spacing:.14em;font-size:12px}
+.hero{background:var(--cd);padding-top:8vh}.hv{background:var(--bg);border:1px solid var(--ln)}
+h1{letter-spacing:.02em}h2{text-align:center;letter-spacing:.06em;text-transform:uppercase;font-size:clamp(24px,3vw,34px)}.hd{text-align:center}
+.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ib{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:44px;height:44px;padding:0 12px;border-radius:22px}
+.tabs .chip{display:flex;align-items:center;gap:10px}.tabs .chip>span{display:block}.bt.p .ic{margin-right:6px;vertical-align:-4px}
+.tabs{scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x;cursor:grab;scroll-snap-type:x proximity;-webkit-mask-image:linear-gradient(90deg,#000 94%,transparent);mask-image:linear-gradient(90deg,#000 94%,transparent)}.tabs::-webkit-scrollbar{display:none}.tabs .chip{scroll-snap-align:start}.tabs[data-d]{cursor:grabbing;scroll-snap-type:none}
+header{display:grid;grid-template-columns:1fr auto 1fr}.logo{grid-column:2}.hl{display:flex;gap:22px}.hl a{color:var(--fg);text-decoration:none;text-transform:uppercase;letter-spacing:.14em;font-size:12px}.hr{grid-column:3;display:flex;justify-content:flex-end;align-items:center;gap:8px}
+.lng button{background:none;border:0;border-bottom:1px solid transparent;color:var(--mu);font:inherit;font-size:12px;letter-spacing:.1em;cursor:pointer;padding:6px 4px}.lng button.on{color:var(--fg);border-color:var(--ac)}.logo{margin:0}
+@media(max-width:760px){.hl{display:none}.logo{grid-column:1;font-size:21px;letter-spacing:.2em}.hr{grid-column:2}header{grid-template-columns:1fr auto}}
+.eb{color:var(--ac);text-transform:uppercase;letter-spacing:.22em;font-size:12px;margin-bottom:14px}
+.tr{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--ln)}.tr>div{padding:26px 5vw;text-align:center;border-right:1px solid var(--ln)}.tr>div:last-child{border:0}.tr .ic{width:26px;height:26px;color:var(--ac);display:block;margin:0 auto 10px}.tr b{display:block;font-weight:500;text-transform:uppercase;letter-spacing:.1em;font-size:13px}.tr small{font-size:13px}
+.st{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;padding:0 5vw;max-width:1200px;margin:0 auto}.st>div{border-top:1px solid var(--ac);padding-top:16px}.st b{font-size:44px;color:var(--ac);display:block;font-weight:500}.st h3{font-size:28px;margin:0 0 6px;font-weight:500}.st p{margin:0;color:var(--mu)}
+.mt{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:0 5vw;max-width:1300px;margin:0 auto}.mt .c{background:var(--cd);border:1px solid var(--ln);padding:30px 20px;text-align:center}.mt h3{font-size:26px;margin:0 0 6px;font-weight:500}.mt p{margin:0;color:var(--mu)}.sw{width:92px;height:92px;border-radius:50%;margin:0 auto 20px;box-shadow:inset 0 0 0 1px #0002,0 10px 24px #0003}
+.fq{max-width:820px;margin:0 auto;padding:0 5vw}details{border-bottom:1px solid var(--ln);padding:18px 0}summary{cursor:pointer;font:500 24px 'Cormorant Garamond',Georgia,serif;list-style:none;display:flex;justify-content:space-between;gap:12px}summary::-webkit-details-marker{display:none}summary::after{content:'+';color:var(--ac)}details[open] summary::after{content:'–'}details p{margin:12px 0 0;color:var(--mu)}
+.cn{display:grid;grid-template-columns:1fr 1fr;gap:6vw;padding:0 5vw;max-width:1100px;margin:0 auto}.ci2 p{display:flex;align-items:center;gap:12px;margin:0 0 18px}.ci2 .ic{color:var(--ac)}textarea.in{resize:vertical}
+footer{padding:0;background:var(--cd)}.ft{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px;padding:54px 5vw 30px}.ft b{display:block;text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--fg);margin-bottom:12px;font-weight:500}.ft a,.ft span{display:block;color:var(--mu);text-decoration:none;margin-bottom:8px}.ft p a{display:inline}.fb{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:18px 5vw;border-top:1px solid var(--ln);font-size:12px}
+@media(max-width:900px){.tr,.mt{grid-template-columns:1fr 1fr}.tr>div{border-bottom:1px solid var(--ln)}.st,.cn{grid-template-columns:1fr}.ft{grid-template-columns:1fr 1fr}}
+.hn{position:absolute;left:0;right:0;bottom:10px;display:flex;gap:6px;justify-content:center;align-items:center;color:var(--mu);font-size:12px;pointer-events:none}
+#v3{position:fixed;inset:0;z-index:30;background:radial-gradient(circle at 50% 40%,var(--cd),var(--bg))}#c3{width:100%;height:100%;display:block;touch-action:none;cursor:grab}.x3{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:14px}
+#xi{position:relative;height:800vh;color:#efe9da;background:#070b09}
+#xi .xs{position:sticky;top:var(--hh,64px);height:calc(100vh - var(--hh,64px));overflow:hidden;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,#0f2a20,#070b09 70%)}
+#xi .xs::after{content:'';position:absolute;left:0;right:0;bottom:0;height:45%;background:linear-gradient(transparent,#070b09d9);pointer-events:none}
+#xw{position:relative;display:grid;place-items:center}
+#xw .wp{width:min(calc(100vh - var(--hh,64px) - 4vh),96vw)}
+#xi .xt{position:absolute;left:5vw;right:5vw;text-align:center;pointer-events:none;z-index:2}
+#xi .xt1{top:6vh}#xi .xt1 h1{font-size:clamp(34px,5.6vw,80px);line-height:1;margin:0;text-shadow:0 4px 30px #000;color:#efe9da}
+#xi .xt2{bottom:7vh;opacity:0}#xi .xt2 h2{font-size:clamp(28px,5vw,60px);line-height:1.05;margin:0 0 18px;text-shadow:0 4px 30px #000;text-transform:none;letter-spacing:0;color:#efe9da}
+#xi .xe{color:#c4a25a;text-transform:uppercase;letter-spacing:.26em;font-size:12px;margin-bottom:14px}
+#xi .xb{display:inline-block;background:#c4a25a;color:#111;border:0;text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:500;padding:16px 30px;border-radius:2px;cursor:pointer;font-family:inherit}
+#xi .xsc{position:absolute;bottom:14px;left:50%;width:1px;height:40px;background:linear-gradient(#c4a25a,transparent);animation:xsc 1.8s infinite;z-index:2}
+@keyframes xsc{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.wp{position:relative;aspect-ratio:1;container-type:inline-size;pointer-events:none;user-select:none;-webkit-mask-image:linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent)}
+.wp>*{position:absolute;display:block;max-width:none}
+.wp .wc,.wp .wdl{left:0;top:0;width:100%;height:100%}
+.wp .wh{height:auto} .wp .wl{left:61.37%;top:46.43%;width:11.25%;height:auto;pointer-events:none;opacity:var(--od,0)}
+.wp .wg{left:22.1417%;top:22.7083%;width:55.6667%;aspect-ratio:1;border-radius:50%;background:radial-gradient(120% 120% at 27% 17%,rgba(255,255,255,.28) 0%,rgba(255,255,255,.07) 26%,rgba(255,255,255,0) 44%),linear-gradient(118deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.09) 48%,rgba(255,255,255,0) 56%),linear-gradient(135deg,rgba(255,255,255,.12) 0%,rgba(255,255,255,0) 34%,rgba(255,255,255,0) 68%,rgba(255,255,255,.09) 100%),radial-gradient(circle,rgba(150,205,215,.06) 0%,rgba(150,205,215,.13) 100%);box-shadow:inset 0 0 0 .16cqw rgba(255,255,255,.24),inset 0 0 1.2cqw rgba(255,255,255,.12),inset 0 -.5cqw 1cqw rgba(0,0,0,.18)}
+
+#xw .wp{overflow:hidden;--ob:0;--oc:0;--od:0;--ho:0}
+.wp .rc,.wp .rb,.wp .rd,.wp .rs{left:0;top:0;width:100%;height:100%;opacity:0}
+.wp .rd,.wp .rs{position:absolute;display:block}
+.wp .rd.on,.wp .rs.on{opacity:1}.wp .rc.on{opacity:var(--oc)}.wp .rb.on{opacity:var(--ob)}.wp .rdw{opacity:var(--od)}
+.wp .rdw{left:0;top:0;width:100%;height:100%}
+.wp .rg{left:0;top:0;width:100%;height:100%;opacity:var(--ob);pointer-events:none}
+.wp .rg::before,.wp .rg::after{content:"";position:absolute;inset:0}
+.wp .rg::before{background:radial-gradient(circle at 49.975% 50.542%,transparent 24.9cqw,rgba(40,22,16,.3) 26.4cqw,transparent 26.55cqw)}
+.wp .rg::after{background:radial-gradient(circle at 49.975% 50.542%,rgba(92,60,48,.85) 26.45cqw,rgba(92,60,48,0) 26.85cqw,rgba(92,60,48,0) 28cqw,rgba(92,60,48,.8) 28.25cqw),conic-gradient(from 0deg at 49.975% 50.542%,#e9e5e2,#fbfaf9 40deg,#c7beb9 95deg,#968d87 135deg,#d6cfca 200deg,#f7f5f3 250deg,#bfb6b1 305deg,#e9e5e2);-webkit-mask-image:radial-gradient(circle at 49.975% 50.542%,transparent 26.4cqw,#000 26.55cqw,#000 28.25cqw,transparent 28.42cqw);mask-image:radial-gradient(circle at 49.975% 50.542%,transparent 26.4cqw,#000 26.55cqw,#000 28.25cqw,transparent 28.42cqw)}
+.wp .rs text{font-family:"Helvetica Neue",Arial,sans-serif}
+.wp .nh{height:auto;opacity:var(--ho);display:none}.wp .nh.ok{display:block}
+.wp.nhok .wh:not(.nh){opacity:calc(1 - var(--ho))}
+@media(prefers-reduced-motion:reduce){#xw .wp *{transition:none!important}}
+.hv{align-items:center}.hv .wp{width:min(100%,calc(clamp(320px,62vh,560px) - 28px))}
+@media(prefers-reduced-motion:reduce){#xi .xsc{animation:none}}
+.wp .qg::before,.wp .qg::after{content:"";position:absolute;inset:0}
+.wp .qg::before{background:radial-gradient(circle at 49.975% 50.542%,transparent 24.9cqw,rgba(0,0,0,.35) 26.4cqw,transparent 26.55cqw)}
+.wp .qg::after{background:radial-gradient(circle at 49.975% 50.542%,rgba(52,56,62,.85) 26.45cqw,rgba(52,56,62,0) 26.85cqw,rgba(52,56,62,0) 28cqw,rgba(52,56,62,.8) 28.25cqw),conic-gradient(from 0deg at 49.975% 50.542%,#e9e5e2,#fbfaf9 40deg,#c7beb9 95deg,#968d87 135deg,#d6cfca 200deg,#f7f5f3 250deg,#bfb6b1 305deg,#e9e5e2);-webkit-mask-image:radial-gradient(circle at 49.975% 50.542%,transparent 26.4cqw,#000 26.55cqw,#000 28.25cqw,transparent 28.42cqw);mask-image:radial-gradient(circle at 49.975% 50.542%,transparent 26.4cqw,#000 26.55cqw,#000 28.25cqw,transparent 28.42cqw)}
+#xw .wp{--sb:0;--sc:0;--sd:0;--sh:0;--sr:90deg}
+.wp .qc,.wp .qb,.wp .qd,.wp .qs,.wp .qdw,.wp .qg{left:0;top:0;width:100%;height:100%}
+.wp .qc,.wp .qb,.wp .qd{opacity:0}.wp .qc.on{opacity:var(--sc)}.wp .qb.on{opacity:var(--sb)}.wp .qd.on{opacity:1}
+.wp .qdw{opacity:var(--sd)}.wp .qs{position:absolute;display:block}.wp .qd{position:absolute;display:block}
+.wp .qb{transform:rotate(var(--sr,0deg));transform-origin:49.975% 50.542%}
+.wp .qg{opacity:var(--sb);pointer-events:none}
+.wp .qh{height:auto;opacity:var(--sh);display:none}.wp .qh.ok{display:block}
+.wp.qhok .nh{opacity:calc(var(--ho)*(1 - var(--sh)))}
+.wp .ql{left:63.59%;top:47.62%;width:8.33%;height:auto;opacity:var(--sd);pointer-events:none}
+</style><script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script></head><body>
+<header><div class="hl"><a href="#builder">Конструктор</a><a href="#gallery">Галерея</a><a href="#materials">Материалы</a><a href="#contact">Контакты</a></div><div class="logo lg">ASRLUX</div><div class="hr"><div class="lng"><button data-l="ru">RU</button><button data-l="uz">UZ</button><button data-l="en">EN</button></div><button class="bt ib" id="th" aria-label="Тема" title="Тема"></button><button class="bt ib" id="cb" onclick="cp(1)" aria-label="Корзина" title="Корзина"><span id="cc">0</span></button></div></header>
+<div id="xi"><div class="xs"><div id="xw"></div>
+<div class="xt xt1" id="xt1"><div class="xe">Часы на заказ</div><h1 class="lg">Время, которое вы создаёте сами</h1></div>
+<div class="xt xt2" id="xt2"><div class="xe">Ручная сборка</div><h2 class="lg">Каждая деталь — по вашему выбору</h2><button class="xb" onclick="location.hash='builder'">Собрать часы</button></div>
+<div class="xsc"></div></div></div>
+<div class="hero"><div><div class="eb">Часы на заказ</div><h1>Часы, которые собираете вы</h1><p>Выберите корпус, безель, циферблат, стрелки и ремешок. Посмотрите результат днём и ночью, на мужской и женской руке, и закажите.</p><button class="bt p" onclick="location.hash='builder'">Собрать часы</button> <button class="bt" onclick="location.hash='gallery'">Готовые модели</button></div><div class="hv" id="hv"></div></div>
+<div class="tr"><div><i data-i="tool"></i><b>Сборка вручную</b><small>Каждые часы собираются под заказ</small></div><div><i data-i="shield"></i><b>Гарантия</b><small>Гарантийное обслуживание</small></div><div><i data-i="truck"></i><b>Доставка</b><small>По всему Узбекистану</small></div><div><i data-i="chat"></i><b>Поддержка</b><small>Поможем с выбором</small></div></div>
+<section><div class="hd"><div class="eb">01 — 03</div><h2>Как это работает</h2></div><div class="st"><div><b class="lg">01</b><h3 class="lg">Соберите</h3><p>Выберите детали и посмотрите часы в 3D</p></div><div><b class="lg">02</b><h3 class="lg">Подтвердите</h3><p>Мы свяжемся, уточним детали и сроки</p></div><div><b class="lg">03</b><h3 class="lg">Получите</h3><p>Изготовим и доставим часы к вам</p></div></div></section>
+<section id="builder"><div class="hd"><h2>Конструктор</h2><p>Выберите деталь и листайте варианты влево и вправо: по бокам соседние детали, в центре ваши часы.</p></div>
+<div class="tabs" id="tabs"></div>
+<div class="wrap"><button class="bt ar l" onclick="mv(-1)" aria-label="Назад">‹</button><button class="bt ar r" onclick="mv(1)" aria-label="Вперёд">›</button><div id="stage" tabindex="0" aria-label="Сцена: листайте стрелками или свайпом"></div><div class="hn" id="hn"></div></div>
+<div class="info"><span id="nm"></span><span><b id="dl"></b> · <span id="ix"></span></span></div>
+<div class="bar"><div><button class="chip ib" id="nt"></button><button class="chip ib" id="wr"></button><button class="chip ib" id="gn" hidden></button><button class="chip ib" id="b3"></button></div><div class="lg" style="font-size:30px" id="tp"></div><button class="bt p" id="ad" onclick="addC()"></button></div></section>
+<section id="gallery"><div class="hd"><h2>Готовые модели</h2><p>Закажите как есть или возьмите за основу и измените.</p></div><div class="grid" id="gl"></div></section>
+<section id="materials"><div class="hd"><div class="eb">ASRLUX</div><h2>Материалы</h2><p>Из чего можно собрать ваши часы</p></div><div class="mt">
+<div class="c"><div class="sw" style="background:linear-gradient(135deg,#f4f5f7,#aeb2b9 45%,#e6e8eb 60%,#8f939a)"></div><h3 class="lg">Сталь 904L</h3><p>Прочная сталь с зеркальной и сатинированной полировкой</p></div>
+<div class="c"><div class="sw" style="background:linear-gradient(135deg,#f6e3a8,#c9a44c 45%,#f1d98f 60%,#9a7a2c)"></div><h3 class="lg">Золото 18 кт</h3><p>Жёлтое, белое и розовое золото</p></div>
+<div class="c"><div class="sw" style="background:linear-gradient(135deg,#ecedef,#8c9096 45%,#d3d6db 60%,#6d7177)"></div><h3 class="lg">Платина и титан</h3><p>Редкие и лёгкие металлы для особых моделей</p></div>
+<div class="c"><div class="sw" style="background:linear-gradient(135deg,#46464c,#0b0b0d 55%,#2c2c32)"></div><h3 class="lg">Керамический безель</h3><p>Устойчив к царапинам, цвет не выгорает</p></div></div></section>
+<section id="faq"><div class="hd"><div class="eb">FAQ</div><h2>Частые вопросы</h2></div><div class="fq">
+<details><summary>Как долго делают часы?</summary><p>Сроки зависят от выбранных деталей. Точную дату мы назовём при подтверждении заказа.</p></details>
+<details><summary>Есть ли гарантия?</summary><p>Да, на часы действует гарантия. Условия будут указаны в договоре.</p></details>
+<details><summary>Как оплатить заказ?</summary><p>Payme, Click, Uzum или картой. Сейчас оплата тестовая.</p></details>
+<details><summary>Можно ли изменить заказ?</summary><p>Да, до начала сборки. Напишите нам.</p></details>
+<details><summary>Доставляете ли вы по Узбекистану?</summary><p>Да, по всей стране. Стоимость и сроки зависят от города.</p></details></div></section>
+<section id="contact"><div class="hd"><div class="eb">ASRLUX</div><h2>Связаться с нами</h2><p>Поможем подобрать детали и ответим на вопросы.</p></div><div class="cn"><div><input class="in" id="cn1" placeholder="Имя"><input class="in" id="cn2" placeholder="Телефон" inputmode="tel"><textarea class="in" id="cn3" rows="4" placeholder="Сообщение"></textarea><button class="bt p" onclick="sendC()">Отправить</button><p id="cr" style="color:var(--ac)"></p></div>
+<div class="ci2"><p><i data-i="pin"></i>Ташкент, Узбекистан</p><p><i data-i="phone"></i>+998 00 000 00 00</p><p><i data-i="chat"></i>Telegram: @asrlux</p><p><i data-i="clock"></i>Ежедневно 10:00–20:00</p></div></div></section>
+<footer><div class="ft"><div><div class="logo lg" style="font-size:24px">ASRLUX</div><p>Часы, которые собираете вы</p><p><a href="#">Telegram</a> · <a href="#">Instagram</a></p></div>
+<div><b>Навигация</b><a href="#builder">Конструктор</a><a href="#gallery">Галерея</a><a href="#materials">Материалы</a><a href="#faq">Вопросы</a><a href="#contact">Контакты</a></div>
+<div><b>Покупателям</b><a href="#">Доставка и оплата</a><a href="#">Гарантия</a><a href="#">Возврат</a><a href="#">Публичная оферта</a><a href="#">Политика конфиденциальности</a></div>
+<div><b>Контакты</b><span>Ташкент, Узбекистан</span><span>+998 00 000 00 00</span><span>Ежедневно 10:00–20:00</span></div></div>
+<div class="fb"><span>© 2026 ASRLUX. Все права защищены.</span><span>Прототип. Цены и оплата тестовые, справочный курс 1 $ = 12 700 сум.</span></div></footer>
+<div id="v3" hidden><canvas id="c3"></canvas><button class="bt ib x3" id="x3" aria-label="Закрыть" title="Закрыть"></button><div class="hn">Вращайте часы пальцем, колесом мыши — приближение</div></div>
+<aside id="cp" aria-label="Корзина"></aside>
+<script>
+const IC={size:'<circle cx="12" cy="12" r="6"/><path d="M2 12h3M19 12h3M4 10l-2 2 2 2M20 10l2 2-2 2"/>',case:'<circle cx="12" cy="12" r="6"/><path d="M9 6V2h6v4M9 18v4h6v-4"/>',bezel:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="6"/>',dial:'<circle cx="12" cy="12" r="9"/><path d="M12 4v2M12 18v2M4 12h2M18 12h2"/>',hands:'<circle cx="12" cy="12" r="9"/><path d="M12 12V6M12 12l4 2"/>',strap:'<rect x="8" y="2" width="8" height="20" rx="2"/><path d="M8 8h8M8 16h8"/>',moon:'<path d="M20 14.5A8 8 0 1 1 9.500 4a6.500 6.500 0 0 0 10.500 10.500z"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.500 1.500M17.500 17.500L19 19M19 5l-1.500 1.500M6.500 17.500L5 19"/>',watch:'<rect x="7" y="7" width="10" height="10" rx="3"/><path d="M9 7l1-5h4l1 5M9 17l1 5h4l1-5"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',male:'<circle cx="10" cy="14" r="5"/><path d="M14 10l6-6M15 4h5v5"/>',female:'<circle cx="12" cy="9" r="5"/><path d="M12 14v8M9 18h6"/>',theme:'<circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/>',bag:'<path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',cube:'<path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 12l9-5M12 12v10M12 12L3 7"/>',close:'<path d="M5 5l14 14M19 5L5 19"/>',shield:'<path d="M12 2l8 3v6c0 5-3.500 9-8 11-4.500-2-8-6-8-11V5z"/><path d="M9 12l2 2 4-4"/>',truck:'<path d="M2 6h12v10H2zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>',tool:'<path d="M14 6a4 4 0 0 0-5 5L3 17l4 4 6-6a4 4 0 0 0 5-5l-3 3-3-1-1-3z"/>',chat:'<path d="M4 5h16v11H9l-5 4z"/>',pin:'<path d="M12 22s7-6.500 7-12a7 7 0 0 0-14 0c0 5.500 7 12 7 12z"/><circle cx="12" cy="10" r="2.500"/>',phone:'<path d="M5 3h4l2 5-2.500 1.500a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'},ic=n=>`<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${IC[n]}</svg>`,$=s=>document.querySelector(s),RATE=12700,BASE=1200000,rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const f=n=>Math.round(n).toLocaleString('ru-RU')+' сум',usd=n=>'≈ $'+Math.round(n/RATE);
+const D={case:[['Oystersteel 904L','#c3c7cd',0],['Чёрный PVD','#2a2a2f',150000],['Жёлтое золото 18 кт','#c9a44c',420000],['Розовое золото Everose','#c98f7e',450000],['Белое золото 18 кт','#dfe1e4',460000],['Платина 950','#d3d6db',900000],['Титан RLX','#8c9096',300000],['Rolesor жёлтое','#c3c7cd',220000,'#c9a44c'],['Rolesor Everose','#c3c7cd',240000,'#c98f7e'],['Rolesium (сталь + платина)','#c3c7cd',400000,'#d3d6db']],
+bezel:[['Гладкий','#b9bdc4',0,0],['Рифлёный','#aeb2b9',1,60000],['Шкала','#1e1e22',2,90000],['Золотой','#c9a44c',1,180000],['Синий','#1d3a6b',2,120000],['Халк','#12803f',2,160000],['Чёрная керамика','#17171a',2,150000],['Рифл. белое золото','#dfe1e4',1,200000],['Рифл. Everose','#c98f7e',1,200000]],
+dial:[['Полночь','#0f1014','#f1eee8',0,1,0],['Снег','#f4f1ea','#1a1a1d',1,0,0],['Океан','#12315c','#e8eef7',0,1,80000],['Лес','#16392c','#e9efe9',2,1,80000],['Бордо','#4a1621','#f0e3e3',1,1,100000],['Шампань','#d8c9a6','#2a2418',0,0,60000],['Зелёный','#0e6b3a','#f1eee8',2,1,90000]],
+hands:[['Палка','#e6e6e6',0,1,0],['Меч','#d8d8d8',1,1,30000],['Лист','#c9a44c',2,1,60000],['Графит','#33333a',1,0,40000]],
+strap:[['Кожа чёрная','#1c1b1d',0,0],['Кожа коричневая','#6b4426',0,0],['Кожа синяя','#1f2f55',0,20000],['Oyster','#b4b8bf',1,250000],['Jubilee','#b4b8bf',3,280000],['President','#c9a44c',4,520000],['Каучук','#222629',2,70000]]};
+D.size=[28,31,36,40,41,42].map((m,i)=>[m+' мм',m,[0,0,0,40,60,80][i]*1000]);
+const PI={size:2,case:2,bezel:3,dial:5,hands:4,strap:3},CL={size:'Размер',case:'Корпус',bezel:'Безель',dial:'Циферблат',hands:'Стрелки',strap:'Ремешок'};
+const P=(r,a)=>[150+r*Math.sin(a*Math.PI/180),240-r*Math.cos(a*Math.PI/180)];
+const T=(r1,r2,a,c,w)=>{const[x1,y1]=P(r1,a),[x2,y2]=P(r2,a);return`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="${w}"/>`};
+function W(st,x){const A=k=>!x||x==k,c=D.case[st.case],b=D.bezel[st.bezel],d=D.dial[st.dial],h=D.hands[st.hands],s=D.strap[st.strap];let o=`<g transform="translate(150 240) scale(${D.size[st.size??3][1]/40}) translate(-150 -240)"><g class="b">`;
+if(A('strap'))for(const y of[8,330]){o+=`<rect x="104" y="${y}" width="92" height="142" fill="${s[1]}"/>`;const ac=c[3]&&[0,[135,30],0,[141,18],[128,44]][s[2]];if(ac)o+=`<rect x="${ac[0]}" y="${y}" width="${ac[1]}" height="142" fill="${c[3]}"/>`;
+for(let k=0;k<142;k+=s[2]==2?12:s[2]==3?9:16){if(s[2]==1||s[2]>2)o+=`<line x1="104" x2="196" y1="${y+k}" y2="${y+k}" stroke="#0006" stroke-width="1.5"/>`;if(s[2]==2)o+=`<line x1="112" x2="188" y1="${y+k}" y2="${y+k}" stroke="#ffffff22"/>`}
+for(const x of s[2]==1?[135,165]:s[2]==3?[122,141,159,178]:s[2]==4?[128,172]:[])o+=`<line x1="${x}" x2="${x}" y1="${y}" y2="${y+142}" stroke="#0007" stroke-width="1.5"/>`;
+if(!s[2])for(const x of[111,189])o+=`<line x1="${x}" x2="${x}" y1="${y}" y2="${y+142}" stroke="#ffffff55" stroke-dasharray="4 3"/>`}
+if(A('case'))for(const[x,y]of[[92,150],[194,150],[92,290],[194,290]])o+=`<rect x="${x}" y="${y}" width="14" height="40" rx="4" fill="${c[1]}"/>`;
+if(A('case'))o+=`<rect x="244" y="231" width="14" height="18" rx="3" fill="${c[3]||c[1]}"/><circle cx="150" cy="240" r="98" fill="${c[1]}" stroke="#0005"/>`+(x?'<circle cx="150" cy="240" r="84" fill="#0b0d0c"/>':'');
+if(A('bezel'))o+=`<circle cx="150" cy="240" r="81" fill="none" stroke="${b[1]}" stroke-width="14"/>`;
+if(A('bezel')&&b[2])for(let i=0;i<60;i++)o+=T(b[2]==1?80:i%5?83:78,88,i*6,b[2]==1?'#0007':'#fffb',b[2]==1?1.5:i%5?1:2);
+if(A('dial'))o+=`<circle cx="150" cy="240" r="74" fill="${d[1]}"/><text x="150" y="200" text-anchor="middle" font-size="8" letter-spacing="3" fill="${d[2]}" font-family="Georgia,serif">ASRLUX</text>`;
+if(x=='hands')o+='<circle cx="150" cy="240" r="84" fill="#0d1110"/>';
+if(A('hands'))o+=`<line x1="150" y1="262" x2="150" y2="176" stroke="#d94a3a" transform="rotate(150 150 240)"/>`;
+o+='</g>';
+o+=`<g class="${d[4]?'l':'b'}" fill="${d[2]}" stroke="${d[2]}">`;
+if(A('dial'))for(let i=0;i<12;i++){const a=i*30,q=i%3==0;
+if(d[3]==0)o+=T(q?54:60,68,a,d[2],q?5:2.5);
+else if(d[3]==1){if(q){const[x,y]=P(54,a);o+=`<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="central" font-size="17" font-family="Georgia,serif" stroke-width=".3">${i||12}</text>`}else o+=T(62,68,a,d[2],2)}
+else{const[x,y]=P(64,a);o+=`<circle cx="${x}" cy="${y}" r="${q?4.5:2.5}" stroke="none"/>`}}
+const hp=['<rect x="-3" y="-42" width="6" height="48" rx="1"/>','<polygon points="0,-46 5.5,-8 0,7 -5.5,-8"/>','<path d="M0 -46C10-28 9-10 0 7C-9-10-10-28 0-46Z"/>'][h[2]];
+return o+`</g><g class="${h[3]?'l':'b'}" ${A('hands')?'':'display="none" '}transform="translate(150 240)" fill="${h[1]}" stroke="${h[1]}" stroke-width=".4"><g transform="rotate(305)">${hp}</g><g transform="rotate(60) scale(.8 1.45)">${hp}</g><circle r="4.5"/></g><ellipse cx="125" cy="190" rx="40" ry="22" fill="#fff" opacity=".05" transform="rotate(-30 125 190)"/></g>`}
+const VB={size:'0 40 300 400',full:'0 40 300 400',case:'30 120 240 240',bezel:'55 145 190 190',dial:'70 160 160 160',hands:'60 150 180 180',strap:'84 0 132 480'};
+const S=(st,n,x)=>`<svg viewBox="${x?VB[x]:'0 0 300 480'}" class="${n?'n':''}" role="img" aria-label="${x?CL[x]||'Часы':'Часы'}">${W(st,x=='full'||x=='size'?0:x)}</svg>`;
+function WR(st,n,g){const m=g=='m',k=m?.49:.36,x0=m?70:92,w=m?160:116;
+return`<svg viewBox="0 0 300 480" class="${n?'n':''}" role="img" aria-label="Часы на руке"><defs><linearGradient id="sk" x1="0" x2="1"><stop offset="0" stop-color="#b9815f"/><stop offset=".5" stop-color="#e0a984"/><stop offset="1" stop-color="#a8704f"/></linearGradient><clipPath id="cl"><rect x="${x0-4}" y="0" width="${w+8}" height="480"/></clipPath></defs><g class="b"><rect x="${x0}" y="0" width="${w}" height="480" fill="url(#sk)"/><ellipse cx="150" cy="490" rx="${w/2+16}" ry="60" fill="url(#sk)"/><rect x="${x0-10}" y="0" width="${w+20}" height="70" rx="6" fill="${m?'#2b3140':'#e8dccf'}"/></g><g clip-path="url(#cl)"><g transform="translate(150 270) scale(${k}) rotate(90) translate(-150 -240)">${W(st)}</g></g></svg>`}
+function WR2(st,n,g){const m=g=='m',w=m?198:166,y0=200-w/2;
+return`<svg viewBox="0 0 600 400" style="width:100%;height:100%" class="${n?'n':''}" role="img" aria-label="Часы на руке"><defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${m?'#a8764f':'#d9a98a'}"/><stop offset=".45" stop-color="${m?'#d9a37c':'#efc7ab'}"/><stop offset="1" stop-color="${m?'#8f5f41':'#c28f72'}"/></linearGradient><clipPath id="cl"><rect x="110" y="${y0}" width="300" height="${w}"/></clipPath></defs><g transform="rotate(-24 300 200)"><g class="b"><path d="M-500 ${y0-80}L330 ${y0}L330 ${y0+w}L-500 ${y0+w+80}Z" fill="url(#sk)"/><ellipse cx="470" cy="200" rx="150" ry="${w/2+22}" fill="url(#sk)"/><path d="M-500 ${y0-130}L40 ${y0-46}L40 ${y0+w+46}L-500 ${y0+w+130}Z" fill="${m?'#262c38':'#e6dccf'}"/></g><g clip-path="url(#cl)"><g transform="translate(250 200) scale(.653) translate(-150 -240)">${W(st)}</g></g></g></svg>`}
+let st={size:3,case:0,bezel:0,dial:0,hands:0,strap:0},cat='dial',night=0,wrist=0,g='m',cart=[],step=0,pay='Payme',oid=0;
+const total=s=>BASE+Object.keys(PI).reduce((a,k)=>a+D[k][s[k]??(k=='size'?3:0)][PI[k]],0),stg=$('#stage');
+function draw(dir){const a=D[cat],n=a.length,i=st[cat];let h='';
+const k=Math.min(stg.clientHeight*.96/400,stg.clientWidth*.6/300),Z2=(x,s,v)=>{const[,,vw,vh]=VB[x].split(' ').map(Number);return v.replace('<svg',`<svg style="width:${vw*k*s}px;height:${vh*k*s}px"`)};
+if(wrist)h=`<div class="o0" style="height:94%;width:94%">${WR2(st,night,g)}</div>`;else for(let o=-2;o<=2;o++)h+=`<div class="o${Math.abs(o)}" data-o="${o}">${o?Z2(cat,Math.abs(o)>1?.6:1,S({...st,[cat]:(i+o+n*3)%n},night,cat)):Z2('full',1,S(st,night,'full'))}</div>`;
+stg.innerHTML=h;stg.classList.toggle('n',!!night);
+if(dir&&!rm&&!wrist)stg.querySelectorAll('.o1,.o2').forEach(e=>{const w=e.offsetWidth*(e.classList.contains('o1')?1.15:1.3);e.animate([{transform:`translateX(${dir*w}px)`},{transform:'none'}],{duration:320,easing:'cubic-bezier(.2,.8,.2,1)'})});
+const v=a[i],d=v[PI[cat]];$('#nm').innerHTML=`${CL[cat]} <b>«${v[0]}»</b>`;$('#dl').textContent=d?'+ '+f(d):'включено';$('#ix').textContent=`${i+1} / ${n}`;
+const t=total(st);$('#tp').innerHTML=`${f(t)} <small>${usd(t)}</small>`;
+$('#tabs').innerHTML=Object.keys(CL).map(k=>`<button class="chip${k==cat?' on':''}" onclick="cat='${k}';draw()">${ic(k)}<span>${CL[k]}<small>${D[k][st[k]][0]}</small></span></button>`).join('');
+const I=(e,n,t)=>{e.innerHTML=ic(n);e.title=t;e.setAttribute('aria-label',t)};I($('#nt'),night?'sun':'moon',night?'День':'Ночь');I($('#wr'),wrist?'gear':'watch',wrist?'К сборке':'На руке');$('#gn').hidden=!wrist;I($('#gn'),g=='m'?'male':'female',g=='m'?'Мужская рука':'Женская рука')}
+function mv(d){const n=D[cat].length;st[cat]=(st[cat]+d+n*3)%n;navigator.vibrate&&navigator.vibrate(8);draw(d>0?1:-1)}
+let sx=null,sy=0;stg.addEventListener('pointerdown',e=>{sx=e.clientX;sy=e.clientY});stg.addEventListener('pointercancel',()=>sx=null);
+stg.addEventListener('pointerup',e=>{if(sx==null)return;const dx=e.clientX-sx,dy=e.clientY-sy;sx=null;if(dy>70&&dy>Math.abs(dx)*1.2)return o3();if(Math.abs(dx)>40)mv(dx<0?1:-1);else{const o=e.target.closest('[data-o]');if(o&&+o.dataset.o)mv(+o.dataset.o)}});
+stg.addEventListener('keydown',e=>{if(e.key=='ArrowRight')mv(1);if(e.key=='ArrowLeft')mv(-1)});
+$('#nt').onclick=()=>{night^=1;draw()};$('#wr').onclick=()=>{wrist^=1;draw()};$('#gn').onclick=()=>{g=g=='m'?'f':'m';draw()};
+let tm=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';$('#th').onclick=()=>{tm=tm=='dark'?'light':'dark';document.documentElement.dataset.theme=tm};
+const G=[['Президент',{case:2,bezel:3,dial:5,hands:2,strap:5}],['Халк',{case:0,bezel:5,dial:6,hands:1,strap:3}],['Дайвер',{case:0,bezel:6,dial:0,hands:1,strap:3}],['Классика Jubilee',{case:0,bezel:1,dial:1,hands:3,strap:4}],['Золотой Jubilee',{case:2,bezel:3,dial:5,hands:2,strap:4}],['Океан Oyster',{case:0,bezel:4,dial:2,hands:1,strap:3}]];
+G.forEach((m,i)=>m[1].size=[3,3,4,2,3,3][i]);
+$('#gl').innerHTML=G.map((m,i)=>`<div class="card">${S(m[1],0)}<div class="lg" style="font-size:24px">${m[0]}</div><div>${f(total(m[1]))}<br><small>${usd(total(m[1]))}</small></div><button class="bt" onclick="st={...G[${i}][1]};draw();location.hash='builder'">Взять за основу</button><button class="bt p" onclick="cart.push({st:{...G[${i}][1]},p:total(G[${i}][1])});rc();cp(1)">Заказать</button></div>`).join('');
+function addC(){cart.push({st:{...st},p:total(st)});step=0;rc();cp(1)}
+function cp(o){$('#cp').classList.toggle('on',!!o);if(o)rc()}
+function ck(){if(!$('#fn').value||!$('#fp').value||!$('#fa').value){$('#er').textContent='Заполните имя, телефон и адрес доставки.';return}
+$('#pb').textContent='Обработка платежа…';setTimeout(()=>{oid=1000+Math.floor(Math.random()*9000);step=2;rc()},900)}
+function rc(){const v=['fn','fp','fa'].map(i=>$('#'+i)?.value||''),t=cart.reduce((a,c)=>a+c.p,0);$('#cc').textContent=cart.length;
+let h='<button class="bt" onclick="cp(0)" style="float:right">Закрыть</button><h2>Корзина</h2>';
+if(step==2)h+=`<p class="lg" style="font-size:28px">Заказ № ASR-${oid} принят</p><p>Тестовый режим: платёжный модуль пока заглушка, деньги не списаны.</p><button class="bt p" onclick="cart=[];step=0;cp(0);rc()">Готово</button>`;
+else if(!cart.length)h+='<p>В корзине пусто. Соберите часы в конструкторе или выберите готовую модель.</p>';
+else{h+=cart.map((c,i)=>`<div class="ci">${S(c.st,0)}<div><b>${D.size[c.st.size??3][1]} мм, ${D.case[c.st.case][0]}, ${D.dial[c.st.dial][0]}</b><br>${D.strap[c.st.strap][0]}<br>${f(c.p)}<br><a href="#" onclick="cart.splice(${i},1);step=0;rc();return false">Убрать</a></div></div>`).join('')+`<p class="lg" style="font-size:26px">Итого ${f(t)} <small>${usd(t)}</small></p>`;
+if(!step)h+='<button class="bt p" onclick="step=1;rc()">Оформить заказ</button>';
+else h+=`<input class="in" id="fn" placeholder="Имя"><input class="in" id="fp" placeholder="Телефон" inputmode="tel"><input class="in" id="fa" placeholder="Город и адрес доставки"><p>Способ оплаты (заглушка)</p><div>${['Payme','Click','Uzum','Картой'].map(p=>`<button class="chip${p==pay?' on':''}" onclick="pay='${p}';rc()">${p}</button>`).join('')}</div><p id="er" style="color:#d9534f"></p><button class="bt p" id="pb" onclick="ck()">Оплатить ${f(t)}</button>`}
+$('#cp').innerHTML=h;['fn','fp','fa'].forEach((i,k)=>{if($('#'+i))$('#'+i).value=v[k]})}
+
+let R3,SC,CM,GR,raf,drag=0,rx=.3,ry=.5,zoom=9;
+const mk=(c,sh=100)=>new THREE.MeshPhongMaterial({color:c,shininess:sh,specular:0x888888}),bx=(w,h,d,m,x=0,y=0,z=0)=>{const b=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);b.position.set(x,y,z);return b};
+function dialTex(d){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');x.fillStyle=d[1];x.fillRect(0,0,512,512);const gr=x.createRadialGradient(256,200,20,256,256,300);gr.addColorStop(0,'rgba(255,255,255,.18)');gr.addColorStop(1,'rgba(0,0,0,.25)');x.fillStyle=gr;x.fillRect(0,0,512,512);x.fillStyle=x.strokeStyle=d[2];x.textAlign='center';x.textBaseline='middle';
+for(let i=0;i<12;i++){const a=i*Math.PI/6,sn=Math.sin(a),cs=-Math.cos(a),q=i%3==0,P=r=>[256+r*sn,256+r*cs];
+if(d[3]==1&&q){x.font='62px Georgia';const[px,py]=P(180);x.fillText(i||12,px,py)}
+else if(d[3]==2){const[px,py]=P(205);x.beginPath();x.arc(px,py,q?17:10,0,7);x.fill()}
+else{x.lineWidth=q?18:9;const[a1,b1]=P(q?150:170),[a2,b2]=P(215);x.beginPath();x.moveTo(a1,b1);x.lineTo(a2,b2);x.stroke()}}
+x.font='24px Georgia';x.fillText('ASRLUX',256,150);return new THREE.CanvasTexture(c)}
+function b3(){const T=THREE,g=new T.Group(),c=D.case[st.case],b=D.bezel[st.bezel],d=D.dial[st.dial],h=D.hands[st.hands],s=D.strap[st.strap],mc=mk(c[1]),rd=Math.PI/180,bk=new T.MeshBasicMaterial({color:0}),wh=new T.MeshBasicMaterial({color:0xffffff});
+const cs=new T.Mesh(new T.CylinderGeometry(1,1,.32,64),mc);cs.rotation.x=Math.PI/2;g.add(cs);
+const sh=new T.Shape();sh.absarc(0,0,1,0,7,false);const hl=new T.Path();hl.absarc(0,0,.82,0,7,true);sh.holes.push(hl);
+const br=new T.Mesh(new T.ExtrudeGeometry(sh,{depth:.1,bevelEnabled:false,curveSegments:64}),mk(b[1],b[2]==1?100:160));br.position.z=.16;g.add(br);
+for(let i=0;i<60;i++){const a=i*6*rd,sn=Math.sin(a),co=Math.cos(a);let n;
+if(b[2]==1){n=bx(.03,.07,.12,bk,sn*.995,co*.995,.22)}
+else if(b[2]==2){n=bx(.025,i%5?.05:.09,.012,wh,sn*.91,co*.91,.266)}
+if(n){n.rotation.z=-a;g.add(n)}}
+const dl=new T.Mesh(new T.CircleGeometry(.82,64),new T.MeshPhongMaterial({map:dialTex(d),shininess:60}));dl.position.z=.165;g.add(dl);
+const gl=new T.Mesh(new T.CircleGeometry(.82,64),new T.MeshPhongMaterial({color:0xffffff,transparent:true,opacity:.1,shininess:200}));gl.position.z=.262;g.add(gl);
+[[305,.5,.07],[60,.78,.05],[150,.8,.015]].forEach(([a,l,w],i)=>{const hh=bx(w,l,.02,i>1?mk(0xd94a3a):mk(h[1],60));hh.geometry.translate(0,l*.4,0);hh.rotation.z=-a*rd;hh.position.z=.19+i*.01;g.add(hh)});
+const cp=new T.Mesh(new T.CylinderGeometry(.05,.05,.04,16),mc);cp.rotation.x=Math.PI/2;cp.position.z=.235;g.add(cp);
+[[1,1],[-1,1],[1,-1],[-1,-1]].forEach(([a,e])=>g.add(bx(.26,.46,.26,mc,a*.62,e*1,0)));
+const cr=new T.Mesh(new T.CylinderGeometry(.11,.11,.18,24),mk(c[3]||c[1]));cr.rotation.z=Math.PI/2;cr.position.x=1.1;g.add(cr);
+const t=s[2],ms=mk(s[1],t==2?20:t?110:10),Rw=3,w=.94,cols=t==1?[.27,.34,.27]:t==3?[.17,.17,.17,.17,.17]:t==4?[.28,.3,.28]:[.94];
+for(const sd of[1,-1]){let ph=.33;for(let i=0;i<8;i++){const L=t?.17:.2;let x0=-w/2;cols.forEach((cw,ci)=>{const m=bx(cw-(t>0?.02:0),L,.07,c[3]&&t&&ci==cols.length>>1?mk(c[3]):ms,x0+cw/2,sd*Rw*Math.sin(ph),Rw*Math.cos(ph)-Rw);m.rotation.x=-sd*ph;g.add(m);x0+=cw});ph+=L/Rw+.012}}
+g.scale.setScalar(D.size[st.size??3][1]/40);return g}
+function rs3(){const w=innerWidth,h=innerHeight;R3.setPixelRatio(Math.min(devicePixelRatio,2));R3.setSize(w,h,false);CM.aspect=w/h;CM.updateProjectionMatrix()}
+function o3(){if(!window.THREE)return;$('#v3').hidden=false;if(!R3){R3=new THREE.WebGLRenderer({canvas:$('#c3'),antialias:true,alpha:true});SC=new THREE.Scene();CM=new THREE.PerspectiveCamera(35,1,.1,100);const l1=new THREE.DirectionalLight(0xffffff,1),l2=new THREE.DirectionalLight(0xffffff,.6);l1.position.set(3,4,6);l2.position.set(-5,-2,4);SC.add(new THREE.AmbientLight(0xffffff,.55),l1,l2)}
+if(GR)SC.remove(GR);GR=b3();SC.add(GR);rs3();cancelAnimationFrame(raf);const lp=()=>{if(!drag)ry+=.004;GR.rotation.set(rx,ry,0);CM.position.z=zoom;R3.render(SC,CM);raf=requestAnimationFrame(lp)};lp()}
+function c3(){$('#v3').hidden=true;cancelAnimationFrame(raf)}
+{const cv=$('#c3');let lx,ly;cv.onpointerdown=e=>{drag=1;lx=e.clientX;ly=e.clientY;cv.setPointerCapture(e.pointerId)};cv.onpointermove=e=>{if(!drag)return;ry+=(e.clientX-lx)*.01;rx=Math.max(-1.2,Math.min(1.2,rx+(e.clientY-ly)*.01));lx=e.clientX;ly=e.clientY};cv.onpointerup=cv.onpointercancel=()=>drag=0;cv.onwheel=e=>{e.preventDefault();zoom=Math.max(4,Math.min(14,zoom+e.deltaY*.01))};addEventListener('keydown',e=>{if(e.key=='Escape')c3()})}
+$('#x3').innerHTML=ic('close');$('#x3').onclick=c3;$('#b3').innerHTML=ic('cube');$('#b3').title='3D просмотр';$('#b3').onclick=o3;$('#hn').innerHTML=ic('cube')+'Свайп вниз — 3D просмотр';
+{const t=$('#tabs');let x0,s0,mvd=0;t.addEventListener('pointerdown',e=>{if(e.pointerType!='mouse')return;x0=e.clientX;s0=t.scrollLeft;mvd=0;t.dataset.d=1});addEventListener('pointermove',e=>{if(!t.dataset.d)return;const d=e.clientX-x0;if(Math.abs(d)>4)mvd=1;t.scrollLeft=s0-d});addEventListener('pointerup',()=>{delete t.dataset.d});t.addEventListener('click',e=>{if(mvd){e.stopPropagation();e.preventDefault();mvd=0}},true)}
+
+const TRS=`Конструктор|Builder|Konstruktor
+Галерея|Gallery|Galereya
+Часы, которые собираете вы|Watches you design yourself|O‘zingiz yig‘adigan soat
+Выберите корпус, безель, циферблат, стрелки и ремешок. Посмотрите результат днём и ночью, на мужской и женской руке, и закажите.|Choose the case, bezel, dial, hands and strap. See the result by day and by night, on a man’s and a woman’s wrist, and place your order.|Korpus, bezel, siferblat, strelka va tasmani tanlang. Natijani kunduzi va kechasi, erkak va ayol qo‘lida ko‘ring va buyurtma bering.
+Собрать часы|Build your watch|Soatni yig‘ish
+Выберите деталь и листайте варианты влево и вправо: по бокам соседние детали, в центре ваши часы.|Pick a part and swipe left or right through the options: neighbouring parts on the sides, your watch in the centre.|Qismni tanlang va variantlarni chapga-o‘ngga suring: yonlarda qo‘shni qismlar, o‘rtada sizning soatingiz.
+Готовые модели|Ready-made models|Tayyor modellar
+Закажите как есть или возьмите за основу и измените.|Order as is, or use one as a starting point and change it.|Shunday buyurtma qiling yoki asos qilib olib, o‘zgartiring.
+Взять за основу|Use as base|Asos qilib olish
+Заказать|Order|Buyurtma berish
+В корзину|Add to cart|Savatga
+Корзина|Cart|Savat
+Тема|Theme|Mavzu
+Назад|Back|Orqaga
+Вперёд|Forward|Oldinga
+День|Day|Kun
+Ночь|Night|Tun
+К сборке|To builder|Konstruktorga
+На руке|On wrist|Qo‘lda
+Мужская рука|Man’s wrist|Erkak qo‘li
+Женская рука|Woman’s wrist|Ayol qo‘li
+3D просмотр|3D view|3D ko‘rinish
+Закрыть|Close|Yopish
+Свайп вниз — 3D просмотр|Swipe down for 3D view|Pastga suring — 3D ko‘rinish
+Вращайте часы пальцем, колесом мыши — приближение|Rotate the watch with your finger; mouse wheel to zoom|Soatni barmoq bilan aylantiring, g‘ildirak bilan yaqinlashtiring
+Сцена: листайте стрелками или свайпом|Stage: use arrows or swipe|Sahna: strelkalar yoki surish bilan
+включено|included|kiritilgan
+Итого|Total|Jami
+Оформить заказ|Checkout|Buyurtmani rasmiylashtirish
+Имя|Name|Ism
+Телефон|Phone|Telefon
+Город и адрес доставки|City and delivery address|Shahar va yetkazib berish manzili
+Способ оплаты (заглушка)|Payment method (placeholder)|To‘lov usuli (vaqtincha)
+Оплатить|Pay|To‘lash
+Убрать|Remove|Olib tashlash
+Заполните имя, телефон и адрес доставки.|Please enter your name, phone and delivery address.|Ism, telefon va yetkazib berish manzilini kiriting.
+Обработка платежа…|Processing payment…|To‘lov amalga oshirilmoqda…
+Заказ №|Order №|Buyurtma №
+принят|received|qabul qilindi
+Тестовый режим: платёжный модуль пока заглушка, деньги не списаны.|Test mode: the payment module is a placeholder, no money was charged.|Test rejimi: to‘lov moduli hozircha vaqtincha, pul yechilmadi.
+Готово|Done|Tayyor
+В корзине пусто. Соберите часы в конструкторе или выберите готовую модель.|Your cart is empty. Build a watch or pick a ready-made model.|Savat bo‘sh. Konstruktorda soat yig‘ing yoki tayyor modelni tanlang.
+Прототип. Цены и оплата тестовые, справочный курс 1 $ = 12 700 сум.|Prototype. Prices and payment are for testing; reference rate $1 = 12,700 UZS.|Prototip. Narxlar va to‘lov sinov uchun, ma’lumot kursi 1 $ = 12 700 so‘m.
+ сум| UZS| so‘m
+ мм| mm| mm
+Размер|Size|O‘lcham
+Корпус|Case|Korpus
+Безель|Bezel|Bezel
+Циферблат|Dial|Siferblat
+Стрелки|Hands|Strelkalar
+Ремешок|Strap|Tasma
+Часы|Watch|Soat
+Чёрный PVD|Black PVD|Qora PVD
+Жёлтое золото 18 кт|18 ct yellow gold|18 karat sariq oltin
+Розовое золото Everose|Everose rose gold|Everose pushti oltin
+Белое золото 18 кт|18 ct white gold|18 karat oq oltin
+Платина 950|950 platinum|950 platina
+Титан RLX|RLX titanium|RLX titan
+Rolesor жёлтое|Rolesor yellow|Rolesor sariq
+Rolesium (сталь + платина)|Rolesium (steel + platinum)|Rolesium (po‘lat + platina)
+Гладкий|Smooth|Silliq
+Рифлёный|Fluted|Rifli
+Рифл. белое золото|Fluted white gold|Rifli oq oltin
+Рифл. Everose|Fluted Everose|Rifli Everose
+Шкала|Scale|Shkala
+Золотой|Gold|Oltin
+Синий|Blue|Ko‘k
+Халк|Hulk|Halk
+Чёрная керамика|Black ceramic|Qora keramika
+Полночь|Midnight|Yarim tun
+Снег|Snow|Qor
+Океан|Ocean|Okean
+Лес|Forest|O‘rmon
+Бордо|Burgundy|Bordo
+Шампань|Champagne|Shampan
+Зелёный|Green|Yashil
+Палка|Stick|Tayoq
+Меч|Sword|Qilich
+Лист|Leaf|Barg
+Графит|Graphite|Grafit
+Кожа чёрная|Black leather|Qora charm
+Кожа коричневая|Brown leather|Jigarrang charm
+Кожа синяя|Blue leather|Ko‘k charm
+Каучук|Rubber|Kauchuk
+Президент|President|Prezident
+Дайвер|Diver|Dayver
+Классика|Classic|Klassika
+Часы на заказ|Made-to-order watches|Buyurtma asosidagi soatlar
+Сборка вручную|Hand assembly|Qo‘lda yig‘ish
+Каждые часы собираются под заказ|Every watch is assembled to order|Har bir soat buyurtma asosida yig‘iladi
+Гарантия|Warranty|Kafolat
+Гарантийное обслуживание|Warranty service|Kafolatli xizmat
+Доставка|Delivery|Yetkazib berish
+По всему Узбекистану|Across Uzbekistan|O‘zbekiston bo‘ylab
+Поддержка|Support|Qo‘llab-quvvatlash
+Поможем с выбором|We will help you choose|Tanlashda yordam beramiz
+Как это работает|How it works|Qanday ishlaydi
+Соберите|Design|Yig‘ing
+Выберите детали и посмотрите часы в 3D|Choose the parts and view your watch in 3D|Qismlarni tanlang va soatni 3D da ko‘ring
+Подтвердите|Confirm|Tasdiqlang
+Мы свяжемся, уточним детали и сроки|We will contact you to confirm details and timing|Biz bog‘lanib, tafsilot va muddatlarni aniqlaymiz
+Получите|Receive|Qabul qiling
+Изготовим и доставим часы к вам|We make the watch and deliver it to you|Soatni tayyorlab, sizga yetkazamiz
+Материалы|Materials|Materiallar
+Из чего можно собрать ваши часы|What your watch can be made of|Soatingiz nimalardan yig‘ilishi mumkin
+Сталь 904L|904L steel|904L po‘lat
+Прочная сталь с зеркальной и сатинированной полировкой|Durable steel with polished and satin finishes|Silliqlangan va satin pardozli mustahkam po‘lat
+Золото 18 кт|18 ct gold|18 karat oltin
+Жёлтое, белое и розовое золото|Yellow, white and rose gold|Sariq, oq va pushti oltin
+Платина и титан|Platinum and titanium|Platina va titan
+Редкие и лёгкие металлы для особых моделей|Rare and lightweight metals for special models|Maxsus modellar uchun noyob va yengil metallar
+Керамический безель|Ceramic bezel|Keramik bezel
+Устойчив к царапинам, цвет не выгорает|Scratch-resistant, colour does not fade|Chizilishga chidamli, rangi o‘chmaydi
+Частые вопросы|FAQ|Ko‘p so‘raladigan savollar
+Как долго делают часы?|How long does it take to make a watch?|Soat qancha vaqtda tayyorlanadi?
+Сроки зависят от выбранных деталей. Точную дату мы назовём при подтверждении заказа.|Timing depends on the parts you choose. We will give an exact date when confirming your order.|Muddat tanlangan qismlarga bog‘liq. Aniq sanani buyurtma tasdiqlanganda aytamiz.
+Есть ли гарантия?|Is there a warranty?|Kafolat bormi?
+Да, на часы действует гарантия. Условия будут указаны в договоре.|Yes, the watch is covered by a warranty. Terms will be stated in the contract.|Ha, soatga kafolat beriladi. Shartlar shartnomada ko‘rsatiladi.
+Как оплатить заказ?|How do I pay for an order?|Buyurtmaga qanday to‘layman?
+Payme, Click, Uzum или картой. Сейчас оплата тестовая.|Payme, Click, Uzum or by card. Payment is currently in test mode.|Payme, Click, Uzum yoki karta orqali. Hozircha to‘lov test rejimida.
+Можно ли изменить заказ?|Can I change my order?|Buyurtmani o‘zgartirish mumkinmi?
+Да, до начала сборки. Напишите нам.|Yes, before assembly starts. Just write to us.|Ha, yig‘ish boshlanguncha. Bizga yozing.
+Доставляете ли вы по Узбекистану?|Do you deliver across Uzbekistan?|O‘zbekiston bo‘ylab yetkazasizmi?
+Да, по всей стране. Стоимость и сроки зависят от города.|Yes, nationwide. Cost and timing depend on the city.|Ha, butun mamlakat bo‘ylab. Narx va muddat shaharga bog‘liq.
+Контакты|Contacts|Aloqa
+Связаться с нами|Contact us|Biz bilan bog‘laning
+Поможем подобрать детали и ответим на вопросы.|We will help you choose parts and answer your questions.|Qismlarni tanlashda yordam beramiz va savollarga javob beramiz.
+Сообщение|Message|Xabar
+Отправить|Send|Yuborish
+Спасибо! Мы свяжемся с вами.|Thank you! We will get back to you.|Rahmat! Siz bilan bog‘lanamiz.
+Заполните имя и телефон.|Please enter your name and phone.|Ism va telefonni kiriting.
+Ташкент, Узбекистан|Tashkent, Uzbekistan|Toshkent, O‘zbekiston
+Ежедневно 10:00–20:00|Daily 10:00–20:00|Har kuni 10:00–20:00
+Навигация|Navigation|Navigatsiya
+Покупателям|For customers|Xaridorlar uchun
+Доставка и оплата|Delivery and payment|Yetkazib berish va to‘lov
+Возврат|Returns|Qaytarish
+Публичная оферта|Public offer|Ommaviy oferta
+Политика конфиденциальности|Privacy policy|Maxfiylik siyosati
+Вопросы|FAQ|Savollar
+Часы, которые собираете вы|Watches you design yourself|O‘zingiz yig‘adigan soat
+© 2026 ASRLUX. Все права защищены.|© 2026 ASRLUX. All rights reserved.|© 2026 ASRLUX. Barcha huquqlar himoyalangan.`.split('\n').map(l=>l.split('|'));
+let lang='ru';try{lang=localStorage.getItem('lg')||'ru'}catch(e){}
+const TD={en:[],uz:[]},TT={ru:'ASRLUX — конструктор часов',en:'ASRLUX — watch builder',uz:'ASRLUX — soat konstruktori'};TRS.forEach(r=>{TD.en.push([r[0],r[1]]);TD.uz.push([r[0],r[2]])});for(const k in TD)TD[k].sort((a,b)=>b[0].length-a[0].length);
+const tr=v=>{if(lang=='ru')return v;let o=v;for(const[a,b]of TD[lang])if(o.includes(a))o=o.split(a).join(b);return o},OT=new WeakMap(),OA=new WeakMap();
+function tx(){const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:n=>/^(SCRIPT|STYLE)$/.test(n.parentElement?.tagName||'')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});let n;while(n=w.nextNode()){if(!OT.has(n))OT.set(n,n.nodeValue);const v=tr(OT.get(n));if(n.nodeValue!==v)n.nodeValue=v}
+['title','aria-label','placeholder'].forEach(a=>document.querySelectorAll('['+a+']').forEach(e=>{const m=OA.get(e)||{},c=e.getAttribute(a);let x=m[a];if(!x||c!==x.t)x={o:c};x.t=tr(x.o);m[a]=x;OA.set(e,m);if(c!==x.t)e.setAttribute(a,x.t)}));document.title=TT[lang];document.documentElement.lang=lang;document.querySelectorAll('.lng button').forEach(b=>b.classList.toggle('on',b.dataset.l==lang))}
+document.querySelectorAll('.lng button').forEach(b=>b.onclick=()=>{lang=b.dataset.l;try{localStorage.setItem('lg',lang)}catch(e){}tx()});
+{const d0=draw,r0=rc;draw=function(...a){d0(...a);tx()};rc=function(...a){r0(...a);tx()}}
+function sendC(){const v=['cn1','cn2'].every(i=>$('#'+i).value.trim());$('#cr').textContent=v?'Спасибо! Мы свяжемся с вами.':'Заполните имя и телефон.';if(v)['cn1','cn2','cn3'].forEach(i=>$('#'+i).value='');tx()}
+document.querySelectorAll('[data-i]').forEach(e=>e.insertAdjacentHTML('afterbegin',ic(e.dataset.i)));
+$('#th').innerHTML=ic('theme');$('#cb').insertAdjacentHTML('afterbegin',ic('bag'));$('#ad').innerHTML=ic('bag')+'В корзину';
+draw();rc();addEventListener('resize',()=>{draw();R3&&rs3()});
+</script><script>(function(){
+const IM={"c": "img_01.avif", "h": "img_02.avif", "m": "img_03.avif", "s": "img_04.avif", "base": "img_05.avif", "bat": "img_06.avif", "tri": "img_07.avif", "frm": "img_08.avif"},HD={"h": {"w": 148, "h": 743, "left": 48.0591, "top": 35.4899, "width": 3.8657, "ox": 49.562, "oy": 77.811}, "m": {"w": 137, "h": 1087, "left": 48.2008, "top": 27.0037, "width": 3.5577, "ox": 49.87, "oy": 83.15}, "s": {"w": 105, "h": 1146, "left": 48.6197, "top": 27.4458, "width": 2.7414, "ox": 49.438, "oy": 77.379}},GD={"0": ["M330.1 9.8C506.8 9.8 609.4 -127 609.4 -363.3C609.4 -598.6 505.9 -737.3 330.1 -737.3C153.8 -737.3 50.3 -599.1 50.3 -363.3C50.3 -127 153.3 9.8 330.1 9.8ZM330.1 -99.6C234.4 -99.6 181.6 -195.3 181.6 -363.3C181.6 -531.2 234.9 -628.4 330.1 -628.4C424.8 -628.4 478 -531.7 478 -363.3C478 -195.3 424.8 -99.6 330.1 -99.6Z", 659.7], "1": ["M350.1 -727.5H205.6L45.9 -613.3V-489.3L215.8 -611.3H220.7V0H350.1Z", 422.9], "2": ["M65.4 0H563V-108.9H246.1V-114.3L372.6 -243.2C514.6 -380.4 552.2 -445.8 552.2 -526.4C552.2 -647.9 453.6 -737.3 307.6 -737.3C163.6 -737.3 61.5 -647.5 61.5 -509.8H186C186 -584.5 232.9 -630.9 306.2 -630.9C375 -630.9 426.8 -588.4 426.8 -520C426.8 -458.5 388.7 -414.6 317.9 -342.3L65.4 -93.8Z", 623.0], "3": ["M317.9 9.8C473.1 9.8 585.9 -79.1 585.9 -201.7C585.9 -292.5 529.8 -358.4 428.2 -372.6V-378.4C506.8 -396 559.6 -454.1 559.6 -536.1C559.6 -646.5 465.3 -737.3 320.3 -737.3C179.2 -737.3 69.8 -652.8 67.4 -531.7H192.9C194.8 -593.3 252 -630.9 319.3 -630.9C387.7 -630.9 432.6 -589.8 432.6 -528.3C432.6 -464.4 380.4 -421.9 304.7 -421.9H240.2V-321.3H304.7C397 -321.3 451.7 -274.9 451.7 -208.5C451.7 -143.6 396 -99.6 317.9 -99.6C244.1 -99.6 187 -137.7 183.6 -197.3H52.2C55.7 -74.7 165 9.8 317.9 9.8Z", 636.2], "4": ["M52.2 -135.3H398.4V0H523.4V-135.3H617.2V-242.7H523.4V-727.5H361.3L52.2 -239.3ZM400.9 -242.7H185.5V-248.5L395 -579.1H400.9Z", 666.0], "5": ["M317.9 9.8C471.2 9.8 578.6 -94.7 578.6 -238.8C578.6 -378.4 481 -479.5 349.1 -479.5C290.5 -479.5 237.8 -456.5 210.4 -424.8H206.5L227.5 -618.2H540.5V-727.5H119.1L81.5 -352.5L199.7 -333.5C224.1 -360.4 270 -378.4 314.5 -378.4C394 -378.4 451.7 -318.8 451.7 -235.8C451.7 -153.8 396 -96.2 317.9 -96.2C252 -96.2 198.2 -137.7 194.3 -197.3H67.9C71.3 -77.1 175.8 9.8 317.9 9.8Z", 628.9], "6": ["M327.6 9.8C484.4 9.8 589.4 -97.2 589.4 -240.2C589.4 -378.4 491.2 -477.5 363.8 -477.5C285.6 -477.5 217.3 -439.9 182.6 -377H177.2C177.2 -531.2 233.9 -624.5 335.4 -624.5C398.4 -624.5 440.9 -587.4 454.6 -531.7H582.5C566.9 -649.9 471.2 -737.3 335.4 -737.3C161.1 -737.3 50.3 -591.3 50.3 -342.8C50.3 -76.2 189 9.8 327.6 9.8ZM327.1 -96.2C249.5 -96.2 191.9 -160.6 191.9 -237.3C191.9 -313 251.5 -377.4 328.6 -377.4C406.2 -377.4 462.9 -316.4 462.9 -237.8C462.9 -158.2 404.3 -96.2 327.1 -96.2Z", 639.6], "7": ["M90.3 0H226.1L535.6 -615.2V-727.5H40.5V-618.2H399.9V-613.3Z", 576.2], "8": ["M319.8 9.8C477.1 9.8 589.8 -76.7 589.8 -194.8C589.8 -285.6 522.5 -361.8 438 -376.5V-380.9C511.7 -397.5 563 -463.9 563 -542.5C563 -654.3 459.5 -737.3 319.8 -737.3C179.2 -737.3 76.7 -654.3 76.7 -542.5C76.7 -463.9 127 -397.5 202.1 -380.9V-376.5C115.7 -361.8 50.3 -285.6 50.3 -194.8C50.3 -76.7 161.6 9.8 319.8 9.8ZM319.8 -90.8C237.3 -90.8 184.1 -136.7 184.1 -204.1C184.1 -273.9 241.2 -323.7 319.8 -323.7C397.5 -323.7 455.1 -273.9 455.1 -204.1C455.1 -136.2 401.4 -90.8 319.8 -90.8ZM319.8 -422.4C252 -422.4 204.1 -466.3 204.1 -529.8C204.1 -592.8 250.5 -634.8 319.8 -634.8C388.2 -634.8 435.5 -592.8 435.5 -529.8C435.5 -466.3 386.7 -422.4 319.8 -422.4Z", 640.1], "9": ["M305.2 10.3C479 10.3 589.4 -135.7 589.4 -385.3C589.4 -651.9 451.2 -736.8 313.5 -737.8C155.8 -739.7 50.3 -630.9 50.3 -487.3C50.3 -350.1 148.4 -250.5 276.4 -250.5C355 -250.5 422.9 -289.1 458 -351.1H462.9C462.9 -195.8 405.8 -102.5 305.2 -102.5C241.2 -102.5 198.7 -140.6 186 -196.8H57.1C72.8 -77.6 168.5 10.3 305.2 10.3ZM311 -350.6C233.9 -350.6 177.2 -411.6 177.2 -490.2C177.2 -569.3 235.8 -631.3 313 -631.3C391.1 -631.3 448.7 -566.4 448.7 -491.7C448.7 -415.5 388.7 -350.6 311 -350.6Z", 639.6]},DL="<svg class=\"wdl\" viewBox=\"0 0 2400 2400\" aria-hidden=\"true\"><defs><radialGradient id=\"go@ID@\" gradientUnits=\"userSpaceOnUse\" cx=\"1199.4\" cy=\"1213.0\" r=\"659.0\"><stop offset=\"0\" stop-color=\"#000\" stop-opacity=\".6\"/><stop offset=\".95\" stop-color=\"#000\" stop-opacity=\".6\"/><stop offset=\"1\" stop-color=\"#000\" stop-opacity=\"0\"/></radialGradient><radialGradient id=\"gi@ID@\" gradientUnits=\"userSpaceOnUse\" cx=\"1230.8\" cy=\"1256.9\" r=\"627.6\"><stop offset=\".8\" stop-color=\"#000\" stop-opacity=\"0\"/><stop offset=\".93\" stop-color=\"#000\" stop-opacity=\".22\"/><stop offset=\"1\" stop-color=\"#000\" stop-opacity=\".58\"/></radialGradient><linearGradient id=\"gw@ID@\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#000\" stop-opacity=\".32\"/><stop offset=\".38\" stop-color=\"#000\" stop-opacity=\"0\"/><stop offset=\"1\" stop-color=\"#000\" stop-opacity=\".07\"/></linearGradient><image id=\"bt@ID@\" href=\"@I_bat@\" x=\"-30.8\" y=\"-94.3\" width=\"61.7\" height=\"188.7\"/></defs><circle cx=\"1199.4\" cy=\"1213.0\" r=\"659.0\" fill=\"url(#go@ID@)\"/><image href=\"@I_base@\" x=\"538.4\" y=\"552.0\" width=\"1326.4\" height=\"1326.4\"/><circle cx=\"1199.4\" cy=\"1213.0\" r=\"628.9\" fill=\"url(#gi@ID@)\"/><path d=\"M1260.3 633.8L1263.2 606.3M1320.5 643.3L1326.2 616.3M1379.4 659.1L1387.9 632.8M1436.3 680.9L1447.5 655.7M1541.7 741.8L1558 719.5M1589.1 780.2L1607.6 759.7M1632.2 823.3L1652.7 804.8M1670.6 870.7L1692.9 854.4M1731.5 976.1L1756.7 964.9M1753.3 1033L1779.6 1024.5M1769.1 1091.9L1796.1 1086.2M1778.6 1152.1L1806.1 1149.2M1778.6 1273.9L1806.1 1276.8M1769.1 1334.1L1796.1 1339.8M1753.3 1393L1779.6 1401.5M1731.5 1449.9L1756.7 1461.1M1670.6 1555.3L1692.9 1571.6M1632.2 1602.7L1652.7 1621.2M1589.1 1645.8L1607.6 1666.3M1541.7 1684.2L1558 1706.5M1436.3 1745.1L1447.5 1770.3M1379.4 1766.9L1387.9 1793.2M1320.5 1782.7L1326.2 1809.7M1260.3 1792.2L1263.2 1819.7M1138.5 1792.2L1135.6 1819.7M1078.3 1782.7L1072.6 1809.7M1019.4 1766.9L1010.9 1793.2M962.5 1745.1L951.3 1770.3M857.1 1684.2L840.8 1706.5M809.7 1645.8L791.2 1666.3M766.6 1602.7L746.1 1621.2M728.2 1555.3L705.9 1571.6M667.3 1449.9L642.1 1461.1M645.5 1393L619.2 1401.5M629.7 1334.1L602.7 1339.8M620.2 1273.9L592.7 1276.8M620.2 1152.1L592.7 1149.2M629.7 1091.9L602.7 1086.2M645.5 1033L619.2 1024.5M667.3 976.1L642.1 964.9M728.2 870.7L705.9 854.4M766.6 823.3L746.1 804.8M809.7 780.2L791.2 759.7M857.1 741.8L840.8 719.5M962.5 680.9L951.3 655.7M1019.4 659.1L1010.9 632.8M1078.3 643.3L1072.6 616.3M1138.5 633.8L1135.6 606.3\" stroke=\"#e9f0ea\" stroke-opacity=\".82\" stroke-width=\"2.6\" fill=\"none\"/><path fill=\"#edf3ee\" fill-opacity=\".9\" d=\"M1185.4 636.8C1191.8 636.8 1196.3 632.2 1196.3 625.8C1196.3 619.6 1192 615 1186.1 615C1182.6 615 1179.4 616.6 1177.9 619.2H1177.8C1177.8 611.9 1180.5 606.6 1186.2 606.6C1189.5 606.6 1191.6 608.6 1192.2 611.7H1196.1C1195.4 606.6 1191.6 603.1 1185.9 603.1C1177.7 603.1 1174.1 610.3 1174.1 621.3C1174.1 631.2 1178.2 636.8 1185.4 636.8ZM1185.4 633.3C1181.5 633.3 1178.4 629.9 1178.4 625.9C1178.4 621.8 1181.6 618.5 1185.5 618.5C1189.5 618.5 1192.5 621.7 1192.5 625.8C1192.5 629.9 1189.4 633.3 1185.4 633.3ZM1212.9 636.8C1220.2 636.8 1224.7 630.2 1224.7 619.9C1224.7 609.6 1220.2 603.1 1212.9 603.1C1205.7 603.1 1201.2 609.6 1201.2 619.9C1201.2 630.2 1205.7 636.8 1212.9 636.8ZM1212.9 633.3C1208 633.3 1204.9 628.2 1204.9 619.9C1204.9 611.6 1208 606.6 1212.9 606.6C1217.9 606.6 1221 611.6 1221 619.9C1221 628.2 1217.9 633.3 1212.9 633.3ZM1487.7 714C1493.4 717.2 1499.5 715.4 1502.7 709.7C1506 704.2 1504.7 698.1 1499.5 695.1C1496.8 693.5 1494.1 693.2 1491.2 694.1L1491.2 694.1L1497.2 685.3L1510.4 692.9L1512.1 689.9L1495.8 680.5L1485.6 696L1488.8 697.9C1491.1 696 1494.2 696.1 1497.3 697.9C1500.8 699.9 1501.6 704.1 1499.4 707.9C1497.2 711.7 1493.1 713 1489.5 710.9C1486 708.9 1484.8 705.1 1486.3 701.7L1482.9 699.8C1480.3 704.8 1482.3 710.8 1487.7 714ZM1722.7 900.6 1720.8 897.3 1712 893 1708.6 895 1717.3 899.3 1717.3 899.4 1692.6 913.6 1694.5 916.9ZM1703 932.7C1706.6 939 1714.5 939.6 1723.4 934.5C1732.3 929.3 1735.7 922.1 1732.1 915.9C1728.5 909.6 1720.6 908.9 1711.6 914.1C1702.7 919.2 1699.3 926.4 1703 932.7ZM1706 931C1703.5 926.6 1706.3 921.5 1713.5 917.3C1720.7 913.2 1726.6 913.3 1729.1 917.6C1731.6 921.9 1728.8 927.1 1721.6 931.3C1714.4 935.4 1708.5 935.3 1706 931ZM1808.8 1205V1201.2L1803.4 1193H1799.3L1804.7 1201.1V1201.2H1776.2V1205ZM1775.7 1222.1C1775.7 1228.6 1780.3 1233 1786.9 1233C1793.4 1233 1798 1228.9 1798 1222.9C1798 1219.8 1796.9 1217.2 1794.7 1215.2V1215.1L1805.3 1215.9V1231.2H1808.8V1212.4L1790.2 1211.3V1215.1C1793 1216.1 1794.4 1218.8 1794.4 1222.4C1794.4 1226.4 1791.3 1229.2 1786.9 1229.2C1782.4 1229.2 1779.2 1226.3 1779.2 1222.1C1779.2 1218.1 1781.9 1215.1 1785.6 1214.8V1210.9C1780 1211.1 1775.7 1215.8 1775.7 1222.1ZM1711.3 1479.8 1700.6 1498.4 1703.6 1500.2 1711.7 1486.2 1711.7 1486.2 1714.3 1497.9C1715.6 1504.2 1717.2 1507.8 1720.9 1509.9C1725.9 1512.8 1731.6 1511.1 1734.6 1505.8C1737.9 1500.2 1736 1494.2 1730.4 1491L1728.5 1494.2C1732.6 1496.5 1733.8 1500.2 1731.6 1504.1C1729.5 1507.6 1726.1 1508.6 1722.6 1506.6C1719.7 1504.9 1718.8 1502.3 1717.6 1496.9L1714.2 1481.5ZM1691.9 1512.5C1688.3 1518.7 1691.7 1525.9 1700.6 1531.1C1709.5 1536.2 1717.5 1535.6 1721.1 1529.3C1724.7 1523 1721.3 1515.8 1712.4 1510.7C1703.5 1505.5 1695.5 1506.2 1691.9 1512.5ZM1694.9 1514.2C1697.4 1509.9 1703.3 1509.7 1710.5 1513.9C1717.7 1518 1720.5 1523.2 1718 1527.5C1715.5 1531.9 1709.6 1532 1702.4 1527.8C1695.3 1523.7 1692.4 1518.5 1694.9 1514.2ZM1508.6 1700.5 1490 1711.2 1491.8 1714.2 1505.7 1706.2 1505.8 1706.2 1502.1 1717.6C1500.1 1723.7 1499.7 1727.6 1501.9 1731.3C1504.8 1736.3 1510.5 1737.7 1515.8 1734.6C1521.4 1731.4 1522.8 1725.3 1519.5 1719.7L1516.3 1721.5C1518.7 1725.5 1517.9 1729.3 1514 1731.6C1510.5 1733.6 1507 1732.8 1505 1729.3C1503.3 1726.4 1503.8 1723.7 1505.5 1718.3L1510.3 1703.3ZM1476.2 1718.7C1470.5 1721.9 1469 1728.1 1472.3 1733.8C1475.6 1739.4 1481.4 1741.3 1486.6 1738.3C1489.3 1736.8 1491 1734.6 1491.7 1731.7L1491.7 1731.7L1496.3 1741.2L1483.1 1748.8L1484.8 1751.9L1501.1 1742.5L1492.8 1725.8L1489.5 1727.7C1490 1730.6 1488.4 1733.2 1485.3 1735C1481.8 1737.1 1477.8 1735.7 1475.6 1731.9C1473.4 1728 1474.3 1723.8 1477.9 1721.7C1481.4 1719.7 1485.3 1720.6 1487.4 1723.6L1490.9 1721.6C1487.8 1716.9 1481.6 1715.5 1476.2 1718.7ZM922.8 1718.7C917.2 1715.4 911 1716.5 908.1 1721.5C906.2 1724.8 907 1728.8 910.3 1731.5L910.3 1731.5C906.6 1730.7 903.3 1731.9 901.6 1734.8C899 1739.4 901 1745 906.2 1748C911.5 1751.1 917.3 1749.7 920.3 1744.6L917 1742.7C914.9 1746.2 911.5 1747.1 907.9 1745C904.4 1743 903.2 1739.7 905.1 1736.5C906.7 1733.8 910.2 1733.4 913.8 1735.5L916.1 1736.8L917.8 1733.7L915.6 1732.4C911.4 1730 909.7 1726.4 911.5 1723.4C913.4 1720.1 917.3 1719.5 921.1 1721.7C925.2 1724.1 926.2 1727.8 923.9 1731.8L927.3 1733.8C930.5 1728.2 928.6 1722.1 922.8 1718.7ZM899.2 1705.2C893.6 1701.9 887.5 1703.7 884.2 1709.4C881 1715 882.2 1721.1 887.4 1724.1C890.1 1725.6 892.8 1726 895.7 1725.1L895.7 1725.1L889.8 1733.9L876.6 1726.2L874.8 1729.3L891.1 1738.7L901.4 1723.1L898.1 1721.2C895.8 1723.1 892.7 1723 889.6 1721.2C886.1 1719.2 885.3 1715.1 887.5 1711.3C889.7 1707.4 893.8 1706.1 897.5 1708.2C900.9 1710.2 902.1 1714 900.6 1717.4L904 1719.4C906.6 1714.4 904.7 1708.3 899.2 1705.2ZM706.3 1528.3 698 1513.8 704.8 1509.9 702.9 1506.6 696.1 1510.6 693.6 1506.3 690.6 1508 693.1 1512.3 674.7 1523 677.1 1527.1 703.5 1529.9ZM695 1515.6 701.1 1526.2 701 1526.2 680.4 1524 680.4 1524ZM693 1488.4C689.4 1482.1 681.4 1481.4 672.5 1486.6C663.6 1491.7 660.2 1499 663.8 1505.2C667.4 1511.5 675.4 1512.1 684.3 1507C693.2 1501.9 696.6 1494.6 693 1488.4ZM690 1490.1C692.5 1494.5 689.6 1499.6 682.5 1503.8C675.3 1507.9 669.4 1507.8 666.9 1503.5C664.4 1499.1 667.2 1494 674.4 1489.8C681.6 1485.7 687.5 1485.8 690 1490.1ZM614.8 1238.7V1222H622.6V1218.2H614.8V1213.3L611.2 1213.3V1218.2H590V1223.1L611.5 1238.7ZM611.2 1222V1234.2H611.2L594.4 1222.1V1222ZM623.1 1198.2C623.1 1191.7 618.5 1187.3 611.9 1187.3C605.4 1187.3 600.8 1191.5 600.8 1197.5C600.8 1200.5 601.9 1203.1 604.1 1205.1V1205.2L593.5 1204.4V1189.1H590V1208L608.6 1209V1205.3C605.8 1204.3 604.4 1201.5 604.4 1197.9C604.4 1193.9 607.5 1191.1 611.9 1191.1C616.4 1191.1 619.6 1194 619.6 1198.2C619.6 1202.2 616.9 1205.2 613.2 1205.5V1209.5C618.8 1209.2 623.1 1204.5 623.1 1198.2ZM693.3 937C696.5 931.3 694.7 925.2 689 922C683.5 918.7 677.4 920 674.4 925.2C672.8 927.9 672.5 930.6 673.4 933.5L673.3 933.5L664.6 927.5L672.2 914.3L669.2 912.6L659.8 928.9L675.3 939.1L677.2 935.9C675.3 933.6 675.4 930.5 677.2 927.4C679.2 923.9 683.4 923.1 687.2 925.3C691 927.5 692.3 931.6 690.2 935.2C688.2 938.7 684.4 939.9 681 938.4L679.1 941.8C684.1 944.4 690.1 942.4 693.3 937ZM707.1 913.2C710.7 906.9 707.3 899.7 698.4 894.6C689.5 889.4 681.5 890.1 677.9 896.4C674.3 902.6 677.7 909.8 686.6 915C695.5 920.1 703.5 919.5 707.1 913.2ZM704.1 911.4C701.6 915.8 695.7 915.9 688.5 911.8C681.3 907.6 678.5 902.4 681 898.1C683.5 893.8 689.4 893.6 696.6 897.8C703.7 901.9 706.6 907.1 704.1 911.4ZM899.8 720.5C905.4 717.2 906.9 711.1 903.7 705.4C900.4 699.8 894.5 697.8 889.3 700.8C886.7 702.4 885 704.6 884.3 707.5L884.3 707.5L879.7 698L892.9 690.3L891.1 687.3L874.8 696.7L883.2 713.4L886.5 711.5C886 708.6 887.6 706 890.7 704.2C894.2 702.1 898.2 703.5 900.4 707.3C902.6 711.1 901.7 715.3 898 717.5C894.6 719.5 890.7 718.6 888.5 715.6L885.1 717.5C888.1 722.3 894.3 723.6 899.8 720.5ZM923 707.1C928.6 703.8 930.1 697.7 926.8 692C923.6 686.4 917.7 684.5 912.5 687.5C909.9 689 908.2 691.2 907.5 694.1L907.5 694.1L902.9 684.6L916.1 677L914.3 673.9L898 683.3L906.4 700L909.7 698.1C909.1 695.2 910.8 692.6 913.9 690.8C917.4 688.7 921.3 690.1 923.6 693.9C925.8 697.8 924.9 702 921.2 704.1C917.8 706.1 913.9 705.2 911.7 702.2L908.3 704.2C911.3 708.9 917.5 710.3 923 707.1Z\"/><path fill=\"#f3f0e6\" d=\"M1104.5 957V958.3H1086.9V957Q1088.1 956.8 1088.7 956.8Q1091.3 956.7 1091.3 955Q1091.3 953.4 1088.8 947.7H1076.6L1075.7 949.8Q1074.2 953.8 1074.2 954.8Q1074.2 955.8 1075.2 956.3Q1076.2 956.8 1078.6 957V958.3H1067.6V957Q1069.6 956.6 1070.5 955.5Q1071.4 954.4 1072.9 950.6L1085 920.9H1086.5L1098.6 949.4Q1100.6 954.2 1101.7 955.6Q1102.7 957 1104.3 957ZM1077.4 945.5H1088L1082.5 932.3ZM1128.6 920.8Q1131.2 920.8 1134 921.7Q1136.8 922.6 1137.2 922.6Q1137.9 922.6 1138.3 922.2Q1138.7 921.8 1139 920.8H1140.6V932.6H1139.1Q1137.5 927.4 1134.7 925Q1131.9 922.5 1128.6 922.5Q1125.8 922.5 1124.2 924Q1122.6 925.4 1122.6 927.9Q1122.6 929.9 1123.8 931.2Q1124.9 932.4 1128.2 934.1L1136.2 938Q1138.8 939.3 1140.5 942.1Q1142.2 944.9 1142.2 947.9Q1142.2 953 1138.4 956.2Q1134.7 959.4 1128.7 959.4Q1125.8 959.4 1122.9 958.5Q1120 957.5 1119.4 957.5Q1118.2 957.5 1117.8 959.4H1116.2V946H1117.8Q1120.6 957.6 1128.9 957.6Q1132 957.6 1133.9 955.9Q1135.7 954.2 1135.7 951.4Q1135.7 949.3 1134.5 947.9Q1133.2 946.6 1129.6 944.9L1126 943.1Q1121.1 940.8 1118.9 938.1Q1116.7 935.4 1116.7 931.8Q1116.7 926.7 1119.9 923.8Q1123 920.8 1128.6 920.8ZM1187.2 931.3Q1187.2 933 1186.7 934.4Q1186.1 935.8 1185.4 936.7Q1184.7 937.6 1183.5 938.4Q1182.2 939.1 1181.2 939.6Q1180.1 940 1178.7 940.5L1189.6 956Q1190.4 957 1191.8 957V958.3H1180.7L1169.4 941.4H1168V952Q1168 954.9 1168.8 955.7Q1169.6 956.6 1172.7 957V958.3H1154.4V957Q1157.6 956.6 1158.4 955.8Q1159.2 955 1159.2 952V928Q1159.2 925.1 1158.3 924.1Q1157.4 923.2 1154.4 923V921.6H1171.9Q1179.3 921.6 1183.2 924.1Q1187.2 926.6 1187.2 931.3ZM1170.9 923.5Q1168 923.5 1168 925.8V939.6Q1173.8 939.5 1175.8 937.9Q1177.9 936.4 1177.9 931.5Q1177.9 927.2 1176.3 925.4Q1174.6 923.5 1170.9 923.5ZM1219.9 956.7Q1221.5 956.7 1222.9 956.4Q1224.3 956.2 1225.4 955.9Q1226.4 955.6 1227.4 955Q1228.5 954.3 1229.1 953.9Q1229.8 953.5 1230.5 952.6Q1231.2 951.7 1231.6 951.2Q1232 950.7 1232.5 949.8Q1233 948.8 1233.1 948.4Q1233.3 948.1 1233.7 947.1Q1234.1 946.1 1234.2 946H1235.7L1233.5 958.3H1202.1V957Q1205.1 956.6 1205.9 955.9Q1206.8 955.2 1206.8 953.1V926.9Q1206.8 924.8 1205.8 924Q1204.9 923.2 1202.1 923V921.6H1221.1V923Q1217.5 923.2 1216.6 924.1Q1215.6 925 1215.6 928V953.6Q1215.6 955.4 1216.5 956Q1217.4 956.7 1219.9 956.7ZM1264.4 923Q1261.1 923.1 1260.1 924Q1259.1 924.9 1259.1 928V946.1Q1259.1 951.7 1261 954.2Q1262.9 956.7 1267.1 956.7Q1272 956.7 1274.3 953.8Q1276.6 951 1276.6 944.9V928.4Q1276.6 925.4 1275.6 924.3Q1274.5 923.3 1271.3 923V921.6H1283.2V923Q1280.6 923.4 1279.8 924.3Q1279 925.2 1279 927.6V944.9Q1279 959.4 1265 959.4Q1258.2 959.4 1254.3 956.1Q1250.5 952.8 1250.5 946.1V928Q1250.5 925.1 1249.7 924.2Q1248.9 923.3 1246 923V921.6H1264.4ZM1320.9 925Q1320.9 923.7 1319.9 923.4Q1319.5 923.3 1317 923V921.6H1330.6V923Q1327.6 923.3 1325.8 924.7Q1324 926.1 1320.4 930.9L1316 937L1325.9 952.3Q1327.9 955.3 1328.8 956.1Q1329.8 956.9 1331.2 957V958.3H1312.7V957Q1314.1 956.9 1314.3 956.9Q1317.1 956.7 1317.1 955.4Q1317.1 954.2 1315.9 952.4L1310.5 943.6L1308.4 946.4Q1305.3 950.5 1304.3 952.2Q1303.3 953.9 1303.3 954.8Q1303.3 955.8 1304.2 956.3Q1305.2 956.7 1307.7 957V958.3H1294.1V957Q1296.1 956.8 1297.3 956.1Q1298.5 955.5 1299.8 954L1309.3 941.9L1298.5 926.1Q1297.3 924.3 1296.4 923.7Q1295.6 923.1 1294.2 923V921.6H1312.9V923Q1311.4 923.1 1311.3 923.1Q1309.8 923.2 1309.2 923.5Q1308.7 923.9 1308.7 924.8Q1308.7 925.5 1309.5 926.8L1314.7 934.9Q1315.6 933.7 1316.9 932Q1318.1 930.3 1318.7 929.6Q1319.2 928.8 1319.9 927.8Q1320.5 926.9 1320.7 926.2Q1320.9 925.6 1320.9 925Z\"/><use href=\"#bt@ID@\" transform=\"translate(1199.4 1213.0) rotate(30) translate(0 -481.6)\"/><use href=\"#bt@ID@\" transform=\"translate(1199.4 1213.0) rotate(60) translate(0 -481.6)\"/><use href=\"#bt@ID@\" transform=\"translate(1199.4 1213.0) rotate(120) translate(0 -481.6)\"/><use href=\"#bt@ID@\" transform=\"translate(1199.4 1213.0) rotate(150) translate(0 -481.6)\"/><use href=\"#bt@ID@\" transform=\"translate(1199.4 1213.0) rotate(180) translate(0 -481.6)\"/><use href=\"#bt@ID@\" transform=\"translate(1199.4 1213.0) rotate(210) translate(0 -481.6)\"/><use href=\"#bt@ID@\" transform=\"translate(1199.4 1213.0) rotate(240) translate(0 -481.6)\"/><use href=\"#bt@ID@\" transform=\"translate(1199.4 1213.0) rotate(270) translate(0 -481.6)\"/><use href=\"#bt@ID@\" transform=\"translate(1199.4 1213.0) rotate(300) translate(0 -481.6)\"/><use href=\"#bt@ID@\" transform=\"translate(1199.4 1213.0) rotate(330) translate(0 -481.6)\"/><image href=\"@I_tri@\" x=\"1127.1\" y=\"637.1\" width=\"144.7\" height=\"174.7\"/><polygon fill=\"#f3f1ea\" points=\"1541.2,1161.5 1539.9,1166.9 1537.9,1184.6 1537.0,1197.9 1536.9,1220.6 1537.5,1234.1 1539.1,1251.5 1541.1,1263.7 1542.8,1265.9 1700.5,1265.6 1704.3,1265.2 1705.3,1264.2 1706.4,1259.4 1708.3,1238.0 1709.1,1218.7 1709.0,1203.5 1708.0,1185.2 1706.4,1170.8 1704.9,1162.6 1703.6,1160.5 1702.0,1159.9 1608.5,1159.6 1542.3,1160.8\"/><polygon fill=\"url(#gw@ID@)\" points=\"1541.2,1161.5 1539.9,1166.9 1537.9,1184.6 1537.0,1197.9 1536.9,1220.6 1537.5,1234.1 1539.1,1251.5 1541.1,1263.7 1542.8,1265.9 1700.5,1265.6 1704.3,1265.2 1705.3,1264.2 1706.4,1259.4 1708.3,1238.0 1709.1,1218.7 1709.0,1203.5 1708.0,1185.2 1706.4,1170.8 1704.9,1162.6 1703.6,1160.5 1702.0,1159.9 1608.5,1159.6 1542.3,1160.8\"/><g class=\"dn\" fill=\"#131313\"></g><image href=\"@I_frm@\" x=\"1475.7\" y=\"1087.1\" width=\"295.0\" height=\"228.9\"/></svg>",EM=92,FH=0.7373046875,DC=[1607.9,1215.8];window.DC0=DC;
+const NW={c:"img_09.avif",b:"img_10.avif",d:"img_11.avif"};NW.hands={h:"img_12.avif",m:"img_13.avif",s:"img_14.avif"};let uid=0;
+const hs=k=>{const h=HD[k];return `<img class="wh h${k}" alt="" src="${IM[k]}" style="left:${h.left}%;top:${h.top}%;width:${h.width}%;transform-origin:${h.ox}% ${h.oy}%">`};
+const NH={h:{left:47.886,top:35.416,width:4.185,ox:49.92,oy:77.74},m:{left:48.205,top:29.095,width:3.570,ox:49.57,oy:82.21},s:{left:48.540,top:27.958,width:2.887,ox:49.70,oy:77.13}};
+const nhs=k=>{const h=NH[k];return `<img class="wh nh nh${k}" alt="" style="left:${h.left}%;top:${h.top}%;width:${h.width}%;transform-origin:${h.ox}% ${h.oy}%">`};
+const RS=id=>`<div class="rdw"><img class="rd" alt=""><svg class="rs" viewBox="0 0 2400 2400" aria-hidden="true"><defs><path id="dp${id}" d="M713.8 1213A485.6 485.6 0 0 1 1685 1213"/></defs><text class="dw" font-weight="700" font-size="56" letter-spacing="7" fill="#181818"><textPath href="#dp${id}" startOffset="50%" text-anchor="middle"></textPath></text><path fill="#4A2F24" d="M1104.5 957V958.3H1086.9V957Q1088.1 956.8 1088.7 956.8Q1091.3 956.7 1091.3 955Q1091.3 953.4 1088.8 947.7H1076.6L1075.7 949.8Q1074.2 953.8 1074.2 954.8Q1074.2 955.8 1075.2 956.3Q1076.2 956.8 1078.6 957V958.3H1067.6V957Q1069.6 956.6 1070.5 955.5Q1071.4 954.4 1072.9 950.6L1085 920.9H1086.5L1098.6 949.4Q1100.6 954.2 1101.7 955.6Q1102.7 957 1104.3 957ZM1077.4 945.5H1088L1082.5 932.3ZM1128.6 920.8Q1131.2 920.8 1134 921.7Q1136.8 922.6 1137.2 922.6Q1137.9 922.6 1138.3 922.2Q1138.7 921.8 1139 920.8H1140.6V932.6H1139.1Q1137.5 927.4 1134.7 925Q1131.9 922.5 1128.6 922.5Q1125.8 922.5 1124.2 924Q1122.6 925.4 1122.6 927.9Q1122.6 929.9 1123.8 931.2Q1124.9 932.4 1128.2 934.1L1136.2 938Q1138.8 939.3 1140.5 942.1Q1142.2 944.9 1142.2 947.9Q1142.2 953 1138.4 956.2Q1134.7 959.4 1128.7 959.4Q1125.8 959.4 1122.9 958.5Q1120 957.5 1119.4 957.5Q1118.2 957.5 1117.8 959.4H1116.2V946H1117.8Q1120.6 957.6 1128.9 957.6Q1132 957.6 1133.9 955.9Q1135.7 954.2 1135.7 951.4Q1135.7 949.3 1134.5 947.9Q1133.2 946.6 1129.6 944.9L1126 943.1Q1121.1 940.8 1118.9 938.1Q1116.7 935.4 1116.7 931.8Q1116.7 926.7 1119.9 923.8Q1123 920.8 1128.6 920.8ZM1187.2 931.3Q1187.2 933 1186.7 934.4Q1186.1 935.8 1185.4 936.7Q1184.7 937.6 1183.5 938.4Q1182.2 939.1 1181.2 939.6Q1180.1 940 1178.7 940.5L1189.6 956Q1190.4 957 1191.8 957V958.3H1180.7L1169.4 941.4H1168V952Q1168 954.9 1168.8 955.7Q1169.6 956.6 1172.7 957V958.3H1154.4V957Q1157.6 956.6 1158.4 955.8Q1159.2 955 1159.2 952V928Q1159.2 925.1 1158.3 924.1Q1157.4 923.2 1154.4 923V921.6H1171.9Q1179.3 921.6 1183.2 924.1Q1187.2 926.6 1187.2 931.3ZM1170.9 923.5Q1168 923.5 1168 925.8V939.6Q1173.8 939.5 1175.8 937.9Q1177.9 936.4 1177.9 931.5Q1177.9 927.2 1176.3 925.4Q1174.6 923.5 1170.9 923.5ZM1219.9 956.7Q1221.5 956.7 1222.9 956.4Q1224.3 956.2 1225.4 955.9Q1226.4 955.6 1227.4 955Q1228.5 954.3 1229.1 953.9Q1229.8 953.5 1230.5 952.6Q1231.2 951.7 1231.6 951.2Q1232 950.7 1232.5 949.8Q1233 948.8 1233.1 948.4Q1233.3 948.1 1233.7 947.1Q1234.1 946.1 1234.2 946H1235.7L1233.5 958.3H1202.1V957Q1205.1 956.6 1205.9 955.9Q1206.8 955.2 1206.8 953.1V926.9Q1206.8 924.8 1205.8 924Q1204.9 923.2 1202.1 923V921.6H1221.1V923Q1217.5 923.2 1216.6 924.1Q1215.6 925 1215.6 928V953.6Q1215.6 955.4 1216.5 956Q1217.4 956.7 1219.9 956.7ZM1264.4 923Q1261.1 923.1 1260.1 924Q1259.1 924.9 1259.1 928V946.1Q1259.1 951.7 1261 954.2Q1262.9 956.7 1267.1 956.7Q1272 956.7 1274.3 953.8Q1276.6 951 1276.6 944.9V928.4Q1276.6 925.4 1275.6 924.3Q1274.5 923.3 1271.3 923V921.6H1283.2V923Q1280.6 923.4 1279.8 924.3Q1279 925.2 1279 927.6V944.9Q1279 959.4 1265 959.4Q1258.2 959.4 1254.3 956.1Q1250.5 952.8 1250.5 946.1V928Q1250.5 925.1 1249.7 924.2Q1248.9 923.3 1246 923V921.6H1264.4ZM1320.9 925Q1320.9 923.7 1319.9 923.4Q1319.5 923.3 1317 923V921.6H1330.6V923Q1327.6 923.3 1325.8 924.7Q1324 926.1 1320.4 930.9L1316 937L1325.9 952.3Q1327.9 955.3 1328.8 956.1Q1329.8 956.9 1331.2 957V958.3H1312.7V957Q1314.1 956.9 1314.3 956.9Q1317.1 956.7 1317.1 955.4Q1317.1 954.2 1315.9 952.4L1310.5 943.6L1308.4 946.4Q1305.3 950.5 1304.3 952.2Q1303.3 953.9 1303.3 954.8Q1303.3 955.8 1304.2 956.3Q1305.2 956.7 1307.7 957V958.3H1294.1V957Q1296.1 956.8 1297.3 956.1Q1298.5 955.5 1299.8 954L1309.3 941.9L1298.5 926.1Q1297.3 924.3 1296.4 923.7Q1295.6 923.1 1294.2 923V921.6H1312.9V923Q1311.4 923.1 1311.3 923.1Q1309.8 923.2 1309.2 923.5Q1308.7 923.9 1308.7 924.8Q1308.7 925.5 1309.5 926.8L1314.7 934.9Q1315.6 933.7 1316.9 932Q1318.1 930.3 1318.7 929.6Q1319.2 928.8 1319.9 927.8Q1320.5 926.9 1320.7 926.2Q1320.9 925.6 1320.9 925Z"/><g class="dn2" fill="#131313"></g></svg></div>`;
+const QV="?v=4",QW={c:"img_16.avif"+QV,b:"img_17.avif"+QV,d:"img_18.avif"+QV},QHS={h:"img_19.avif"+QV,m:"img_20.avif"+QV,s:"img_21.avif"+QV},DC3=[1626.3,1213.0],EM3=74;const QN={h:{left:46.92,top:34.607,width:6.131,ox:49.83,oy:86.26},m:{left:47.581,top:25.731,width:4.83,ox:49.57,oy:91.13},s:{left:48.22,top:25.854,width:3.53,ox:49.71,oy:78.37}};
+const qhs=k=>{const h=QN[k];return `<img class="qh qh${k}" alt="" style="left:${h.left}%;top:${h.top}%;width:${h.width}%;transform-origin:${h.ox}% ${h.oy}%">`};
+const QL=`<img class="qc" alt=""><img class="qb" alt=""><div class="qdw"><img class="qd" alt=""><svg class="qs" viewBox="0 0 2400 2400" aria-hidden="true"><g class="dn3" fill="#131313"></g></svg></div><div class="qg"></div>${qhs('h')}${qhs('m')}${qhs('s')}<img class="ql" alt="" src="img_22.avif${QV}">`;
+const LZ=id=>`<img class="wl" alt="" src="img_15.avif">`;
+const html=(rose)=>{const id=++uid,old=DL.replace(/@ID@/g,id).replace(/@I_(\w+)@/g,(m,k)=>IM[k]);
+ if(!rose)return `<div class="wp" role="img" aria-label="Часы"><img class="wc" alt="" src="${IM.c}">${old}${hs('h')}${hs('m')}${hs('s')}<div class="wg"></div></div>`;
+ return `<div class="wp" role="img" aria-label="Часы"><img class="wc" alt="" src="${IM.c}"><img class="rc" alt="">${old}<img class="rb" alt="">${RS(id)}<div class="rg"></div>${hs('h')}${hs('m')}${hs('s')}${nhs('h')}${nhs('m')}${nhs('s')}${LZ(id)}${QL}<div class="wg"></div></div>`};
+function setDate(w,sel,DC,em){DC=DC||window.DC0;em=em||EM;const g=w.querySelector(sel||'.dn'),s=String(new Date().getDate()),k=em/1000,tr=15;let t=0;for(const c of s)t+=GD[c][1];t+=tr*(s.length-1);let x=DC[0]-t*k/2;const y=DC[1]+FH*em/2;
+ g.innerHTML=[...s].map(c=>{const h=`<path transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${k})" d="${GD[c][0]}"/>`;x+=(GD[c][1]+tr)*k;return h}).join('')}
+function setDay(w){var tp=w.querySelector('.dw textPath');if(!tp)return;var t;try{t=new Date().toLocaleDateString('en-US',{weekday:'long'})}catch(e){t=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][new Date().getDay()]}
+ tp.textContent=t.toUpperCase();var tx=tp.parentNode,fs=62,pa=w.querySelector(tp.getAttribute('href'));tx.setAttribute('font-size',fs);try{var L=tp.getComputedTextLength();if(L>330)fs=+(62*330/L).toFixed(1);tx.setAttribute('font-size',fs)}catch(e){}
+ if(pa){var R=507.8-.358*fs;pa.setAttribute('d','M'+(1199.4-R).toFixed(1)+' 1213A'+R.toFixed(1)+' '+R.toFixed(1)+' 0 0 1 '+(1199.4+R).toFixed(1)+' 1213')}}
+var $=function(q){return document.querySelector(q)},rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+$('#xw').innerHTML=html(1);$('#hv').innerHTML=html();
+const W=[].slice.call(document.querySelectorAll('.wp')).map(function(e){var o={e:e,h:e.querySelector('.hh'),m:e.querySelector('.hm'),s:e.querySelector('.hs'),nh:e.querySelector('.nhh'),nm:e.querySelector('.nhm'),ns:e.querySelector('.nhs'),qh:e.querySelector('.qhh'),qm:e.querySelector('.qhm'),qs:e.querySelector('.qhs'),v:true};setDate(e);if(o.nh){setDate(e,'.dn2',[1607.9,1215.8]);setDay(e)}if(o.qh)setDate(e,'.dn3',DC3,EM3);
+ if('IntersectionObserver' in window)new IntersectionObserver(function(r){o.v=r[0].isIntersecting}).observe(e.parentNode);return o});
+function tick(){var n=new Date(),s=n.getSeconds()+(rm?0:n.getMilliseconds()/1000),m=n.getMinutes()+s/60,h=n.getHours()%12+m/60;
+ W.forEach(function(o){if(!o.v)return;o.h.style.transform='rotate('+h*30+'deg)';o.m.style.transform='rotate('+m*6+'deg)';o.s.style.transform='rotate('+s*6+'deg)';if(o.nh){o.nh.style.transform=o.h.style.transform;o.nm.style.transform=o.m.style.transform;o.ns.style.transform=o.s.style.transform}if(o.qh){o.qh.style.transform=o.h.style.transform;o.qm.style.transform=o.m.style.transform;o.qs.style.transform=o.s.style.transform}});requestAnimationFrame(tick)}tick();
+var xi=$('#xi'),hd=document.querySelector('header'),sv=$('#xw .wp'),t1=$('#xt1'),t2=$('#xt2');
+function hh(){xi.style.setProperty('--hh',(hd?hd.offsetHeight:64)+'px')}hh();addEventListener('resize',hh);
+var RDY=false,NHR=false,QRDY=false,QHR=false;
+function gems(){return;var im=new Image(),W=sv.querySelector('.rdw');if(!W)return;im.onload=function(){var cx=1199.4,cy=1213,k=1.3,gemScale=1.2;
+[[915.6,724.1],[1479.9,722.2],[709,931.2],[1687.1,928.1],[710.1,1496.4],[1689.2,1493.7],[917.7,1702.9],[1482.5,1701],[649.6,1212.2,1],[1198,1761.7,1]].forEach(function(p){
+var x=p[0],y=p[1],d=Math.hypot(x-cx,y-cy),s=p[2]?15:11,X=x-(x-cx)/d*s,Y=y-(y-cy)/d*s,v=p[2]&&Math.abs(y-cy)>Math.abs(x-cx),w=(p[2]?(v?170:280):168)*gemScale,e=(p[2]?(v?280:170):168)*gemScale,c=document.createElement('canvas'),q=c.getContext('2d'),m=Math.max(w,e)/2,r;
+c.width=w;c.height=e;q.drawImage(im,x-w/(2*gemScale*k),y-e/(2*gemScale*k),w/(gemScale*k),e/(gemScale*k),0,0,w,e);q.globalCompositeOperation='destination-in';q.translate(w/2,e/2);q.scale(w/(2*m),e/(2*m));
+r=q.createRadialGradient(0,0,m*.76,0,0,m);r.addColorStop(0,'#000');r.addColorStop(1,'rgba(0,0,0,0)');q.fillStyle=r;q.fillRect(-m,-m,2*m,2*m);
+c.style.cssText='position:absolute;left:'+(X-w/2)/24+'%;top:'+(Y-e/2)/24+'%;width:'+w/24+'%;height:'+e/24+'%';W.appendChild(c)})};im.src=NW.d}
+function loadRose(){var m={c:'.rc',b:'.rb',d:'.rd'},n=0,tot=3,Hs=NW.hands||{};
+ Object.keys(m).forEach(function(k){var im=new Image();im.src=NW[k];(im.decode?im.decode():Promise.resolve()).catch(function(){}).then(function(){var t=sv.querySelector(m[k]);t.src=NW[k];if(k=='d'){sv.querySelector('.rs').classList.add('on');gems()}t.classList.add('on');if(++n==tot){RDY=true;sc()}})});
+ var hk=Object.keys(Hs);if(hk.length==3){var hn=0;hk.forEach(function(k){var im=new Image();im.src=Hs[k];(im.decode?im.decode():Promise.resolve()).catch(function(){}).then(function(){var t=sv.querySelector('.nh'+k);t.src=Hs[k];t.classList.add('ok');if(++hn==3){NHR=true;sv.classList.add('nhok');sc()}})})}}
+function loadQ(){var m={c:'.qc',b:'.qb',d:'.qd'},n=0,hn=0;
+ Object.keys(m).forEach(function(k){var im=new Image();im.src=QW[k];(im.decode?im.decode():Promise.resolve()).catch(function(){}).then(function(){var t=sv.querySelector(m[k]);t.src=QW[k];t.classList.add('on');if(++n==3){QRDY=true;sc()}})});
+ Object.keys(QHS).forEach(function(k){var im=new Image();im.src=QHS[k];(im.decode?im.decode():Promise.resolve()).catch(function(){}).then(function(){var t=sv.querySelector('.qh'+k);t.src=QHS[k];t.classList.add('ok');if(++hn==3){QHR=true;sv.classList.add('qhok');sc()}})})}
+var ld=function(){requestAnimationFrame(function(){requestAnimationFrame(function(){loadRose();loadQ()})})};if(document.readyState=='complete')ld();else addEventListener('load',ld);
+var ss=function(a,b,p){return Math.min(1,Math.max(0,(p-a)/(b-a)))};
+var raf=0;function sc(){var r=xi.getBoundingClientRect(),p=Math.min(1,Math.max(0,-r.top/(xi.offsetHeight-innerHeight))),e=p;
+ sv.style.transform='scale('+(1+ss(0,1,p)*.3)+')';
+ var S=sv.style,q=RDY?p:0,f=rm?function(a,b){return q>=a?1:0}:function(a,b){return ss(a,b,q)};
+ S.setProperty('--ob',f(.03,.11));S.setProperty('--oc',f(.11,.19));S.setProperty('--od',f(.19,.27));S.setProperty('--ho',NHR?f(.27,.34):0);
+ var g=QRDY?p:0,h2=rm?function(a,b){return g>=a?1:0}:function(a,b){return ss(a,b,g)},rr=rm?(g>=.58?1:0):ss(.47,.58,g);rr=rr*rr*(3-2*rr);
+ S.setProperty('--sb',h2(.40,.46));S.setProperty('--sr',(90*(1-rr)).toFixed(2)+'deg');S.setProperty('--sd',h2(.60,.68));S.setProperty('--sh',QHR?h2(.69,.76):0);S.setProperty('--sc',h2(.78,.86));
+ t1.style.opacity=Math.max(0,1-p*4);t1.style.transform='translateY('+(-p*80)+'px)';var o=ss(.92,1,p);t2.style.opacity=o;t2.style.pointerEvents=o>.5?'auto':'none'}
+setInterval(function(){W.forEach(function(o){setDate(o.e);if(o.nh){setDate(o.e,'.dn2',[1607.9,1215.8]);setDay(o.e)}if(o.qh)setDate(o.e,'.dn3',DC3,EM3);})},60000);
+addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(function(){raf=0;sc()})},{passive:true});addEventListener('resize',sc);sc();
+})();</script></body></html>
