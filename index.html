@@ -113,7 +113,7 @@ footer{padding:0;background:var(--cd)}.ft{display:grid;grid-template-columns:1.4
 <div class="tabs" id="tabs"></div>
 <div class="wrap"><button class="bt ar l" onclick="mv(-1)" aria-label="Назад">‹</button><button class="bt ar r" onclick="mv(1)" aria-label="Вперёд">›</button><div id="stage" tabindex="0" aria-label="Сцена: листайте стрелками или свайпом"></div></div>
 <div class="info"><span id="nm"></span><span><b id="dl"></b> · <span id="ix"></span></span></div>
-<div class="bar"><div><button class="chip ib" id="nt"></button><button class="chip ib" id="wr"></button><button class="chip ib" id="gn" hidden></button></div><div class="lg" style="font-size:30px" id="tp"></div><button class="bt p" id="ad" onclick="addC()"></button></div></section>
+<div class="bar"><div><button class="chip ib" id="nt"></button><button class="chip ib" id="wr"></button><button class="chip ib" id="gn" hidden></button><input class="in" id="dt" maxlength="14" autocomplete="off" placeholder="Имя или надпись на циферблате" aria-label="Имя или надпись на циферблате" style="display:block;width:min(320px,100%);margin:10px 0 0"></div><div class="lg" style="font-size:30px" id="tp"></div><button class="bt p" id="ad" onclick="addC()"></button></div></section>
 <section id="gallery"><div class="hd"><h2>Готовые модели</h2><p>Закажите как есть или возьмите за основу и измените.</p></div><div class="grid" id="gl"></div></section>
 <section id="materials"><div class="hd"><div class="eb">ASRLUX</div><h2>Материалы</h2><p>Из чего можно собрать ваши часы</p></div><div class="mt">
 <div class="c"><div class="sw" style="background:linear-gradient(135deg,#f4f5f7,#aeb2b9 45%,#e6e8eb 60%,#8f939a)"></div><h3 class="lg">Сталь 904L</h3><p>Прочная сталь с зеркальной и сатинированной полировкой</p></div>
@@ -146,6 +146,8 @@ D.size=[28,31,36,40,41,42].map((m,i)=>[m+' мм',m,[0,0,0,40,60,80][i]*1000]);
 const PI={size:2,case:2,bezel:3,dial:5,hands:4,strap:3},CL={size:'Размер',case:'Корпус',bezel:'Безель',dial:'Циферблат',hands:'Стрелки',strap:'Ремешок'};
 const P=(r,a)=>[150+r*Math.sin(a*Math.PI/180),240-r*Math.cos(a*Math.PI/180)];
 const T=(r1,r2,a,c,w)=>{const[x1,y1]=P(r1,a),[x2,y2]=P(r2,a);return`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="${w}"/>`};
+const EH=t=>String(t).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const DT=(t,c)=>{t=(t||'').trim().toLocaleUpperCase().slice(0,14)||'ASRLUX';const n=t.length,sm=n>8,fs=sm?9:10.5,ls=sm?1.2:2.4;return`<text data-nt x="${150+ls/2}" y="203" text-anchor="middle" font-size="${fs}" font-weight="700" letter-spacing="${ls}" fill="${c}" font-family="Georgia,serif"${n*(fs*.66+ls)>96?' textLength="96" lengthAdjust="spacingAndGlyphs"':''}>${EH(t)}</text>`};
 function W(st,x){const A=k=>!x||x==k,c=D.case[st.case],b=D.bezel[st.bezel],d=D.dial[st.dial],h=D.hands[st.hands],s=D.strap[st.strap];let o=`<g transform="translate(150 240) scale(${D.size[st.size??3][1]/40}) translate(-150 -240)"><g class="b">`;
 if(A('strap'))for(const y of[8,330]){o+=`<rect x="104" y="${y}" width="92" height="142" fill="${s[1]}"/>`;const ac=c[3]&&[0,[135,30],0,[141,18],[128,44]][s[2]];if(ac)o+=`<rect x="${ac[0]}" y="${y}" width="${ac[1]}" height="142" fill="${c[3]}"/>`;
 for(let k=0;k<142;k+=s[2]==2?12:s[2]==3?9:16){if(s[2]==1||s[2]>2)o+=`<line x1="104" x2="196" y1="${y+k}" y2="${y+k}" stroke="#0006" stroke-width="1.5"/>`;if(s[2]==2)o+=`<line x1="112" x2="188" y1="${y+k}" y2="${y+k}" stroke="#ffffff22"/>`}
@@ -155,7 +157,7 @@ if(A('case'))for(const[x,y]of[[92,150],[194,150],[92,290],[194,290]])o+=`<rect x
 if(A('case'))o+=`<rect x="244" y="231" width="14" height="18" rx="3" fill="${c[3]||c[1]}"/><circle cx="150" cy="240" r="98" fill="${c[1]}" stroke="#0005"/>`+(x?'<circle cx="150" cy="240" r="84" fill="#0b0d0c"/>':'');
 if(A('bezel'))o+=`<circle cx="150" cy="240" r="81" fill="none" stroke="${b[1]}" stroke-width="14"/>`;
 if(A('bezel')&&b[2])for(let i=0;i<60;i++)o+=T(b[2]==1?80:i%5?83:78,88,i*6,b[2]==1?'#0007':'#fffb',b[2]==1?1.5:i%5?1:2);
-if(A('dial'))o+=`<circle cx="150" cy="240" r="74" fill="${d[1]}"/><text x="150" y="200" text-anchor="middle" font-size="8" letter-spacing="3" fill="${d[2]}" font-family="Georgia,serif">ASRLUX</text>`;
+if(A('dial'))o+=`<circle cx="150" cy="240" r="74" fill="${d[1]}"/>`+DT(st.txt,d[2]);
 if(x=='hands')o+='<circle cx="150" cy="240" r="84" fill="#0d1110"/>';
 if(A('hands'))o+=`<line x1="150" y1="262" x2="150" y2="176" stroke="#d94a3a" transform="rotate(150 150 240)"/>`;
 o+='</g>';
@@ -187,11 +189,11 @@ function mv(d){const n=D[cat].length;st[cat]=(st[cat]+d+n*3)%n;navigator.vibrate
 let sx=null,sy=0;stg.addEventListener('pointerdown',e=>{sx=e.clientX;sy=e.clientY});stg.addEventListener('pointercancel',()=>sx=null);
 stg.addEventListener('pointerup',e=>{if(sx==null)return;const dx=e.clientX-sx,dy=e.clientY-sy;sx=null;if(Math.abs(dx)>40)mv(dx<0?1:-1);else{const o=e.target.closest('[data-o]');if(o&&+o.dataset.o)mv(+o.dataset.o)}});
 stg.addEventListener('keydown',e=>{if(e.key=='ArrowRight')mv(1);if(e.key=='ArrowLeft')mv(-1)});
-$('#nt').onclick=()=>{night^=1;draw()};$('#wr').onclick=()=>{wrist^=1;draw()};$('#gn').onclick=()=>{g=g=='m'?'f':'m';draw()};
+$('#nt').onclick=()=>{night^=1;draw()};$('#wr').onclick=()=>{wrist^=1;draw()};$('#gn').onclick=()=>{g=g=='m'?'f':'m';draw()};$('#dt').oninput=e=>{st.txt=e.target.value;draw()};
 let tm=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';$('#th').onclick=()=>{tm=tm=='dark'?'light':'dark';document.documentElement.dataset.theme=tm};
 const G=[['Президент',{case:2,bezel:3,dial:5,hands:2,strap:5}],['Халк',{case:0,bezel:5,dial:6,hands:1,strap:3}],['Дайвер',{case:0,bezel:6,dial:0,hands:1,strap:3}],['Классика Jubilee',{case:0,bezel:1,dial:1,hands:3,strap:4}],['Золотой Jubilee',{case:2,bezel:3,dial:5,hands:2,strap:4}],['Океан Oyster',{case:0,bezel:4,dial:2,hands:1,strap:3}]];
 G.forEach((m,i)=>m[1].size=[3,3,4,2,3,3][i]);
-$('#gl').innerHTML=G.map((m,i)=>`<div class="card">${S(m[1],0)}<div class="lg" style="font-size:24px">${m[0]}</div><div>${f(total(m[1]))}<br><small>${usd(total(m[1]))}</small></div><button class="bt" onclick="st={...G[${i}][1]};draw();location.hash='builder'">Взять за основу</button><button class="bt p" onclick="cart.push({st:{...G[${i}][1]},p:total(G[${i}][1])});rc();cp(1)">Заказать</button></div>`).join('');
+$('#gl').innerHTML=G.map((m,i)=>`<div class="card">${S(m[1],0)}<div class="lg" style="font-size:24px">${m[0]}</div><div>${f(total(m[1]))}<br><small>${usd(total(m[1]))}</small></div><button class="bt" onclick="st={...G[${i}][1],txt:st.txt};draw();location.hash='builder'">Взять за основу</button><button class="bt p" onclick="cart.push({st:{...G[${i}][1]},p:total(G[${i}][1])});rc();cp(1)">Заказать</button></div>`).join('');
 function addC(){cart.push({st:{...st},p:total(st)});step=0;rc();cp(1)}
 function cp(o){$('#cp').classList.toggle('on',!!o);if(o)rc()}
 function ck(){if(!$('#fn').value||!$('#fp').value||!$('#fa').value){$('#er').textContent='Заполните имя, телефон и адрес доставки.';return}
@@ -200,7 +202,7 @@ function rc(){const v=['fn','fp','fa'].map(i=>$('#'+i)?.value||''),t=cart.reduce
 let h='<button class="bt" onclick="cp(0)" style="float:right">Закрыть</button><h2>Корзина</h2>';
 if(step==2)h+=`<p class="lg" style="font-size:28px">Заказ № ASR-${oid} принят</p><p>Тестовый режим: платёжный модуль пока заглушка, деньги не списаны.</p><button class="bt p" onclick="cart=[];step=0;cp(0);rc()">Готово</button>`;
 else if(!cart.length)h+='<p>В корзине пусто. Соберите часы в конструкторе или выберите готовую модель.</p>';
-else{h+=cart.map((c,i)=>`<div class="ci">${S(c.st,0)}<div><b>${D.size[c.st.size??3][1]} мм, ${D.case[c.st.case][0]}, ${D.dial[c.st.dial][0]}</b><br>${D.strap[c.st.strap][0]}<br>${f(c.p)}<br><a href="#" onclick="cart.splice(${i},1);step=0;rc();return false">Убрать</a></div></div>`).join('')+`<p class="lg" style="font-size:26px">Итого ${f(t)} <small>${usd(t)}</small></p>`;
+else{h+=cart.map((c,i)=>`<div class="ci">${S(c.st,0)}<div><b>${D.size[c.st.size??3][1]} мм, ${D.case[c.st.case][0]}, ${D.dial[c.st.dial][0]}</b><br>${D.strap[c.st.strap][0]}${c.st.txt&&c.st.txt.trim()?`<br>Надпись: <b data-nt>${EH(c.st.txt.trim())}</b>`:''}<br>${f(c.p)}<br><a href="#" onclick="cart.splice(${i},1);step=0;rc();return false">Убрать</a></div></div>`).join('')+`<p class="lg" style="font-size:26px">Итого ${f(t)} <small>${usd(t)}</small></p>`;
 if(!step)h+='<button class="bt p" onclick="step=1;rc()">Оформить заказ</button>';
 else h+=`<input class="in" id="fn" placeholder="Имя"><input class="in" id="fp" placeholder="Телефон" inputmode="tel"><input class="in" id="fa" placeholder="Город и адрес доставки"><p>Способ оплаты (заглушка)</p><div>${['Payme','Click','Uzum','Картой'].map(p=>`<button class="chip${p==pay?' on':''}" onclick="pay='${p}';rc()">${p}</button>`).join('')}</div><p id="er" style="color:#d9534f"></p><button class="bt p" id="pb" onclick="ck()">Оплатить ${f(t)}</button>`}
 $('#cp').innerHTML=h;['fn','fp','fa'].forEach((i,k)=>{if($('#'+i))$('#'+i).value=v[k]})}
@@ -348,11 +350,13 @@ Payme, Click, Uzum или картой. Сейчас оплата тестова
 Политика конфиденциальности|Privacy policy|Maxfiylik siyosati
 Вопросы|FAQ|Savollar
 Часы, которые собираете вы|Watches you design yourself|O‘zingiz yig‘adigan soat
-© 2026 ASRLUX. Все права защищены.|© 2026 ASRLUX. All rights reserved.|© 2026 ASRLUX. Barcha huquqlar himoyalangan.`.split('\n').map(l=>l.split('|'));
+© 2026 ASRLUX. Все права защищены.|© 2026 ASRLUX. All rights reserved.|© 2026 ASRLUX. Barcha huquqlar himoyalangan.
+Имя или надпись на циферблате|Name or inscription on the dial|Siferblatdagi ism yoki yozuv
+Надпись:|Inscription:|Yozuv:`.split('\n').map(l=>l.split('|'));
 let lang='ru';try{lang=localStorage.getItem('lg')||'ru'}catch(e){}
 const TD={en:[],uz:[]},TT={ru:'ASRLUX — конструктор часов',en:'ASRLUX — watch builder',uz:'ASRLUX — soat konstruktori'};TRS.forEach(r=>{TD.en.push([r[0],r[1]]);TD.uz.push([r[0],r[2]])});for(const k in TD)TD[k].sort((a,b)=>b[0].length-a[0].length);
 const tr=v=>{if(lang=='ru')return v;let o=v;for(const[a,b]of TD[lang])if(o.includes(a))o=o.split(a).join(b);return o},OT=new WeakMap(),OA=new WeakMap();
-function tx(){const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:n=>/^(SCRIPT|STYLE)$/.test(n.parentElement?.tagName||'')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});let n;while(n=w.nextNode()){if(!OT.has(n))OT.set(n,n.nodeValue);const v=tr(OT.get(n));if(n.nodeValue!==v)n.nodeValue=v}
+function tx(){const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:n=>/^(SCRIPT|STYLE)$/.test(n.parentElement?.tagName||'')||n.parentElement?.closest('[data-nt]')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});let n;while(n=w.nextNode()){if(!OT.has(n))OT.set(n,n.nodeValue);const v=tr(OT.get(n));if(n.nodeValue!==v)n.nodeValue=v}
 ['title','aria-label','placeholder'].forEach(a=>document.querySelectorAll('['+a+']').forEach(e=>{const m=OA.get(e)||{},c=e.getAttribute(a);let x=m[a];if(!x||c!==x.t)x={o:c};x.t=tr(x.o);m[a]=x;OA.set(e,m);if(c!==x.t)e.setAttribute(a,x.t)}));document.title=TT[lang];document.documentElement.lang=lang;document.querySelectorAll('.lng button').forEach(b=>b.classList.toggle('on',b.dataset.l==lang))}
 document.querySelectorAll('.lng button').forEach(b=>b.onclick=()=>{lang=b.dataset.l;try{localStorage.setItem('lg',lang)}catch(e){}tx()});
 {const d0=draw,r0=rc;draw=function(...a){d0(...a);tx()};rc=function(...a){r0(...a);tx()}}
