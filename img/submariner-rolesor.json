@@ -1,0 +1,39 @@
+{
+ "id": "submariner-rolesor",
+ "brand": "rolex",
+ "name": "Дайвер 41",
+ "size": [41],
+ "strapOffset": 90,
+ "case": {
+  "name": "Дайвер 41 · Rolesor",
+  "color": "#c3c7cd",
+  "color2": "#c9a44c",
+  "price": 220000,
+  "l": {"f": "submariner_case_rolesor_41.avif", "x": 52.68, "y": 131.63, "w": 213.58, "h": 225.08}
+ },
+ "bezel": [
+  {"name": "Чёрная керамика", "color": "#17171a", "price": 150000,
+   "l": {"f": "submariner_bezel_black_gold_41.avif", "x": 52.26, "y": 143.43, "w": 196.0, "h": 194.27}},
+  {"name": "Синяя керамика", "color": "#1d3a6b", "price": 150000,
+   "l": {"f": "submariner_bezel_blue_gold_41.avif", "x": 52.12, "y": 143.43, "w": 196.0, "h": 193.98}}
+ ],
+ "dial": [
+  {"name": "Океан", "bg": "#12315c", "fg": "#e3cf9a", "price": 80000,
+   "l": {"f": "submariner_dial_blue_gold_41.avif", "x": 74.0, "y": 163.92, "w": 152.18, "h": 152.45},
+   "date": {"x": 203.46, "y": 239.74, "w": 15.97, "h": 9.69}}
+ ],
+ "hands": [
+  {"name": "Сталь", "color": "#d8d8d8", "price": 30000,
+   "h": {"f": "submariner_hands_steel_hour_41.avif", "x": 141.53, "y": 195.24, "w": 16.88, "h": 51.75},
+   "m": {"f": "submariner_hands_steel_minute_41.avif", "x": 143.49, "y": 170.0, "w": 13.25, "h": 76.5},
+   "s": {"f": "submariner_hands_steel_second_41.avif", "x": 145.19, "y": 170.57, "w": 9.75, "h": 88.5}},
+  {"name": "Золото", "color": "#c9a44c", "price": 60000,
+   "h": {"f": "submariner_hands_gold_hour_41.avif", "x": 141.53, "y": 195.24, "w": 16.88, "h": 51.75},
+   "m": {"f": "submariner_hands_gold_minute_41.avif", "x": 143.49, "y": 170.0, "w": 13.25, "h": 76.5},
+   "s": {"f": "submariner_hands_gold_second_41.avif", "x": 145.19, "y": 170.57, "w": 9.75, "h": 88.5}}
+ ],
+ "strap": [
+  {"name": "Oyster", "color": "#b4b8bf", "price": 350000,
+   "l": {"f": "submariner_strap_oyster-rolesor_41.avif", "x": 100.61, "y": 221.63, "w": 99.21, "h": 246.89}}
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "id": "submariner-steel",
+ "brand": "rolex",
+ "name": "Дайвер 41",
+ "size": [41],
+ "strapOffset": 90,
+ "case": {
+  "name": "Дайвер 41 · Oystersteel",
+  "color": "#c3c7cd",
+  "price": 0,
+  "l": {"f": "submariner_case_steel_empty_41.avif", "x": 52.68, "y": 131.63, "w": 213.58, "h": 225.08}
+ },
+ "bezel": [
+  {"name": "Чёрная керамика", "color": "#17171a", "price": 150000,
+   "l": {"f": "submariner_bezel_black_41.avif", "x": 52.12, "y": 141.78, "w": 196.0, "h": 198.18}},
+  {"name": "Синяя керамика", "color": "#1d3a6b", "price": 150000,
+   "l": {"f": "submariner_bezel_blue_41.avif", "x": 52.12, "y": 142.18, "w": 196.0, "h": 196.32}},
+  {"name": "Зелёная керамика", "color": "#12803f", "price": 150000,
+   "l": {"f": "submariner_bezel_green_41.avif", "x": 52.12, "y": 142.96, "w": 196.0, "h": 195.83}}
+ ],
+ "dial": [
+  {"name": "Полночь", "bg": "#0f1014", "fg": "#f1eee8", "price": 0,
+   "l": {"f": "submariner_dial_black_41.avif", "x": 74.0, "y": 163.33, "w": 152.18, "h": 153.45},
+   "date": {"x": 201.24, "y": 240.36, "w": 16.82, "h": 10.8}},
+  {"name": "Полночь без даты", "bg": "#0f1014", "fg": "#f1eee8", "price": 0,
+   "l": {"f": "submariner_dial_black_nodate_41.avif", "x": 74.0, "y": 163.35, "w": 152.18, "h": 153.6}}
+ ],
+ "hands": [
+  {"name": "Сталь", "color": "#d8d8d8", "price": 30000,
+   "h": {"f": "submariner_hands_steel_hour_41.avif", "x": 141.53, "y": 195.24, "w": 16.88, "h": 51.75},
+   "m": {"f": "submariner_hands_steel_minute_41.avif", "x": 143.49, "y": 170.0, "w": 13.25, "h": 76.5},
+   "s": {"f": "submariner_hands_steel_second_41.avif", "x": 145.19, "y": 170.57, "w": 9.75, "h": 88.5}},
+  {"name": "Золото", "color": "#c9a44c", "price": 60000,
+   "h": {"f": "submariner_hands_gold_hour_41.avif", "x": 141.53, "y": 195.24, "w": 16.88, "h": 51.75},
+   "m": {"f": "submariner_hands_gold_minute_41.avif", "x": 143.49, "y": 170.0, "w": 13.25, "h": 76.5},
+   "s": {"f": "submariner_hands_gold_second_41.avif", "x": 145.19, "y": 170.57, "w": 9.75, "h": 88.5}}
+ ],
+ "strap": [
+  {"name": "Oyster", "color": "#b4b8bf", "price": 250000,
+   "l": {"f": "submariner_strap_oyster-steel_41.avif", "x": 95.34, "y": 221.63, "w": 110.26, "h": 186.58}}
+ ]
+}
