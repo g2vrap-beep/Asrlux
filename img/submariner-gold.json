@@ -32,7 +32,7 @@
    "s": {"f": "submariner_hands_gold_second_41.avif", "x": 145.19, "y": 170.57, "w": 9.75, "h": 88.5}}
  ],
  "strap": [
-  {"name": "Oyster", "color": "#c9a44c", "price": 520000,
+  {"name": "Oyster золото", "color": "#c9a44c", "price": 520000,
    "l": {"f": "submariner_strap_oyster-gold_41.avif", "x": 96.45, "y": 221.63, "w": 108.06, "h": 126.32}}
  ]
 }
