@@ -37,6 +37,6 @@
  ],
  "strap": [
   {"name": "Oyster сталь", "color": "#b4b8bf", "price": 250000,
-   "l": {"f": "submariner_strap_oyster-steel_41.avif", "x": 95.34, "y": 225.63, "w": 110.26, "h": 186.58}}
+   "l": {"f": "submariner_strap_oyster-steel_41_v2.avif", "x": 100.61, "y": 221.63, "w": 99.21, "h": 245.77}}
  ]
 }
