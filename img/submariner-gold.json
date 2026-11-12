@@ -33,6 +33,6 @@
  ],
  "strap": [
   {"name": "Oyster золото", "color": "#c9a44c", "price": 520000,
-   "l": {"f": "submariner_strap_oyster-gold_41.avif", "x": 96.45, "y": 221.63, "w": 108.06, "h": 126.32}}
+   "l": {"f": "submariner_strap_oyster-gold_41.avif", "x": 96.45, "y": 224.63, "w": 108.06, "h": 126.32}}
  ]
 }
