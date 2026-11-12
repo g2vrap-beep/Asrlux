@@ -158,7 +158,7 @@ hi=m.hands.map(v=>add('hands',[v.name,v.color,1,1,v.price],{h:R(v.h),m:R(v.m),s:
 ri=m.strap.map(v=>add('strap',[v.name,v.color,1,v.price],R(v.l)));
 MODELS[id]={size:si,so:m.strapOffset,def:{case:ci,bezel:bi[0],dial:di[0],hands:hi[0],strap:ri[0]}};
 const ls=[R(m.case.l),...m.bezel.map(v=>R(v.l)),...m.dial.map(v=>R(v.l)),...m.strap.map(v=>R(v.l)),...m.hands.flatMap(v=>[R(v.h),R(v.m),R(v.s)])];ls.forEach(l=>{new Image().src=l.f});new Image().src='img/cyclops.avif'}
-async function loadModels(){try{for(const id of['submariner-steel','submariner-rolesor','submariner-gold']){const m=await(await fetch('img/'+id+'.json?v=5')).json();addModel(id,'img/',m)}draw()}catch(e){}}
+async function loadModels(){try{for(const id of['submariner-steel','submariner-rolesor','submariner-gold']){const m=await(await fetch('img/'+id+'.json?v=6')).json();addModel(id,'img/',m)}draw()}catch(e){}}
 let SCN=0;function WP(st,x){const c=D.case[st.case],M=MODELS[c.m],A=k=>!x||x==k,Pk=k=>{const v=D[k][st[k]];return((v.m==c.m||(k=='strap'&&v.m))?v:D[k][M.def[k]]).l},
 im=r=>`<image href="${r.f}" x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}"/>`,sz=D.size[st.size??3][1]/40,d=Pk('dial'),hs=Pk('hands'),so=M.so;
 let o=`<g transform="translate(150 240) scale(${sz}) translate(-150 -240)"><g class="b">`;
