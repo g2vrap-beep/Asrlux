@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="build" content="straps-v3-crop-anim"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>ASRLUX — конструктор часов</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="build" content="straps-v4-seat"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>ASRLUX — конструктор часов</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500&display=swap">
 <style>
 :root{--bg:#fff;--fg:#1a1a1a;--mu:#666;--ln:#e0dccf;--ac:#a37e2c;--cd:#f5f2ea;--pr:#1a1a1a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -158,11 +158,11 @@ hi=m.hands.map(v=>add('hands',[v.name,v.color,1,1,v.price],{h:R(v.h),m:R(v.m),s:
 ri=m.strap.map(v=>add('strap',[v.name,v.color,1,v.price],R(v.l)));
 MODELS[id]={size:si,so:m.strapOffset,def:{case:ci,bezel:bi[0],dial:di[0],hands:hi[0],strap:ri[0]}};
 const ls=[R(m.case.l),...m.bezel.map(v=>R(v.l)),...m.dial.map(v=>R(v.l)),...m.strap.map(v=>R(v.l)),...m.hands.flatMap(v=>[R(v.h),R(v.m),R(v.s)])];ls.forEach(l=>{new Image().src=l.f})}
-async function loadModels(){try{for(const id of['submariner-steel','submariner-rolesor','submariner-gold']){const m=await(await fetch('img/'+id+'.json?v=3')).json();addModel(id,'img/',m)}draw()}catch(e){}}
+async function loadModels(){try{for(const id of['submariner-steel','submariner-rolesor','submariner-gold']){const m=await(await fetch('img/'+id+'.json?v=4')).json();addModel(id,'img/',m)}draw()}catch(e){}}
 let SCN=0;function WP(st,x){const c=D.case[st.case],M=MODELS[c.m],A=k=>!x||x==k,Pk=k=>{const v=D[k][st[k]];return((v.m==c.m||(k=='strap'&&v.m))?v:D[k][M.def[k]]).l},
 im=r=>`<image href="${r.f}" x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}"/>`,sz=D.size[st.size??3][1]/40,d=Pk('dial'),hs=Pk('hands'),so=M.so;
 let o=`<g transform="translate(150 240) scale(${sz}) translate(-150 -240)"><g class="b">`;
-if(A('strap')){const r=Pk('strap'),sm=D.strap[st.strap].m,fam=m=>String(m).split('-')[0],SL=Math.min(...D.strap.filter(v=>v.m&&fam(v.m)==fam(sm)).map(v=>v.l.y+v.l.h))-r.y,id='sc'+(++SCN),s=`<g clip-path="url(#${id})">${im(r)}</g>`;o+=`<clipPath id="${id}"><rect x="${r.x-1}" y="${r.y}" width="${r.w+2}" height="${SL}"/></clipPath><g class="spt"><g transform="translate(0 ${480-so}) scale(1 -1)">${s}</g></g><g class="spb"><g transform="translate(0 ${so})">${s}</g></g>`}
+if(A('strap')){const r=Pk('strap'),sm=D.strap[st.strap].m,fam=m=>String(m).split('-')[0],FS=D.strap.filter(v=>v.m&&fam(v.m)==fam(sm)),SL=Math.min(...FS.map(v=>v.l.y+v.l.h))-r.y,CX0=Math.max(...FS.map(v=>v.l.x)),CX1=Math.min(...FS.map(v=>v.l.x+v.l.w)),id='sc'+(++SCN),s=`<g clip-path="url(#${id})">${im(r)}</g>`;o+=`<clipPath id="${id}"><rect x="${CX0-1}" y="${r.y}" width="${CX1-CX0+2}" height="${SL}"/></clipPath><g class="spt"><g transform="translate(0 ${480-so}) scale(1 -1)">${s}</g></g><g class="spb"><g transform="translate(0 ${so})">${s}</g></g>`}
 if(A('case'))o+=im(c.l);
 if(A('dial'))o+=(d.date?`<rect x="${d.date.x-d.date.w/2-1}" y="${d.date.y-d.date.h/2-1}" width="${d.date.w+2}" height="${d.date.h+2}" fill="#f4f1ea"/>`:'')+im(d.l)+(d.date?`<text x="${d.date.x}" y="${d.date.y}" font-size="${d.date.h*.85}" text-anchor="middle" dominant-baseline="central" font-family="Arial,Helvetica,sans-serif" font-weight="700" fill="#111">${new Date().getDate()}</text>`:'');
 if(A('bezel'))o+='<g class="bz">'+im(Pk('bezel'))+'</g>';
