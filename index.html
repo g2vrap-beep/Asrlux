@@ -157,7 +157,7 @@ di=m.dial.map(v=>add('dial',[v.name,v.bg,v.fg,2,1,v.price],{l:R(v.l),date:v.date
 hi=m.hands.map(v=>add('hands',[v.name,v.color,1,1,v.price],{h:R(v.h),m:R(v.m),s:R(v.s)})),
 ri=m.strap.map(v=>add('strap',[v.name,v.color,1,v.price],R(v.l)));
 MODELS[id]={size:si,so:m.strapOffset,def:{case:ci,bezel:bi[0],dial:di[0],hands:hi[0],strap:ri[0]}};
-const ls=[R(m.case.l),...m.bezel.map(v=>R(v.l)),...m.dial.map(v=>R(v.l)),...m.strap.map(v=>R(v.l)),...m.hands.flatMap(v=>[R(v.h),R(v.m),R(v.s)])];ls.forEach(l=>{new Image().src=l.f})}
+const ls=[R(m.case.l),...m.bezel.map(v=>R(v.l)),...m.dial.map(v=>R(v.l)),...m.strap.map(v=>R(v.l)),...m.hands.flatMap(v=>[R(v.h),R(v.m),R(v.s)])];ls.forEach(l=>{new Image().src=l.f});new Image().src='img/cyclops.avif'}
 async function loadModels(){try{for(const id of['submariner-steel','submariner-rolesor','submariner-gold']){const m=await(await fetch('img/'+id+'.json?v=5')).json();addModel(id,'img/',m)}draw()}catch(e){}}
 let SCN=0;function WP(st,x){const c=D.case[st.case],M=MODELS[c.m],A=k=>!x||x==k,Pk=k=>{const v=D[k][st[k]];return((v.m==c.m||(k=='strap'&&v.m))?v:D[k][M.def[k]]).l},
 im=r=>`<image href="${r.f}" x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}"/>`,sz=D.size[st.size??3][1]/40,d=Pk('dial'),hs=Pk('hands'),so=M.so;
@@ -168,6 +168,7 @@ if(A('dial'))o+=(d.date?`<rect x="${d.date.x-d.date.w/2-1}" y="${d.date.y-d.date
 if(A('bezel'))o+='<g class="bz">'+im(Pk('bezel'))+'</g>';
 o+='</g>';
 if(A('hands'))o+=(x=='hands'?'<circle cx="150" cy="240" r="84" fill="#0d1110"/>':'')+'<g class="b">'+[['h',305],['m',60],['s',200]].map(([k,a])=>`<g transform="rotate(${a} 150 240)">${im(hs[k])}</g>`).join('')+'</g>';
+if(A('dial')&&d.date){const lw=d.date.w*1.9,lh=lw*.75;o+=`<g class="b"><image href="img/cyclops.avif" x="${d.date.x-lw/2}" y="${d.date.y-lh/2}" width="${lw}" height="${lh}"/></g>`}
 return o+(x?'':'<ellipse cx="125" cy="190" rx="40" ry="22" fill="#fff" opacity=".05" transform="rotate(-30 125 190)"/>')+'</g>'}
 function W(st,x){if(D.case[st.case].m)return WP(st,x);const gx=k=>{const v=D[k][st[k]];return v.m?D[k].find(z=>!z.m):v},A=k=>!x||x==k,c=D.case[st.case],b=gx('bezel'),d=gx('dial'),h=gx('hands'),s=gx('strap');let o=`<g transform="translate(150 240) scale(${D.size[st.size??3][1]/40}) translate(-150 -240)"><g class="b">`;
 if(A('strap'))for(const y of[8,330]){o+=`<rect x="104" y="${y}" width="92" height="142" fill="${s[1]}"/>`;const ac=c[3]&&[0,[135,30],0,[141,18],[128,44]][s[2]];if(ac)o+=`<rect x="${ac[0]}" y="${y}" width="${ac[1]}" height="142" fill="${c[3]}"/>`;
