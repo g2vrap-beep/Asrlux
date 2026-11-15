@@ -102,6 +102,11 @@ footer{padding:0;background:var(--cd)}.ft{display:grid;grid-template-columns:1.4
 .wp .qh{height:auto;opacity:var(--sh);display:none}.wp .qh.ok{display:block}
 .wp.qhok .nh{opacity:var(--hnew,1)}
 .wp .ql{left:63.55%;top:47.37%;width:8.43%;height:auto;opacity:var(--sd);pointer-events:none}
+/* циферблат чуть крупнее, чтобы доходил до кольца (рехаут), а не выглядел утопленным; --ds = во сколько раз увеличить */
+.wp{--ds:1.05}
+.wp .rdw,.wp .qdw{transform-origin:49.975% 50.542%;transform:scale(var(--ds))}
+.wp .wl{left:calc(49.975% + 11.395% * var(--ds));top:calc(50.542% - 4.112% * var(--ds));width:calc(11.25% * var(--ds))}
+.wp .ql{left:calc(49.975% + 13.575% * var(--ds));top:calc(50.542% - 3.172% * var(--ds));width:calc(8.43% * var(--ds))}
 </style><style id="ios">
 /* --- iPhone / сенсорные экраны --- */
 #stage{touch-action:pan-y;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}
