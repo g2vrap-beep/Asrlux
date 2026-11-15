@@ -1,0 +1,105 @@
+{
+ "id": "datejust-steel",
+ "brand": "rolex",
+ "name": "Классика 41",
+ "size": [
+  41
+ ],
+ "strapOffset": 90,
+ "case": {
+  "name": "Классика 41 · Oystersteel",
+  "color": "#c3c7cd",
+  "price": 0,
+  "l": {
+   "f": "datejust_case_steel_41.avif",
+   "x": 51.39,
+   "y": 126.27,
+   "w": 215.83,
+   "h": 233.19
+  }
+ },
+ "bezel": [
+  {
+   "name": "Гладкий",
+   "color": "#b9bdc4",
+   "price": 0,
+   "l": {
+    "f": "datejust_bezel_smooth_41.avif",
+    "x": 52.0,
+    "y": 143.78,
+    "w": 196.0,
+    "h": 192.58
+   }
+  }
+ ],
+ "dial": [
+  {
+   "name": "Синий",
+   "bg": "#1f4f82",
+   "fg": "#e8eef7",
+   "price": 0,
+   "l": {
+    "f": "datejust_dial_blue_41.avif",
+    "x": 69.5,
+    "y": 159.5,
+    "w": 161.0,
+    "h": 161.0
+   },
+   "date": {
+    "x": 198.11,
+    "y": 239.81,
+    "w": 14.58,
+    "h": 9.39,
+    "cy": {
+     "f": "cyclops.avif",
+     "x": 184.11,
+     "y": 229.31,
+     "w": 28.0,
+     "h": 21.0
+    }
+   }
+  }
+ ],
+ "hands": [
+  {
+   "name": "Сталь",
+   "color": "#d8d8d8",
+   "price": 0,
+   "h": {
+    "f": "datejust_hands_steel_hour_41.avif",
+    "x": 144.79,
+    "y": 187.46,
+    "w": 10.35,
+    "h": 65.27
+   },
+   "m": {
+    "f": "datejust_hands_steel_minute_41.avif",
+    "x": 145.03,
+    "y": 171.59,
+    "w": 10.01,
+    "h": 81.83
+   },
+   "s": {
+    "f": "datejust_hands_steel_second_41.avif",
+    "x": 146.69,
+    "y": 168.24,
+    "w": 6.69,
+    "h": 93.5
+   }
+  }
+ ],
+ "strap": [
+  {
+   "name": "Oyster сталь",
+   "color": "#b4b8bf",
+   "price": 0,
+   "l": {
+    "f": "datejust_strap_oyster-steel_41.avif",
+    "x": 100.4,
+    "y": 221.63,
+    "w": 99.21,
+    "h": 263.27
+   }
+  }
+ ]
+}
