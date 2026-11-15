@@ -173,12 +173,23 @@ ri=m.strap.map(v=>add('strap',[v.name,v.color,1,v.price],R(v.l)));
 MODELS[id]={size:si,so:m.strapOffset,def:{case:ci,bezel:bi[0],dial:di[0],hands:hi[0],strap:ri[0]}};
 const ls=[R(m.case.l),...m.bezel.map(v=>R(v.l)),...m.dial.flatMap(v=>v.date&&v.date.cy?[R(v.l),R(v.date.cy)]:[R(v.l)]),...m.strap.map(v=>R(v.l)),...m.hands.flatMap(v=>[R(v.h),R(v.m),R(v.s)])];ls.forEach(l=>prel(l.f))}
 async function loadModels(){try{for(const id of['submariner-steel','submariner-rolesor','submariner-gold','datejust-steel']){const m=await(await fetch('img/'+id+'.json?v=3')).json();addModel(id,'img/',m)}draw()}catch(e){}}
-let SCN=0;function WP(st,x){const c=D.case[st.case],M=MODELS[c.m],A=k=>!x||x==k,Pk=k=>{const v=D[k][st[k]];return((v.m==c.m||(k=='strap'&&v.m))?v:D[k][M.def[k]]).l},
-im=r=>`<image href="${r.f}" x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}"/>`,sz=D.size[st.size??3][1]/40,d=Pk('dial'),hs=Pk('hands'),so=M.so;
+let SCN=0;
+/* ---- кольцо между безелем и циферблатом (рехаут), только Submariner ----
+   k  — во сколько раз уменьшен циферблат, чтобы освободить место под кольцо
+   r1 — внешний радиус кольца (прячется под безелем)
+   rb — радиус внутреннего отверстия безеля на фото */
+const RG={k:.945,r1:79,rb:76.6},
+RGh=h=>/^#[0-9a-f]{6}$/i.test(h)?[1,3,5].map(i=>parseInt(h.substr(i,2),16)):[190,194,200],
+RGm=(h,t)=>'#'+RGh(h).map(v=>Math.round(t<0?v*(1+t):v+(255-v)*t).toString(16).padStart(2,'0')).join(''),
+RGsvg=(cx,cy,rd,col)=>{const id='rg'+(++SCN),r0=rd-1.5,r1=RG.r1,mid=(r0+r1)/2,lt=RGm(col,.6),sh=RGm(col,-.22),dk=RGm(col,-.46);
+return`<defs><linearGradient id="${id}a" gradientUnits="userSpaceOnUse" x1="${cx-r1}" y1="${cy-r1}" x2="${cx+r1}" y2="${cy+r1}"><stop offset="0" stop-color="${dk}"/><stop offset=".3" stop-color="${sh}"/><stop offset=".5" stop-color="${col}"/><stop offset=".72" stop-color="${lt}"/><stop offset="1" stop-color="${sh}"/></linearGradient><radialGradient id="${id}b" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="${r1}"><stop offset="${(RG.rb-3.4)/r1}" stop-color="#000" stop-opacity="0"/><stop offset="${RG.rb/r1}" stop-color="#000" stop-opacity=".6"/><stop offset="1" stop-color="#000" stop-opacity=".6"/></radialGradient></defs><circle cx="${cx}" cy="${cy}" r="${mid}" fill="none" stroke="url(#${id}a)" stroke-width="${r1-r0}"/><circle cx="${cx}" cy="${cy}" r="${r1}" fill="url(#${id}b)"/><circle cx="${cx}" cy="${cy}" r="${rd+.2}" fill="none" stroke="#000" stroke-opacity=".6" stroke-width=".5"/>`},
+RGdial=(sub,r,col,s)=>{if(!sub)return s;const cx=r.x+r.w/2,cy=r.y+r.h/2;return RGsvg(cx,cy,r.w/2*RG.k,col)+`<g transform="translate(${cx} ${cy}) scale(${RG.k}) translate(${-cx} ${-cy})">${s}</g>`};
+function WP(st,x){const c=D.case[st.case],M=MODELS[c.m],A=k=>!x||x==k,Pk=k=>{const v=D[k][st[k]];return((v.m==c.m||(k=='strap'&&v.m))?v:D[k][M.def[k]]).l},
+im=r=>`<image href="${r.f}" x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}"/>`,sz=D.size[st.size??3][1]/40,d=Pk('dial'),hs=Pk('hands'),so=M.so,sub=!x&&/^submariner/.test(c.m);
 let o=`<g transform="translate(150 240) scale(${sz}) translate(-150 -240)"><g class="b">`;
 if(A('strap')){const r=Pk('strap'),sm=D.strap[st.strap].m,fam=m=>String(m).split('-')[0],SL=Math.min(...D.strap.filter(v=>v.m&&fam(v.m)==fam(sm)).map(v=>v.l.y+v.l.h))-r.y,id='sc'+(++SCN),s=`<g clip-path="url(#${id})">${im(r)}</g>`;o+=`<clipPath id="${id}"><rect x="${r.x-1}" y="${r.y}" width="${r.w+2}" height="${SL}"/></clipPath><g class="spt"><g transform="translate(0 ${480-so}) scale(1 -1)">${s}</g></g><g class="spb"><g transform="translate(0 ${so})">${s}</g></g>`}
 if(A('case'))o+=im(c.l);
-if(A('dial'))o+=(d.date?`<rect x="${d.date.x-d.date.w/2-1}" y="${d.date.y-d.date.h/2-1}" width="${d.date.w+2}" height="${d.date.h+2}" fill="#f4f1ea"/>`:'')+im(d.l)+(d.date?`<text x="${d.date.x}" y="${d.date.y}" font-size="${d.date.h*.85}" text-anchor="middle" dominant-baseline="central" font-family="Arial,Helvetica,sans-serif" font-weight="700" fill="#111">${new Date().getDate()}</text>`:'')+(d.date&&d.date.cy?im(d.date.cy):'');
+if(A('dial'))o+=RGdial(sub,d.l,c[1],(d.date?`<rect x="${d.date.x-d.date.w/2-1}" y="${d.date.y-d.date.h/2-1}" width="${d.date.w+2}" height="${d.date.h+2}" fill="#f4f1ea"/>`:'')+im(d.l)+(d.date?`<text x="${d.date.x}" y="${d.date.y}" font-size="${d.date.h*.85}" text-anchor="middle" dominant-baseline="central" font-family="Arial,Helvetica,sans-serif" font-weight="700" fill="#111">${new Date().getDate()}</text>`:'')+(d.date&&d.date.cy?im(d.date.cy):''));
 if(A('bezel'))o+='<g class="bz">'+im(Pk('bezel'))+'</g>';
 o+='</g>';
 if(A('hands'))o+=(x=='hands'?'<circle cx="150" cy="240" r="84" fill="#0d1110"/>':'')+'<g class="b">'+[['h',305],['m',60],['s',200]].map(([k,a])=>`<g transform="rotate(${a} 150 240)">${im(hs[k])}</g>`).join('')+'</g>';
