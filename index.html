@@ -177,7 +177,7 @@ hi=m.hands.map(v=>add('hands',[v.name,v.color,1,1,v.price],{h:R(v.h),m:R(v.m),s:
 ri=m.strap.map(v=>add('strap',[v.name,v.color,1,v.price],R(v.l)));
 MODELS[id]={size:si,so:m.strapOffset,def:{case:ci,bezel:bi[0],dial:di[0],hands:hi[0],strap:ri[0]}};
 const ls=[R(m.case.l),...m.bezel.map(v=>R(v.l)),...m.dial.flatMap(v=>v.date&&v.date.cy?[R(v.l),R(v.date.cy)]:[R(v.l)]),...m.strap.map(v=>R(v.l)),...m.hands.flatMap(v=>[R(v.h),R(v.m),R(v.s)])];ls.forEach(l=>prel(l.f))}
-async function loadModels(){try{for(const id of['submariner-steel','submariner-rolesor','submariner-gold','datejust-steel']){const m=await(await fetch('img/'+id+'.json?v=3')).json();addModel(id,'img/',m)}draw()}catch(e){}}
+async function loadModels(){for(const id of['submariner-steel','submariner-rolesor','submariner-gold','datejust-steel','datejust-everose','datejust-yellow']){try{const m=await(await fetch('img/'+id+'.json?v=4')).json();addModel(id,'img/',m)}catch(e){console.warn('model '+id,e)}}draw()}
 let SCN=0;
 /* ---- кольцо между безелем и циферблатом (рехаут), только Submariner ----
    k  — во сколько раз уменьшены циферблат и стрелки, чтобы освободить место под кольцо
@@ -421,7 +421,12 @@ Payme, Click, Uzum или картой. Сейчас оплата тестова
 Политика конфиденциальности|Privacy policy|Maxfiylik siyosati
 Вопросы|FAQ|Savollar
 Часы, которые собираете вы|Watches you design yourself|O‘zingiz yig‘adigan soat
-© 2026 ASRLUX. Все права защищены.|© 2026 ASRLUX. All rights reserved.|© 2026 ASRLUX. Barcha huquqlar himoyalangan.`.split('\n').map(l=>l.split('|'));
+© 2026 ASRLUX. Все права защищены.|© 2026 ASRLUX. All rights reserved.|© 2026 ASRLUX. Barcha huquqlar himoyalangan.
+Розовый|Rose|Pushti
+Шоколад|Chocolate|Shokolad
+Рифл. жёлтое золото|Fluted yellow gold|Rifli sariq oltin
+Розовое золото|Rose gold|Pushti oltin
+Жёлтое золото|Yellow gold|Sariq oltin`.split('\n').map(l=>l.split('|'));
 let lang='ru';try{lang=localStorage.getItem('lg')||'ru'}catch(e){}
 const TD={en:[],uz:[]},TT={ru:'ASRLUX — конструктор часов',en:'ASRLUX — watch builder',uz:'ASRLUX — soat konstruktori'};TRS.forEach(r=>{TD.en.push([r[0],r[1]]);TD.uz.push([r[0],r[2]])});for(const k in TD)TD[k].sort((a,b)=>b[0].length-a[0].length);
 const tr=v=>{if(lang=='ru')return v;let o=v;for(const[a,b]of TD[lang])if(o.includes(a))o=o.split(a).join(b);return o},OT=new WeakMap(),OA=new WeakMap();
