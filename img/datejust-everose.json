@@ -1,0 +1,144 @@
+{
+ "id": "datejust-everose",
+ "brand": "rolex",
+ "name": "Классика 41",
+ "size": [
+  41
+ ],
+ "strapOffset": 90,
+ "case": {
+  "name": "Классика 41 · Rolesor Everose",
+  "color": "#c3c7cd",
+  "color2": "#c98f7e",
+  "price": 480000,
+  "l": {
+   "f": "datejust_case_rolesor-everose_41.avif",
+   "x": 51.39,
+   "y": 126.27,
+   "w": 215.83,
+   "h": 233.19
+  }
+ },
+ "bezel": [
+  {
+   "name": "Гладкий",
+   "color": "#c98f7e",
+   "price": 0,
+   "l": {
+    "f": "datejust_bezel_smooth_everose_41.avif",
+    "x": 52.0,
+    "y": 142.65,
+    "w": 196.0,
+    "h": 194.7
+   }
+  },
+  {
+   "name": "Рифл. Everose",
+   "color": "#c98f7e",
+   "price": 80000,
+   "l": {
+    "f": "datejust_bezel_fluted_everose_41.avif",
+    "x": 52.0,
+    "y": 142.89,
+    "w": 196.0,
+    "h": 194.21
+   }
+  }
+ ],
+ "dial": [
+  {
+   "name": "Розовый",
+   "bg": "#d4a88f",
+   "fg": "#f1eee8",
+   "price": 0,
+   "l": {
+    "f": "datejust_dial_sundust_41.avif",
+    "x": 75.04,
+    "y": 165.15,
+    "w": 150.0,
+    "h": 150.12
+   },
+   "date": {
+    "x": 199.35,
+    "y": 240.0,
+    "w": 15.69,
+    "h": 9.48,
+    "cy": {
+     "f": "cyclops.avif",
+     "x": 184.29,
+     "y": 228.7,
+     "w": 30.13,
+     "h": 22.59
+    }
+   }
+  },
+  {
+   "name": "Шоколад",
+   "bg": "#5e3326",
+   "fg": "#f1eee8",
+   "price": 60000,
+   "l": {
+    "f": "datejust_dial_chocolate_41.avif",
+    "x": 75.1,
+    "y": 165.11,
+    "w": 150.0,
+    "h": 150.38
+   },
+   "date": {
+    "x": 199.12,
+    "y": 239.81,
+    "w": 14.12,
+    "h": 8.82,
+    "cy": {
+     "f": "cyclops.avif",
+     "x": 185.57,
+     "y": 229.64,
+     "w": 27.11,
+     "h": 20.33
+    }
+   }
+  }
+ ],
+ "hands": [
+  {
+   "name": "Розовое золото",
+   "color": "#c98f7e",
+   "price": 0,
+   "h": {
+    "f": "datejust_hands_everose_hour_41.avif",
+    "x": 144.49,
+    "y": 198.3,
+    "w": 10.95,
+    "h": 53.73
+   },
+   "m": {
+    "f": "datejust_hands_everose_minute_41.avif",
+    "x": 144.86,
+    "y": 174.9,
+    "w": 10.11,
+    "h": 78.36
+   },
+   "s": {
+    "f": "datejust_hands_everose_second_41.avif",
+    "x": 145.85,
+    "y": 173.5,
+    "w": 8.36,
+    "h": 86.25
+   }
+  }
+ ],
+ "strap": [
+  {
+   "name": "Jubilee Everose",
+   "color": "#c98f7e",
+   "price": 60000,
+   "l": {
+    "f": "datejust_strap_jubilee-everose_41.avif",
+    "x": 100.4,
+    "y": 221.63,
+    "w": 99.21,
+    "h": 263.75
+   }
+  }
+ ]
+}

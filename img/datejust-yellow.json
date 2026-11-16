@@ -1,0 +1,130 @@
+{
+ "id": "datejust-yellow",
+ "brand": "rolex",
+ "name": "Классика 41",
+ "size": [
+  41
+ ],
+ "strapOffset": 90,
+ "case": {
+  "name": "Классика 41 · Rolesor",
+  "color": "#c3c7cd",
+  "color2": "#c9a44c",
+  "price": 420000,
+  "l": {
+   "f": "datejust_case_rolesor-yellow_41.avif",
+   "x": 51.39,
+   "y": 126.27,
+   "w": 215.83,
+   "h": 233.19
+  }
+ },
+ "bezel": [
+  {
+   "name": "Гладкий",
+   "color": "#c9a44c",
+   "price": 0,
+   "l": {
+    "f": "datejust_bezel_smooth_yellow_41.avif",
+    "x": 52.0,
+    "y": 143.15,
+    "w": 196.0,
+    "h": 193.71
+   }
+  },
+  {
+   "name": "Рифл. жёлтое золото",
+   "color": "#c9a44c",
+   "price": 80000,
+   "l": {
+    "f": "datejust_bezel_fluted_yellow_41.avif",
+    "x": 52.0,
+    "y": 142.81,
+    "w": 196.0,
+    "h": 194.39
+   }
+  }
+ ],
+ "dial": [
+  {
+   "name": "Шампань",
+   "bg": "#d6bd86",
+   "fg": "#f1eee8",
+   "price": 0,
+   "l": {
+    "f": "datejust_dial_champagne_41.avif",
+    "x": 75.04,
+    "y": 165.18,
+    "w": 150.0,
+    "h": 150.34
+   },
+   "date": {
+    "x": 197.82,
+    "y": 239.93,
+    "w": 14.58,
+    "h": 9.16,
+    "cy": {
+     "f": "cyclops.avif",
+     "x": 183.83,
+     "y": 229.43,
+     "w": 28.0,
+     "h": 21.0
+    }
+   }
+  }
+ ],
+ "hands": [
+  {
+   "name": "Жёлтое золото",
+   "color": "#c9a44c",
+   "price": 0,
+   "h": {
+    "f": "datejust_hands_yellow_hour_41.avif",
+    "x": 144.76,
+    "y": 198.3,
+    "w": 10.54,
+    "h": 54.28
+   },
+   "m": {
+    "f": "datejust_hands_yellow_minute_41.avif",
+    "x": 145.02,
+    "y": 174.9,
+    "w": 9.96,
+    "h": 78.6
+   },
+   "s": {
+    "f": "datejust_hands_yellow_second_41.avif",
+    "x": 146.55,
+    "y": 173.5,
+    "w": 6.97,
+    "h": 85.61
+   }
+  }
+ ],
+ "strap": [
+  {
+   "name": "Jubilee Rolesor",
+   "color": "#c9a44c",
+   "price": 60000,
+   "l": {
+    "f": "datejust_strap_jubilee-yellow_41.avif",
+    "x": 100.4,
+    "y": 221.63,
+    "w": 99.21,
+    "h": 263.75
+   }
+  },
+  {
+   "name": "Oyster Rolesor 41",
+   "color": "#c9a44c",
+   "price": 0,
+   "l": {
+    "f": "datejust_strap_oyster-yellow_41.avif",
+    "x": 100.4,
+    "y": 221.63,
+    "w": 99.21,
+    "h": 246.19
+   }
+  }
+ ]
+}
