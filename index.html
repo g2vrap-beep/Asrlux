@@ -530,7 +530,7 @@ async function loadHL(){
  catch(e){console.warn('hand tracking',e);hl=null}}
 function hint(x,y,k,on){
  C.style.cursor=on?'grab':'';
- if(!on||hinted){H.hidden=true;return}
+ if(!on||hinted||mode=='cam'){H.hidden=true;return}
  const r=C.getBoundingClientRect(),s=(mode=='cam'?Math.max:Math.min)(r.width/C.width,r.height/C.height),ox=(r.width-C.width*s)/2,oy=(r.height-C.height*s)/2;
  H.hidden=false;H.style.left=Math.min(innerWidth-95,Math.max(95,r.left+ox+x*s))+'px';H.style.top=Math.min(innerHeight-150,Math.max(100,r.top+oy+(y+98*k)*s+14))+'px'}
 function loop(){
