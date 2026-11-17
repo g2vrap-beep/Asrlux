@@ -132,7 +132,7 @@ footer{padding:0;background:var(--cd)}.ft{display:grid;grid-template-columns:1.4
 <div class="tabs" id="tabs"></div>
 <div class="wrap"><button class="bt ar l" onclick="mv(-1)" aria-label="Назад">‹</button><button class="bt ar r" onclick="mv(1)" aria-label="Вперёд">›</button><div id="stage" tabindex="0" aria-label="Сцена: листайте стрелками или свайпом"></div></div>
 <div class="info"><span id="nm"></span><span><b id="dl"></b> · <span id="ix"></span></span></div>
-<div class="bar"><div><button class="chip ib" id="nt"></button><button class="chip ib" id="wr"></button><button class="chip ib" id="gn" hidden></button><button class="chip ib" id="sn"></button></div><div class="lg" style="font-size:30px" id="tp"></div><button class="bt p" id="ad" onclick="addC()"></button></div></section>
+<div class="bar"><div><button class="chip ib" id="nt"></button><button class="chip ib" id="wr"></button><button class="chip ib" id="gn" hidden></button><button class="chip ib" id="sn"></button><button class="chip ib" id="tr" onclick="TRY()">Примерка</button></div><div class="lg" style="font-size:30px" id="tp"></div><button class="bt p" id="ad" onclick="addC()"></button></div></section>
 <section id="gallery"><div class="hd"><h2>Готовые модели</h2><p>Закажите как есть или возьмите за основу и измените.</p></div><div class="grid" id="gl"></div></section>
 <section id="materials"><div class="hd"><div class="eb">ASRLUX</div><h2>Материалы</h2><p>Из чего можно собрать ваши часы</p></div><div class="mt">
 <div class="c"><div class="sw" style="background:linear-gradient(135deg,#f4f5f7,#aeb2b9 45%,#e6e8eb 60%,#8f939a)"></div><h3 class="lg">Сталь 904L</h3><p>Прочная сталь с зеркальной и сатинированной полировкой</p></div>
@@ -426,7 +426,10 @@ Payme, Click, Uzum или картой. Сейчас оплата тестова
 Шоколад|Chocolate|Shokolad
 Рифл. жёлтое золото|Fluted yellow gold|Rifli sariq oltin
 Розовое золото|Rose gold|Pushti oltin
-Жёлтое золото|Yellow gold|Sariq oltin`.split('\n').map(l=>l.split('|'));
+Жёлтое золото|Yellow gold|Sariq oltin
+Примерка|Try on|Kiyib ko‘rish
+Снимок|Photo|Surat
+Покажите тыльную сторону запястья или перетащите часы|Show the back of your wrist or drag the watch|Bilak ustini ko‘rsating yoki soatni suring`.split('\n').map(l=>l.split('|'));
 let lang='ru';try{lang=localStorage.getItem('lg')||'ru'}catch(e){}
 const TD={en:[],uz:[]},TT={ru:'ASRLUX — конструктор часов',en:'ASRLUX — watch builder',uz:'ASRLUX — soat konstruktori'};TRS.forEach(r=>{TD.en.push([r[0],r[1]]);TD.uz.push([r[0],r[2]])});for(const k in TD)TD[k].sort((a,b)=>b[0].length-a[0].length);
 const tr=v=>{if(lang=='ru')return v;let o=v;for(const[a,b]of TD[lang])if(o.includes(a))o=o.split(a).join(b);return o},OT=new WeakMap(),OA=new WeakMap();
@@ -490,4 +493,56 @@ var raf=0,LP=-1,LK='',xk=$('#xk');function sc(){var r=xi.getBoundingClientRect()
  t1.style.opacity=Math.max(0,1-p*4);t1.style.transform='translateY('+(-p*80)+'px)';var o=ss(.92,1,p);t2.style.opacity=o;t2.style.pointerEvents=o>.5?'auto':'none';if(xk){xk.style.opacity=Math.max(0,1-o*4);xk.style.pointerEvents=o>.1?'none':'auto'}}
 setInterval(function(){W.forEach(function(o){setDate(o.e);if(o.nh){setDate(o.e,'.dn2',[1607.9,1215.8]);setDay(o.e)}if(o.qh)setDate(o.e,'.dn3',DC3,EM3);})},60000);
 addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(function(){raf=0;sc()})},{passive:true});addEventListener('resize',sc);sc();
-})();</script><script>(function(){var d=document.getElementById('ld');if(!d)return;var t0=Date.now(),done=0,loaded=document.readyState=='complete',fonts=!(document.fonts&&document.fonts.ready);function hide(){if(done)return;done=1;setTimeout(function(){d.classList.add('out');document.documentElement.classList.remove('ldon');setTimeout(function(){if(d.parentNode)d.parentNode.removeChild(d)},600)},Math.max(0,450-(Date.now()-t0)))}function chk(){if(loaded&&fonts)hide()}if(!loaded)addEventListener('load',function(){loaded=true;chk()});if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){fonts=true;chk()},function(){fonts=true;chk()});setTimeout(hide,9000);chk()})();</script></body></html>
+})();</script><script>(function(){var d=document.getElementById('ld');if(!d)return;var t0=Date.now(),done=0,loaded=document.readyState=='complete',fonts=!(document.fonts&&document.fonts.ready);function hide(){if(done)return;done=1;setTimeout(function(){d.classList.add('out');document.documentElement.classList.remove('ldon');setTimeout(function(){if(d.parentNode)d.parentNode.removeChild(d)},600)},Math.max(0,450-(Date.now()-t0)))}function chk(){if(loaded&&fonts)hide()}if(!loaded)addEventListener('load',function(){loaded=true;chk()});if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){fonts=true;chk()},function(){fonts=true;chk()});setTimeout(hide,9000);chk()})();</script><div id="tro" hidden><canvas id="trc"></canvas><video id="trv" playsinline muted hidden></video><div id="trm"></div><div id="trbar"><button id="trx" aria-label="Закрыть">✕</button><label>Размер <input id="trs" type="range" min="60" max="160" value="100"></label><button id="trf" aria-label="Камера">⟲</button><button id="trp">Снимок</button></div></div>
+<style>#tro{position:fixed;inset:0;z-index:99999;background:#000}#trc{width:100%;height:100%;object-fit:cover;touch-action:none;display:block}#trm{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));left:16px;right:16px;text-align:center;color:#fff;font:14px/1.3 system-ui,sans-serif;text-shadow:0 1px 5px #000}#trbar{position:absolute;left:12px;right:12px;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;gap:10px;align-items:center;justify-content:space-between;color:#fff;font:14px system-ui,sans-serif}#trbar button{min-width:44px;height:44px;padding:0 16px;border-radius:22px;border:1px solid #fff8;background:#0008;color:#fff;font:inherit;cursor:pointer}#trbar label{display:flex;gap:8px;align-items:center;flex:1;justify-content:center}#trs{width:100%;max-width:160px}</style>
+<script>
+(()=>{const $=id=>document.getElementById(id),V=$('trv'),C=$('trc'),M=$('trm'),PX=2.4;
+let stream,hl,hlTried=0,raf,front=0,wc,cur=null,seen=0,last=-1,man={x:.5,y:.5,a:0},drag=0;
+const say=t=>M.textContent=typeof tr=='function'?tr(t):t;
+async function bitmap(){
+ let svg=await build0();const im=new Image;im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);await im.decode();
+ wc=document.createElement('canvas');wc.width=300*PX;wc.height=400*PX;const g=wc.getContext('2d');g.drawImage(im,0,0,wc.width,wc.height);
+ g.globalCompositeOperation='destination-in';const gr=g.createLinearGradient(0,0,0,wc.height);gr.addColorStop(0,'#0000');gr.addColorStop(.14,'#000');gr.addColorStop(.86,'#000');gr.addColorStop(1,'#0000');g.fillStyle=gr;g.fillRect(0,0,wc.width,wc.height)}
+async function build0(){
+ let css='';try{css=[...document.styleSheets].map(h=>{try{return[...h.cssRules].map(r=>r.cssText).join('')}catch(e){return''}}).join('')}catch(e){}
+ let svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 40 300 400" width="${300*PX}" height="${400*PX}"><style>${css}</style>${W(st,0)}</svg>`;
+ const us=[...new Set([...svg.matchAll(/href="([^"#]+\.(?:avif|png|webp|jpe?g))"/g)].map(m=>m[1]))];
+ for(const u of us){const ty=/\.avif/.test(u)?'image/avif':/\.png/.test(u)?'image/png':/\.webp/.test(u)?'image/webp':'image/jpeg',b=await(await fetch(u)).arrayBuffer(),
+  d=await new Promise(o=>{const f=new FileReader;f.onload=()=>o(f.result);f.readAsDataURL(new Blob([b],{type:ty}))});svg=svg.split('"'+u+'"').join('"'+d+'"')}
+ return svg}
+async function cam(){
+ if(stream)stream.getTracks().forEach(t=>t.stop());
+ stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:front?'user':{ideal:'environment'},width:{ideal:1280},height:{ideal:720}},audio:false});
+ V.srcObject=stream;await V.play()}
+async function loadHL(){
+ if(hl||hlTried)return;hlTried=1;
+ try{const B='https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14',m=await import(B+'/vision_bundle.mjs'),f=await m.FilesetResolver.forVisionTasks(B+'/wasm');
+  hl=await m.HandLandmarker.createFromOptions(f,{baseOptions:{modelAssetPath:'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task',delegate:'GPU'},runningMode:'VIDEO',numHands:1})}
+ catch(e){console.warn('hand tracking',e);hl=null}}
+function loop(){
+ raf=requestAnimationFrame(loop);if(!V.videoWidth||!wc)return;
+ if(C.width!=V.videoWidth){C.width=V.videoWidth;C.height=V.videoHeight}
+ const g=C.getContext('2d'),w=C.width,h=C.height;g.save();if(front){g.translate(w,0);g.scale(-1,1)}g.drawImage(V,0,0,w,h);g.restore();
+ let p=null;
+ if(hl&&V.currentTime!=last){last=V.currentTime;try{const L=hl.detectForVideo(V,performance.now()).landmarks[0];
+  if(L){const X=i=>(front?1-L[i].x:L[i].x)*w,Y=i=>L[i].y*h,wx=X(0),wy=Y(0),len=Math.hypot(X(9)-wx,Y(9)-wy),pw=Math.hypot(X(5)-X(17),Y(5)-Y(17)),ux=(X(9)-wx)/len,uy=(Y(9)-wy)/len;
+   p={x:wx-ux*len*.3,y:wy-uy*len*.3,s:.55*pw/196,a:Math.atan2(ux,-uy)};seen=performance.now()}}catch(e){}}
+ const tracked=performance.now()-seen<700;
+ if(p){if(!cur||!tracked&&!cur.t)cur={...p,t:1};else{const k=.35,da=((p.a-cur.a+Math.PI*3)%(Math.PI*2))-Math.PI;cur={x:cur.x+(p.x-cur.x)*k,y:cur.y+(p.y-cur.y)*k,s:cur.s+(p.s-cur.s)*k,a:cur.a+da*k,t:1}}}
+ if(!tracked)cur={x:man.x*w,y:man.y*h,s:Math.min(w,h)*.3/196,a:man.a,t:0};
+ say(tracked?'':hl===null?'Перетащите часы на запястье':'Покажите тыльную сторону запястья или перетащите часы');
+ const k=cur.s*$('trs').value/100;g.save();g.translate(cur.x,cur.y);g.rotate(cur.a);g.scale(k,k);g.shadowColor='#0007';g.shadowBlur=14/Math.max(k,.01)*.15;g.drawImage(wc,-150,-200,300,400);g.restore()}
+function pt(e){const r=C.getBoundingClientRect(),s=Math.max(r.width/C.width,r.height/C.height),ox=(r.width-C.width*s)/2,oy=(r.height-C.height*s)/2;return{x:((e.clientX-r.left-ox)/s)/C.width,y:((e.clientY-r.top-oy)/s)/C.height}}
+C.onpointerdown=e=>{if(performance.now()-seen<700)return;drag=1;C.setPointerCapture(e.pointerId);const q=pt(e);man.x=q.x;man.y=q.y};
+C.onpointermove=e=>{if(!drag)return;const q=pt(e);man.x=q.x;man.y=q.y};C.onpointerup=()=>drag=0;
+C.onwheel=e=>{man.a+=e.deltaY*.002};
+function close(){cancelAnimationFrame(raf);if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;$('tro').hidden=true;document.body.style.overflow=''}
+$('trx').onclick=close;$('trf').onclick=async()=>{front=!front;try{await cam()}catch(e){say('Камера недоступна')}};
+$('trp').onclick=()=>C.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='asrlux-tryon.png';a.click()});
+window.TRY=async()=>{$('tro').hidden=false;document.body.style.overflow='hidden';cur=null;seen=0;say('Загрузка…');
+ try{await bitmap()}catch(e){console.warn(e);say('Не удалось подготовить часы');return}
+ try{await cam()}catch(e){say('Нет доступа к камере: нужен https и разрешение');return}
+ loadHL();cancelAnimationFrame(raf);loop()};
+})();
+</script>
+</body></html>
