@@ -501,11 +501,11 @@ let stream,hl,hlTried=0,raf,front=0,wc,cur=null,seen=0,last=-1,man={x:.5,y:.5,a:
 const say=t=>M.textContent=typeof tr=='function'?tr(t):t;
 async function bitmap(){
  let svg=await build0();const im=new Image;im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);await im.decode();
- wc=document.createElement('canvas');wc.width=300*PX;wc.height=400*PX;const g=wc.getContext('2d');g.drawImage(im,0,0,wc.width,wc.height);
- g.globalCompositeOperation='destination-in';const gr=g.createLinearGradient(0,0,0,wc.height);gr.addColorStop(0,'#0000');gr.addColorStop(.14,'#000');gr.addColorStop(.86,'#000');gr.addColorStop(1,'#0000');g.fillStyle=gr;g.fillRect(0,0,wc.width,wc.height)}
+ wc=document.createElement('canvas');wc.width=300*PX;wc.height=300*PX;const g=wc.getContext('2d');g.drawImage(im,0,0,wc.width,wc.height);
+ g.globalCompositeOperation='destination-in';const gr=g.createLinearGradient(0,0,0,wc.height);gr.addColorStop(0,'#0000');gr.addColorStop(.22,'#000');gr.addColorStop(.78,'#000');gr.addColorStop(1,'#0000');g.fillStyle=gr;g.fillRect(0,0,wc.width,wc.height)}
 async function build0(){
  let css='';try{css=[...document.styleSheets].map(h=>{try{return[...h.cssRules].map(r=>r.cssText).join('')}catch(e){return''}}).join('')}catch(e){}
- let svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 40 300 400" width="${300*PX}" height="${400*PX}"><style>${css}</style>${W(st,0)}</svg>`;
+ let svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 90 300 300" width="${300*PX}" height="${300*PX}"><style>${css}</style>${W(st,0)}</svg>`;
  const us=[...new Set([...svg.matchAll(/href="([^"#]+\.(?:avif|png|webp|jpe?g))"/g)].map(m=>m[1]))];
  for(const u of us){const ty=/\.avif/.test(u)?'image/avif':/\.png/.test(u)?'image/png':/\.webp/.test(u)?'image/webp':'image/jpeg',b=await(await fetch(u)).arrayBuffer(),
   d=await new Promise(o=>{const f=new FileReader;f.onload=()=>o(f.result);f.readAsDataURL(new Blob([b],{type:ty}))});svg=svg.split('"'+u+'"').join('"'+d+'"')}
@@ -526,12 +526,12 @@ function loop(){
  let p=null;
  if(hl&&V.currentTime!=last){last=V.currentTime;try{const L=hl.detectForVideo(V,performance.now()).landmarks[0];
   if(L){const X=i=>(front?1-L[i].x:L[i].x)*w,Y=i=>L[i].y*h,wx=X(0),wy=Y(0),len=Math.hypot(X(9)-wx,Y(9)-wy),pw=Math.hypot(X(5)-X(17),Y(5)-Y(17)),ux=(X(9)-wx)/len,uy=(Y(9)-wy)/len;
-   p={x:wx-ux*len*.3,y:wy-uy*len*.3,s:.55*pw/196,a:Math.atan2(ux,-uy)};seen=performance.now()}}catch(e){}}
+   p={x:wx-ux*len*.3,y:wy-uy*len*.3,s:.55*pw/196,a:Math.atan2(uy,ux)};{let a0=p.a;const dd=q=>Math.abs(((q-(cur?cur.a:0)+Math.PI*3)%(Math.PI*2))-Math.PI);if(cur?dd(a0)>dd(a0+Math.PI):Math.cos(a0)<0)a0+=Math.PI;p.a=a0}seen=performance.now()}}catch(e){}}
  const tracked=performance.now()-seen<700;
  if(p){if(!cur||!tracked&&!cur.t)cur={...p,t:1};else{const k=.35,da=((p.a-cur.a+Math.PI*3)%(Math.PI*2))-Math.PI;cur={x:cur.x+(p.x-cur.x)*k,y:cur.y+(p.y-cur.y)*k,s:cur.s+(p.s-cur.s)*k,a:cur.a+da*k,t:1}}}
  if(!tracked)cur={x:man.x*w,y:man.y*h,s:Math.min(w,h)*.3/196,a:man.a,t:0};
  say(tracked?'':hl===null?'Перетащите часы на запястье':'Покажите тыльную сторону запястья или перетащите часы');
- const k=cur.s*$('trs').value/100;g.save();g.translate(cur.x,cur.y);g.rotate(cur.a);g.scale(k,k);g.shadowColor='#0007';g.shadowBlur=14/Math.max(k,.01)*.15;g.drawImage(wc,-150,-200,300,400);g.restore()}
+ const k=cur.s*$('trs').value/100;g.save();g.translate(cur.x,cur.y);g.rotate(cur.a);g.scale(k,k);g.shadowColor='#0007';g.shadowBlur=14/Math.max(k,.01)*.15;g.drawImage(wc,-150,-150,300,300);g.restore()}
 function pt(e){const r=C.getBoundingClientRect(),s=Math.max(r.width/C.width,r.height/C.height),ox=(r.width-C.width*s)/2,oy=(r.height-C.height*s)/2;return{x:((e.clientX-r.left-ox)/s)/C.width,y:((e.clientY-r.top-oy)/s)/C.height}}
 C.onpointerdown=e=>{if(performance.now()-seen<700)return;drag=1;C.setPointerCapture(e.pointerId);const q=pt(e);man.x=q.x;man.y=q.y};
 C.onpointermove=e=>{if(!drag)return;const q=pt(e);man.x=q.x;man.y=q.y};C.onpointerup=()=>drag=0;
