@@ -503,7 +503,7 @@ addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(function(
 <script>
 (()=>{const $=id=>document.getElementById(id),V=$('trv'),C=$('trc'),M=$('trm'),PX=2.4;
 let WH=185,mode='cam',photo=null,stream,hl,hlTried=0,raf,front=0,wc,cur=null,seen=0,last=-1,man={x:.5,y:.5,a:0},drag=0;
-const PH={m:{src:'img/hand_m.avif',x:.585,y:.545,sf:.125,a:-30,half:150},f:{src:'img/hand_f.avif',x:.565,y:.545,sf:.105,a:-17,half:135}};
+const PH={m:{src:'img/hand_m.avif',x:.555,y:.562,sf:.125,a:-30,half:190},f:{src:'img/hand_f.avif',x:.536,y:.554,sf:.105,a:-17,half:175}};
 const say=t=>M.textContent=typeof tr=='function'?tr(t):t;
 async function bitmap(h=185){
  WH=h;let svg=await build0(h);const im=new Image;im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);await im.decode();
