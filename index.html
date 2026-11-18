@@ -551,9 +551,9 @@ function loop(){
  if(C.width!=V.videoWidth){C.width=V.videoWidth;C.height=V.videoHeight}
  const g=C.getContext('2d'),w=C.width,h=C.height;g.save();if(front){g.translate(w,0);g.scale(-1,1)}g.drawImage(V,0,0,w,h);g.restore();
  let p=null;
- if(hl&&V.currentTime!=last){last=V.currentTime;try{const L=hl.detectForVideo(V,performance.now()).landmarks[0];
+ if(hl&&V.currentTime!=last){last=V.currentTime;try{const R=hl.detectForVideo(V,performance.now()),L=R.landmarks[0],WD=R.worldLandmarks&&R.worldLandmarks[0];
   if(L){const X=i=>(front?1-L[i].x:L[i].x)*w,Y=i=>L[i].y*h,wx=X(0),wy=Y(0),len=Math.hypot(X(9)-wx,Y(9)-wy),pw=Math.hypot(X(5)-X(17),Y(5)-Y(17)),ux=(X(9)-wx)/len,uy=(Y(9)-wy)/len;
-   p={x:wx-ux*len*.3,y:wy-uy*len*.3,s:.55*pw/196,a:Math.atan2(uy,ux)};{let a0=p.a;const dd=q=>Math.abs(((q-(cur?cur.a:0)+Math.PI*3)%(Math.PI*2))-Math.PI);if(cur?dd(a0)>dd(a0+Math.PI):Math.cos(a0)<0)a0+=Math.PI;p.a=a0}seen=performance.now()}}catch(e){}}
+   let sc=.55*pw/196;if(WD){const rs=[];for(const[a,b]of[[5,17],[0,9],[0,5],[0,17],[5,9],[9,13],[13,17],[0,13],[5,13],[9,17]]){const pd=Math.hypot(X(a)-X(b),Y(a)-Y(b)),wd=Math.hypot(WD[a].x-WD[b].x,WD[a].y-WD[b].y,WD[a].z-WD[b].z);if(wd>.005)rs.push(pd/wd)}rs.sort((u,v)=>v-u);if(rs.length>2){const ppm=(rs[0]+rs[1]+rs[2])/3,s3=ppm/1000/4.9;if(isFinite(s3)&&s3>0)sc=s3}}p={x:wx-ux*len*.3,y:wy-uy*len*.3,s:sc,a:Math.atan2(uy,ux)};{let a0=p.a;const dd=q=>Math.abs(((q-(cur?cur.a:0)+Math.PI*3)%(Math.PI*2))-Math.PI);if(cur?dd(a0)>dd(a0+Math.PI):Math.cos(a0)<0)a0+=Math.PI;p.a=a0}seen=performance.now()}}catch(e){}}
  const tracked=performance.now()-seen<700;
  if(p){if(!cur||!tracked&&!cur.t)cur={...p,t:1};else{const k=.35,da=((p.a-cur.a+Math.PI*3)%(Math.PI*2))-Math.PI;cur={x:cur.x+(p.x-cur.x)*k,y:cur.y+(p.y-cur.y)*k,s:cur.s+(p.s-cur.s)*k,a:cur.a+da*k,t:1}}}
  if(!tracked)cur={x:man.x*w,y:man.y*h,s:Math.min(w,h)*.3/196,a:man.a,t:0};
