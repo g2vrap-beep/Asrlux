@@ -7,7 +7,7 @@
  ],
  "strapOffset": 90,
  "case": {
-  "name": "Классика 41 · Rolesor Everose",
+  "name": "Классика 41 · Сталь и розовое золото",
   "color": "#c3c7cd",
   "color2": "#c98f7e",
   "price": 480000,
@@ -33,7 +33,7 @@
    }
   },
   {
-   "name": "Рифл. Everose",
+   "name": "Рифл. розовое золото",
    "color": "#c98f7e",
    "price": 80000,
    "l": {
@@ -337,7 +337,7 @@
  ],
  "strap": [
   {
-   "name": "Jubilee Everose",
+   "name": "Пятизвенный, розовое золото",
    "color": "#c98f7e",
    "price": 60000,
    "l": {

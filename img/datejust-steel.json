@@ -7,7 +7,7 @@
  ],
  "strapOffset": 90,
  "case": {
-  "name": "Классика 41 · Oystersteel",
+  "name": "Классика 41 · Сталь 904L",
   "color": "#c3c7cd",
   "price": 0,
   "l": {
@@ -102,7 +102,7 @@
  ],
  "strap": [
   {
-   "name": "Oyster сталь",
+   "name": "Трёхзвенный, сталь",
    "color": "#b4b8bf",
    "price": 0,
    "l": {
@@ -114,7 +114,7 @@
    }
   },
   {
-   "name": "Jubilee сталь",
+   "name": "Пятизвенный, сталь",
    "color": "#b4b8bf",
    "price": 30000,
    "l": {

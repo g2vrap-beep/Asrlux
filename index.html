@@ -158,11 +158,11 @@ footer{padding:0;background:var(--cd)}.ft{display:grid;grid-template-columns:1.4
 function goB(){var e=document.getElementById('builder');if(e)e.scrollIntoView({block:'start'})}
 const IC={size:'<circle cx="12" cy="12" r="6"/><path d="M2 12h3M19 12h3M4 10l-2 2 2 2M20 10l2 2-2 2"/>',case:'<circle cx="12" cy="12" r="6"/><path d="M9 6V2h6v4M9 18v4h6v-4"/>',bezel:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="6"/>',dial:'<circle cx="12" cy="12" r="9"/><path d="M12 4v2M12 18v2M4 12h2M18 12h2"/>',hands:'<circle cx="12" cy="12" r="9"/><path d="M12 12V6M12 12l4 2"/>',strap:'<rect x="8" y="2" width="8" height="20" rx="2"/><path d="M8 8h8M8 16h8"/>',sound:'<path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.500 6.500a8 8 0 0 1 0 11"/>',mute:'<path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9l5 6M22 9l-5 6"/>',moon:'<path d="M20 14.5A8 8 0 1 1 9.500 4a6.500 6.500 0 0 0 10.500 10.500z"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.500 1.500M17.500 17.500L19 19M19 5l-1.500 1.500M6.500 17.500L5 19"/>',watch:'<rect x="7" y="7" width="10" height="10" rx="3"/><path d="M9 7l1-5h4l1 5M9 17l1 5h4l1-5"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',male:'<circle cx="10" cy="14" r="5"/><path d="M14 10l6-6M15 4h5v5"/>',female:'<circle cx="12" cy="9" r="5"/><path d="M12 14v8M9 18h6"/>',theme:'<circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/>',bag:'<path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',cube:'<path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 12l9-5M12 12v10M12 12L3 7"/>',close:'<path d="M5 5l14 14M19 5L5 19"/>',shield:'<path d="M12 2l8 3v6c0 5-3.500 9-8 11-4.500-2-8-6-8-11V5z"/><path d="M9 12l2 2 4-4"/>',truck:'<path d="M2 6h12v10H2zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>',tool:'<path d="M14 6a4 4 0 0 0-5 5L3 17l4 4 6-6a4 4 0 0 0 5-5l-3 3-3-1-1-3z"/>',chat:'<path d="M4 5h16v11H9l-5 4z"/>',pin:'<path d="M12 22s7-6.500 7-12a7 7 0 0 0-14 0c0 5.500 7 12 7 12z"/><circle cx="12" cy="10" r="2.500"/>',phone:'<path d="M5 3h4l2 5-2.500 1.500a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'},ic=n=>`<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${IC[n]}</svg>`,$=s=>document.querySelector(s),RATE=12700,BASE=2990000,rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const f=n=>Math.round(n).toLocaleString('ru-RU')+' сум',usd=n=>'';
-const D={case:[['Oystersteel 904L','#c3c7cd',0],['Чёрный PVD','#2a2a2f',150000],['Жёлтое золото 18 кт','#c9a44c',420000],['Розовое золото Everose','#c98f7e',450000],['Белое золото 18 кт','#dfe1e4',460000],['Платина 950','#d3d6db',900000],['Титан RLX','#8c9096',300000],['Rolesor жёлтое','#c3c7cd',220000,'#c9a44c'],['Rolesor Everose','#c3c7cd',240000,'#c98f7e'],['Rolesium (сталь + платина)','#c3c7cd',400000,'#d3d6db']],
-bezel:[['Гладкий','#b9bdc4',0,0],['Рифлёный','#aeb2b9',1,60000],['Шкала','#1e1e22',2,90000],['Золотой','#c9a44c',1,180000],['Синий','#1d3a6b',2,120000],['Халк','#12803f',2,160000],['Чёрная керамика','#17171a',2,150000],['Рифл. белое золото','#dfe1e4',1,200000],['Рифл. Everose','#c98f7e',1,200000]],
+const D={case:[['Сталь 904L','#c3c7cd',0],['Чёрный PVD','#2a2a2f',150000],['Жёлтое золото 18 кт','#c9a44c',420000],['Розовое золото 18 кт','#c98f7e',450000],['Белое золото 18 кт','#dfe1e4',460000],['Платина 950','#d3d6db',900000],['Титан','#8c9096',300000],['Сталь и жёлтое золото','#c3c7cd',220000,'#c9a44c'],['Сталь и розовое золото','#c3c7cd',240000,'#c98f7e'],['Сталь и платина','#c3c7cd',400000,'#d3d6db']],
+bezel:[['Гладкий','#b9bdc4',0,0],['Рифлёный','#aeb2b9',1,60000],['Шкала','#1e1e22',2,90000],['Золотой','#c9a44c',1,180000],['Синий','#1d3a6b',2,120000],['Зелёный дайвер','#12803f',2,160000],['Чёрная керамика','#17171a',2,150000],['Рифл. белое золото','#dfe1e4',1,200000],['Рифл. розовое золото','#c98f7e',1,200000]],
 dial:[['Полночь','#0f1014','#f1eee8',0,1,0],['Снег','#f4f1ea','#1a1a1d',1,0,0],['Океан','#12315c','#e8eef7',0,1,80000],['Лес','#16392c','#e9efe9',2,1,80000],['Бордо','#4a1621','#f0e3e3',1,1,100000],['Шампань','#d8c9a6','#2a2418',0,0,60000],['Зелёный','#0e6b3a','#f1eee8',2,1,90000]],
 hands:[['Палка','#e6e6e6',0,1,0],['Меч','#d8d8d8',1,1,30000],['Лист','#c9a44c',2,1,60000],['Графит','#33333a',1,0,40000]],
-strap:[['Кожа чёрная','#1c1b1d',0,0],['Кожа коричневая','#6b4426',0,0],['Кожа синяя','#1f2f55',0,20000],['Oyster','#b4b8bf',1,250000],['Jubilee','#b4b8bf',3,280000],['President','#c9a44c',4,520000],['Каучук','#222629',2,70000]]};
+strap:[['Кожа чёрная','#1c1b1d',0,0],['Кожа коричневая','#6b4426',0,0],['Кожа синяя','#1f2f55',0,20000],['Трёхзвенный','#b4b8bf',1,250000],['Пятизвенный','#b4b8bf',3,280000],['Полукруглый','#c9a44c',4,520000],['Каучук','#222629',2,70000]]};
 D.size=[28,31,36,40,41,42].map((m,i)=>[m+' мм',m,[0,0,0,40,60,80][i]*1000]);
 const PI={size:2,case:2,bezel:3,dial:5,hands:4,strap:3},CL={size:'Размер',case:'Корпус',bezel:'Безель',dial:'Циферблат',hands:'Стрелки',strap:'Ремешок'};
 const P=(r,a)=>[150+r*Math.sin(a*Math.PI/180),240-r*Math.cos(a*Math.PI/180)];
@@ -258,14 +258,14 @@ stg.addEventListener('keydown',e=>{if(e.key=='ArrowRight')mv(1);if(e.key=='Arrow
 $('#nt').onclick=()=>{night^=1;draw()};$('#sn').onclick=()=>{snd^=1;try{localStorage.setItem('snd',snd)}catch(e){}if(snd)clk(0);draw()};$('#wr').onclick=()=>{wrist^=1;draw()};$('#gn').onclick=()=>{g=g=='m'?'f':'m';draw()};
 let tm=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';$('#th').onclick=()=>{tm=tm=='dark'?'light':'dark';document.documentElement.dataset.theme=tm};
 let G=[];
-const GP=[['Классика синий','datejust-steel',{bezel:'Рифл. белое золото',dial:'Синий',strap:'Jubilee сталь'}],
+const GP=[['Классика синий','datejust-steel',{bezel:'Рифл. белое золото',dial:'Синий',strap:'Пятизвенный, сталь'}],
 ['Дайвер','submariner-steel',{bezel:'Чёрная керамика',dial:'Полночь',hands:'Сталь'}],
-['Халк','submariner-steel',{bezel:'Зелёная керамика',dial:'Зелёный',hands:'Сталь'}],
-['Синий Rolesor','submariner-rolesor',{bezel:'Синяя керамика',dial:'Океан',hands:'Золото'}],
+['Зелёный дайвер','submariner-steel',{bezel:'Зелёная керамика',dial:'Зелёный',hands:'Сталь'}],
+['Синий биколор','submariner-rolesor',{bezel:'Синяя керамика',dial:'Океан',hands:'Золото'}],
 ['Золотой дайвер','submariner-gold',{bezel:'Чёрная керамика',dial:'Полночь',hands:'Золото'}],
-['Классика шампань','datejust-yellow',{bezel:'Рифл. жёлтое золото',dial:'Шампань',strap:'Jubilee Rolesor'}],
-['Классика шоколад','datejust-everose',{bezel:'Рифл. Everose',dial:'Шоколад'}],
-['Зелёная классика','datejust-yellow',{bezel:'Рифл. жёлтое золото',dial:'Зелёный · римские',strap:'Jubilee Rolesor'}]];
+['Классика шампань','datejust-yellow',{bezel:'Рифл. жёлтое золото',dial:'Шампань',strap:'Пятизвенный, сталь и золото'}],
+['Классика шоколад','datejust-everose',{bezel:'Рифл. розовое золото',dial:'Шоколад'}],
+['Зелёная классика','datejust-yellow',{bezel:'Рифл. жёлтое золото',dial:'Зелёный · римские',strap:'Пятизвенный, сталь и золото'}]];
 function renderG(){G=GP.filter(g=>MODELS[g[1]]).map(([n,id,sel])=>{const M=MODELS[id],o={...M.def,size:M.size[0]};for(const k in sel){const x=D[k].findIndex(v=>v.m==id&&v[0]==sel[k]);if(x>=0)o[k]=x}return[n,o]});
 $('#gl').innerHTML=G.map((m,i)=>`<div class="card">${S(m[1],0)}<div class="lg" style="font-size:24px">${m[0]}</div><div>${f(total(m[1]))}</div><button class="bt" onclick="st={...G[${i}][1]};draw();location.hash='builder'">Взять за основу</button><button class="bt p" onclick="cart.push({st:{...G[${i}][1]},p:total(G[${i}][1])});rc();cp(1)">Заказать</button></div>`).join('');
 if(typeof tx=='function')tx($('#gallery'))}
@@ -284,8 +284,30 @@ $('#cp').innerHTML=h;['fn','fp','fa'].forEach((i,k)=>{if($('#'+i))$('#'+i).value
 
 {const t=$('#tabs');let x0,s0,mvd=0;t.addEventListener('pointerdown',e=>{if(e.pointerType!='mouse')return;x0=e.clientX;s0=t.scrollLeft;mvd=0;t.dataset.d=1});addEventListener('pointermove',e=>{if(!t.dataset.d)return;const d=e.clientX-x0;if(Math.abs(d)>4)mvd=1;t.scrollLeft=s0-d});addEventListener('pointerup',()=>{delete t.dataset.d});t.addEventListener('click',e=>{if(mvd){e.stopPropagation();e.preventDefault();mvd=0}},true)}
 
-const TRS=`Классика синий|Classic blue|Klassika ko‘k
-Синий Rolesor|Blue Rolesor|Ko‘k Rolesor
+const TRS=`Полукруглый|Semi-round link|Yarim dumaloq
+Классика 41 · Сталь и розовое золото|Classic 41 · Steel and rose gold|Klassika 41 · Po‘lat va pushti oltin
+Классика 41 · Сталь и жёлтое золото|Classic 41 · Steel and yellow gold|Klassika 41 · Po‘lat va sariq oltin
+Дайвер 41 · Сталь и жёлтое золото|Diver 41 · Steel and yellow gold|Dayver 41 · Po‘lat va sariq oltin
+Дайвер 41 · Жёлтое золото 18 кт|Diver 41 · 18 ct yellow gold|Dayver 41 · 18 karat sariq oltin
+Классика 41 · Сталь 904L|Classic 41 · 904L steel|Klassika 41 · 904L po‘lat
+Дайвер 41 · Сталь 904L|Diver 41 · 904L steel|Dayver 41 · 904L po‘lat
+Пятизвенный, розовое золото|Five-link, rose gold|Besh bo‘g‘inli, pushti oltin
+Пятизвенный, сталь и золото|Five-link, steel and gold|Besh bo‘g‘inli, po‘lat va oltin
+Пятизвенный, сталь|Five-link, steel|Besh bo‘g‘inli, po‘lat
+Трёхзвенный, сталь и золото|Three-link, steel and gold|Uch bo‘g‘inli, po‘lat va oltin
+Трёхзвенный, золото|Three-link, gold|Uch bo‘g‘inli, oltin
+Трёхзвенный, сталь|Three-link, steel|Uch bo‘g‘inli, po‘lat
+Пятизвенный|Five-link|Besh bo‘g‘inli
+Трёхзвенный|Three-link|Uch bo‘g‘inli
+Рифл. розовое золото|Fluted rose gold|Rifli pushti oltin
+Розовое золото 18 кт|18 ct rose gold|18 karat pushti oltin
+Сталь и розовое золото|Steel and rose gold|Po‘lat va pushti oltin
+Сталь и жёлтое золото|Steel and yellow gold|Po‘lat va sariq oltin
+Сталь и платина|Steel and platinum|Po‘lat va platina
+Синий биколор|Blue two-tone|Ko‘k ikki rangli
+Зелёный дайвер|Green diver|Yashil dayver
+Титан|Titanium|Titan
+Классика синий|Classic blue|Klassika ko‘k
 Золотой дайвер|Gold diver|Oltin dayver
 Классика шампань|Classic champagne|Klassika shampan
 Классика шоколад|Classic chocolate|Klassika shokolad
@@ -316,10 +338,6 @@ const TRS=`Классика синий|Classic blue|Klassika ko‘k
 День|Day|Kun
 Звук включён|Sound on|Tovush yoqilgan
 Звук выключен|Sound off|Tovush o‘chirilgan
-Oyster сталь|Oyster steel|Oyster po‘lat
-Oyster золото|Oyster gold|Oyster oltin
-Oyster Rolesor|Oyster Rolesor|Oyster Rolesor
-Jubilee сталь|Jubilee steel|Jubilee po‘lat
 Ночь|Night|Tun
 К сборке|To builder|Konstruktorga
 На руке|On wrist|Qo‘lda
@@ -356,20 +374,14 @@ Jubilee сталь|Jubilee steel|Jubilee po‘lat
 Часы|Watch|Soat
 Чёрный PVD|Black PVD|Qora PVD
 Жёлтое золото 18 кт|18 ct yellow gold|18 karat sariq oltin
-Розовое золото Everose|Everose rose gold|Everose pushti oltin
 Белое золото 18 кт|18 ct white gold|18 karat oq oltin
 Платина 950|950 platinum|950 platina
-Титан RLX|RLX titanium|RLX titan
-Rolesor жёлтое|Rolesor yellow|Rolesor sariq
-Rolesium (сталь + платина)|Rolesium (steel + platinum)|Rolesium (po‘lat + platina)
 Гладкий|Smooth|Silliq
 Рифлёный|Fluted|Rifli
 Рифл. белое золото|Fluted white gold|Rifli oq oltin
-Рифл. Everose|Fluted Everose|Rifli Everose
 Шкала|Scale|Shkala
 Золотой|Gold|Oltin
 Синий|Blue|Ko‘k
-Халк|Hulk|Halk
 Чёрная керамика|Black ceramic|Qora keramika
 Синяя керамика|Blue ceramic|Ko‘k keramika
 Зелёная керамика|Green ceramic|Yashil keramika
@@ -389,7 +401,6 @@ Rolesium (сталь + платина)|Rolesium (steel + platinum)|Rolesium (po�
 Кожа коричневая|Brown leather|Jigarrang charm
 Кожа синяя|Blue leather|Ko‘k charm
 Каучук|Rubber|Kauchuk
-Президент|President|Prezident
 Дайвер|Diver|Dayver
 Классика|Classic|Klassika
 Часы на заказ|Made-to-order watches|Buyurtma asosidagi soatlar

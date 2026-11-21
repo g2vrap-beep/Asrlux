@@ -5,7 +5,7 @@
  "size": [41],
  "strapOffset": 90,
  "case": {
-  "name": "Дайвер 41 · Золото 18 кт",
+  "name": "Дайвер 41 · Жёлтое золото 18 кт",
   "color": "#c9a44c",
   "price": 420000,
   "l": {"f": "submariner_case_gold_41.avif", "x": 52.68, "y": 131.63, "w": 213.58, "h": 225.08}
@@ -38,7 +38,7 @@
    "s": {"f": "submariner_hands_gold_second_41.avif", "x": 145.19, "y": 170.57, "w": 9.75, "h": 88.5}}
  ],
  "strap": [
-  {"name": "Oyster золото", "color": "#c9a44c", "price": 520000,
+  {"name": "Трёхзвенный, золото", "color": "#c9a44c", "price": 520000,
    "l": {"f": "submariner_strap_oyster-gold_41_v2.avif", "x": 100.61, "y": 221.63, "w": 99.21, "h": 245.95}}
  ]
 }

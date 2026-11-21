@@ -7,7 +7,7 @@
  ],
  "strapOffset": 90,
  "case": {
-  "name": "Классика 41 · Rolesor",
+  "name": "Классика 41 · Сталь и жёлтое золото",
   "color": "#c3c7cd",
   "color2": "#c9a44c",
   "price": 420000,
@@ -311,7 +311,7 @@
  ],
  "strap": [
   {
-   "name": "Jubilee Rolesor",
+   "name": "Пятизвенный, сталь и золото",
    "color": "#c9a44c",
    "price": 60000,
    "l": {
@@ -323,7 +323,7 @@
    }
   },
   {
-   "name": "Oyster Rolesor 41",
+   "name": "Трёхзвенный, сталь и золото",
    "color": "#c9a44c",
    "price": 0,
    "l": {
