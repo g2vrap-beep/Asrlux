@@ -271,8 +271,12 @@ const GP=[['Классика синий','datejust-steel',{bezel:'Рифл. бе
 ['Золотой дайвер','submariner-gold',{bezel:'Чёрная керамика',dial:'Полночь',hands:'Золото'}],
 ['Классика шампань','datejust-yellow',{bezel:'Рифл. жёлтое золото',dial:'Шампань',strap:'Пятизвенный, сталь и золото'}],
 ['Классика шоколад','datejust-everose',{bezel:'Рифл. розовое золото',dial:'Шоколад'}],
-['Зелёная классика','datejust-yellow',{bezel:'Рифл. жёлтое золото',dial:'Зелёный · римские',strap:'Пятизвенный, сталь и золото'}]];
-function renderG(){G=GP.filter(g=>MODELS[g[1]]).map(([n,id,sel])=>{const M=MODELS[id],o={...M.def,size:M.ds};for(const k in sel){const x=D[k].findIndex(v=>v.m==id&&v[0]==sel[k]);if(x>=0)o[k]=x}return[n,o]});
+['Зелёная классика','datejust-yellow',{bezel:'Рифл. жёлтое золото',dial:'Зелёный · римские',strap:'Пятизвенный, сталь и золото'}],
+['Женская розовая 28','datejust-everose',{bezel:'Рифл. розовое золото',dial:'Розовый'},28],
+['Женская с бриллиантами 31','datejust-yellow',{bezel:'Рифл. жёлтое золото',dial:'Серебро · бриллианты',strap:'Пятизвенный, сталь и золото'},31],
+['Женская шоколад 31','datejust-everose',{bezel:'Рифл. розовое золото',dial:'Шоколад'},31],
+['Женская синяя 28','datejust-steel',{bezel:'Рифл. белое золото',dial:'Синий',strap:'Пятизвенный, сталь'},28]];
+function renderG(){G=GP.filter(g=>MODELS[g[1]]).map(([n,id,sel,mm])=>{const M=MODELS[id],o={...M.def,size:M.ds};if(mm){const z=M.size.find(i=>D.size[i][1]==mm);if(z!=null)o.size=z}for(const k in sel){const x=D[k].findIndex(v=>v.m==id&&v[0]==sel[k]);if(x>=0)o[k]=x}return[n,o]});
 $('#gl').innerHTML=G.map((m,i)=>`<div class="card">${S(m[1],0)}<div class="lg" style="font-size:24px">${m[0]}</div><div>${f(total(m[1]))}</div><button class="bt" onclick="st={...G[${i}][1]};draw();location.hash='builder'">Взять за основу</button><button class="bt p" onclick="cart.push({st:{...G[${i}][1]},p:total(G[${i}][1])});rc();cp(1)">Заказать</button></div>`).join('');
 if(typeof tx=='function')tx($('#gallery'))}
 const PG=[['Доставка и оплата','По Ташкенту доставляем курьером, в регионы Узбекистана — службой доставки. Сроки и стоимость менеджер назовёт при подтверждении заказа.','Оплата через Payme, Click, Uzum или банковской картой. Сейчас онлайн-оплата работает в тестовом режиме.'],
@@ -297,7 +301,11 @@ $('#cp').innerHTML=h;['fn','fp','fa'].forEach((i,k)=>{if($('#'+i))$('#'+i).value
 
 {const t=$('#tabs');let x0,s0,mvd=0;t.addEventListener('pointerdown',e=>{if(e.pointerType!='mouse')return;x0=e.clientX;s0=t.scrollLeft;mvd=0;t.dataset.d=1});addEventListener('pointermove',e=>{if(!t.dataset.d)return;const d=e.clientX-x0;if(Math.abs(d)>4)mvd=1;t.scrollLeft=s0-d});addEventListener('pointerup',()=>{delete t.dataset.d});t.addEventListener('click',e=>{if(mvd){e.stopPropagation();e.preventDefault();mvd=0}},true)}
 
-const TRS=`Жёлтое золото 18 кт|18 ct yellow gold|18 karat sariq oltin
+const TRS=`Женская розовая 28|Women’s rose 28|Ayollar pushti 28
+Женская с бриллиантами 31|Women’s diamond 31|Ayollar brilliantli 31
+Женская шоколад 31|Women’s chocolate 31|Ayollar shokolad 31
+Женская синяя 28|Women’s blue 28|Ayollar ko‘k 28
+Жёлтое золото 18 кт|18 ct yellow gold|18 karat sariq oltin
 Целиком из золота или в паре со сталью|Solid gold or paired with steel|To‘liq oltin yoki po‘lat bilan juftlikda
 Розовое золото 18 кт|18 ct rose gold|18 karat pushti oltin
 Тёплый оттенок в паре со сталью|A warm tone paired with steel|Po‘lat bilan juftlikda iliq tus
@@ -614,7 +622,7 @@ async function setMode(m){mode=m;C.style.objectFit=m=='cam'?'cover':'contain';do
  if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}photo=null;
  try{await bitmap(PH[m].half);const im=new Image;im.src=PH[m].src;await im.decode();photo=im}catch(e){console.warn(e);say('Фото руки пока не добавлено')}}
 document.querySelectorAll('#trt button').forEach(b=>b.onclick=()=>setMode(b.dataset.m));
-window.TRY=async()=>{$('tro').hidden=false;document.body.style.overflow='hidden';cur=null;seen=0;wc=null;say('Загрузка…');cancelAnimationFrame(raf);loop();await setMode('cam')};
+window.TRY=async()=>{$('tro').hidden=false;document.body.style.overflow='hidden';cur=null;seen=0;wc=null;say('Загрузка…');cancelAnimationFrame(raf);loop();const ph=matchMedia('(pointer:coarse)').matches&&Math.min(screen.width,screen.height)<600,sz=D.size[st.size??3][1];await setMode(ph?'cam':(sz<=31?'f':(typeof g=='string'?g:'m')))};
 })();
 </script>
 </body></html>
