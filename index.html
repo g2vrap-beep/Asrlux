@@ -184,7 +184,7 @@ hi=m.hands.map(v=>add('hands',[v.name,v.color,1,1,v.price],{h:R(v.h),m:R(v.m),s:
 ri=m.strap.map(v=>add('strap',[v.name,v.color,1,v.price],R(v.l)));
 MODELS[id]={size:si,ds:si[m.size.indexOf(41)]??si[si.length-1],so:m.strapOffset,du:!!m.dialUnder,def:{case:ci,bezel:bi[0],dial:di[0],hands:hi[0],strap:ri[0]}};
 const ls=[R(m.case.l),...m.bezel.map(v=>R(v.l)),...m.dial.flatMap(v=>v.date&&v.date.cy?[R(v.l),R(v.date.cy)]:[R(v.l)]),...m.strap.map(v=>R(v.l)),...m.hands.flatMap(v=>[R(v.h),R(v.m),R(v.s),...(v.g?[R(v.g)]:[])])];ls.forEach(l=>prel(l.f))}
-async function loadModels(){for(const id of['submariner-steel','submariner-rolesor','submariner-gold','datejust-steel','datejust-everose','datejust-yellow','gmt-steel','gmt-yellow','gmt-rose']){try{const m=await(await fetch('img/'+id+'.json?v=5')).json();addModel(id,'img/',m)}catch(e){console.warn('model '+id,e)}}if(MODELS['datejust-steel']&&!D.case[st.case].m){const M=MODELS['datejust-steel'];st={...st,...M.def,size:M.ds};fix()}draw();renderG()}
+async function loadModels(){for(const id of['submariner-steel','submariner-rolesor','submariner-gold','datejust-steel','datejust-everose','datejust-yellow','gmt-steel','gmt-yellow','gmt-rose','chrono-steel','chrono-yellow']){try{const m=await(await fetch('img/'+id+'.json?v=5')).json();addModel(id,'img/',m)}catch(e){console.warn('model '+id,e)}}if(MODELS['datejust-steel']&&!D.case[st.case].m){const M=MODELS['datejust-steel'];st={...st,...M.def,size:M.ds};fix()}draw();renderG()}
 let SCN=0;
 /* ---- кольцо между безелем и циферблатом (рехаут), только Submariner ----
    k  — во сколько раз уменьшены циферблат и стрелки, чтобы освободить место под кольцо
@@ -276,6 +276,10 @@ const GP=[['Классика синий','datejust-steel',{bezel:'Рифл. бе
 ['Пилот GMT красно-синий','gmt-steel',{bezel:'Красно-синяя керамика'}],
 ['Пилот GMT биколор','gmt-yellow',{hands:'Золото'}],
 ['Пилот GMT розовое золото','gmt-rose',{}],
+['Хронограф белый','chrono-steel',{}],
+['Хронограф чёрный керамика','chrono-steel',{bezel:'Чёрная керамика',dial:'Чёрный · белые счётчики'}],
+['Хронограф синий','chrono-steel',{dial:'Синий'}],
+['Хронограф золотой','chrono-yellow',{dial:'Шампань'}],
 ['Женская розовая 28','datejust-everose',{bezel:'Рифл. розовое золото',dial:'Розовый'},28],
 ['Женская с бриллиантами 31','datejust-yellow',{bezel:'Рифл. жёлтое золото',dial:'Серебро · бриллианты',strap:'Пятизвенный, сталь и золото'},31],
 ['Женская шоколад 31','datejust-everose',{bezel:'Рифл. розовое золото',dial:'Шоколад'},31],
@@ -305,7 +309,17 @@ $('#cp').innerHTML=h;['fn','fp','fa'].forEach((i,k)=>{if($('#'+i))$('#'+i).value
 
 {const t=$('#tabs');let x0,s0,mvd=0;t.addEventListener('pointerdown',e=>{if(e.pointerType!='mouse')return;x0=e.clientX;s0=t.scrollLeft;mvd=0;t.dataset.d=1});addEventListener('pointermove',e=>{if(!t.dataset.d)return;const d=e.clientX-x0;if(Math.abs(d)>4)mvd=1;t.scrollLeft=s0-d});addEventListener('pointerup',()=>{delete t.dataset.d});t.addEventListener('click',e=>{if(mvd){e.stopPropagation();e.preventDefault();mvd=0}},true)}
 
-const TRS=`Пилот GMT сине-чёрный|GMT Pilot blue-black|GMT Pilot ko‘k-qora
+const TRS=`Хронограф · Жёлтое золото 18 кт|Chronograph · 18 ct yellow gold|Xronograf · 18 karat sariq oltin
+Хронограф · Сталь 904L|Chronograph · 904L steel|Xronograf · 904L po‘lat
+Хронограф чёрный керамика|Chronograph black ceramic|Xronograf qora keramika
+Хронограф белый|Chronograph white|Xronograf oq
+Хронограф синий|Chronograph blue|Xronograf ko‘k
+Хронограф золотой|Chronograph gold|Xronograf oltin
+Белый · чёрные счётчики|White · black counters|Oq · qora hisoblagichlar
+Чёрный · белые счётчики|Black · white counters|Qora · oq hisoblagichlar
+Стальной тахиметр|Steel tachymeter|Po‘lat taxometr
+Золотой тахиметр|Gold tachymeter|Oltin taxometr
+Пилот GMT сине-чёрный|GMT Pilot blue-black|GMT Pilot ko‘k-qora
 Пилот GMT красно-синий|GMT Pilot red-blue|GMT Pilot qizil-ko‘k
 Пилот GMT биколор|GMT Pilot two-tone|GMT Pilot ikki rangli
 Пилот GMT розовое золото|GMT Pilot rose gold|GMT Pilot pushti oltin
