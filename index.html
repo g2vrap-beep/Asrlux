@@ -184,7 +184,7 @@ hi=m.hands.map(v=>add('hands',[v.name,v.color,1,1,v.price],{h:R(v.h),m:R(v.m),s:
 ri=m.strap.map(v=>add('strap',[v.name,v.color,1,v.price],R(v.l)));
 MODELS[id]={size:si,ds:si[m.size.indexOf(41)]??si[si.length-1],so:m.strapOffset,du:!!m.dialUnder,def:{case:ci,bezel:bi[0],dial:di[0],hands:hi[0],strap:ri[0]}};
 const ls=[R(m.case.l),...m.bezel.map(v=>R(v.l)),...m.dial.flatMap(v=>v.date&&v.date.cy?[R(v.l),R(v.date.cy)]:[R(v.l)]),...m.strap.map(v=>R(v.l)),...m.hands.flatMap(v=>[R(v.h),R(v.m),R(v.s),...(v.g?[R(v.g)]:[])])];ls.forEach(l=>prel(l.f))}
-async function loadModels(){for(const id of['submariner-steel','submariner-rolesor','submariner-gold','datejust-steel','datejust-everose','datejust-yellow','gmt-steel','gmt-yellow','gmt-rose','chrono-steel','chrono-yellow','daydate-yellow','daydate-white','daydate-rose']){try{const m=await(await fetch('img/'+id+'.json?v=5')).json();addModel(id,'img/',m)}catch(e){console.warn('model '+id,e)}}if(MODELS['datejust-steel']&&!D.case[st.case].m){const M=MODELS['datejust-steel'];st={...st,...M.def,size:M.ds};fix()}draw();renderG()}
+async function loadModels(){for(const id of['submariner-steel','submariner-rolesor','submariner-gold','datejust-steel','datejust-everose','datejust-yellow','gmt-steel','gmt-yellow','gmt-rose','chrono-steel','chrono-yellow','chrono-rose','daydate-yellow','daydate-white','daydate-rose']){try{const m=await(await fetch('img/'+id+'.json?v=5')).json();addModel(id,'img/',m)}catch(e){console.warn('model '+id,e)}}if(MODELS['datejust-steel']&&!D.case[st.case].m){const M=MODELS['datejust-steel'];st={...st,...M.def,size:M.ds};fix()}draw();renderG()}
 let SCN=0;
 /* ---- кольцо между безелем и циферблатом (рехаут), только Submariner ----
    k  — во сколько раз уменьшены циферблат и стрелки, чтобы освободить место под кольцо
@@ -280,6 +280,7 @@ const GP=[['Классика синий','datejust-steel',{bezel:'Рифл. бе
 ['Хронограф чёрный керамика','chrono-steel',{bezel:'Чёрная керамика',dial:'Чёрный · белые счётчики'}],
 ['Хронограф синий','chrono-steel',{dial:'Синий'}],
 ['Хронограф золотой','chrono-yellow',{dial:'Шампань'}],
+['Хронограф розовое золото','chrono-rose',{dial:'Чёрный · белые счётчики'}],
 ['Календарь шампань','daydate-yellow',{}],
 ['Календарь ледяной голубой','daydate-white',{dial:'Ледяной голубой'}],
 ['Календарь зелёный','daydate-yellow',{dial:'Зелёный'}],
@@ -313,7 +314,10 @@ $('#cp').innerHTML=h;['fn','fp','fa'].forEach((i,k)=>{if($('#'+i))$('#'+i).value
 
 {const t=$('#tabs');let x0,s0,mvd=0;t.addEventListener('pointerdown',e=>{if(e.pointerType!='mouse')return;x0=e.clientX;s0=t.scrollLeft;mvd=0;t.dataset.d=1});addEventListener('pointermove',e=>{if(!t.dataset.d)return;const d=e.clientX-x0;if(Math.abs(d)>4)mvd=1;t.scrollLeft=s0-d});addEventListener('pointerup',()=>{delete t.dataset.d});t.addEventListener('click',e=>{if(mvd){e.stopPropagation();e.preventDefault();mvd=0}},true)}
 
-const TRS=`Календарь · Жёлтое золото 18 кт|Day-Date · 18 ct yellow gold|Kalendar · 18 karat sariq oltin
+const TRS=`Хронограф · Розовое золото 18 кт|Chronograph · 18 ct rose gold|Xronograf · 18 karat pushti oltin
+Хронограф розовое золото|Chronograph rose gold|Xronograf pushti oltin
+Тахиметр, розовое золото|Tachymeter, rose gold|Taxometr, pushti oltin
+Календарь · Жёлтое золото 18 кт|Day-Date · 18 ct yellow gold|Kalendar · 18 karat sariq oltin
 Календарь · Белое золото 18 кт|Day-Date · 18 ct white gold|Kalendar · 18 karat oq oltin
 Календарь · Розовое золото 18 кт|Day-Date · 18 ct rose gold|Kalendar · 18 karat pushti oltin
 Календарь ледяной голубой|Day-Date ice blue|Kalendar muz ko‘k
