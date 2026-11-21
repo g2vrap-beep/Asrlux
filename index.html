@@ -107,6 +107,7 @@ footer{padding:0;background:var(--cd)}.ft{display:grid;grid-template-columns:1.4
 .wp .rdw,.wp .qdw{transform-origin:49.975% 50.542%;transform:scale(var(--ds))}
 .wp .wl{left:calc(49.975% + 11.395% * var(--ds));top:calc(50.542% - 4.112% * var(--ds));width:calc(11.25% * var(--ds))}
 .wp .ql{left:calc(49.975% + 13.575% * var(--ds));top:calc(50.542% - 3.172% * var(--ds));width:calc(8.43% * var(--ds))}
+#gl{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));max-width:1240px;margin:0 auto}
 </style><style id="ios">
 /* --- iPhone / сенсорные экраны --- */
 #stage{touch-action:pan-y;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}
@@ -167,7 +168,7 @@ const PI={size:2,case:2,bezel:3,dial:5,hands:4,strap:3},CL={size:'Размер',
 const P=(r,a)=>[150+r*Math.sin(a*Math.PI/180),240-r*Math.cos(a*Math.PI/180)];
 const T=(r1,r2,a,c,w)=>{const[x1,y1]=P(r1,a),[x2,y2]=P(r2,a);return`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="${w}"/>`};
 /* ---- фото-модели: img/rolex/<модель>/model.json ---- */
-const MODELS={},mdl=s=>D.case[s.case].m||'',ok=(k,i,s)=>{if(k=='case')return true;const M=mdl(s),it=D[k][i];return k=='size'&&M?MODELS[M].size.includes(i):k=='strap'&&M?!!it.m:(it.m||'')==M},vis=k=>D[k].map((_,i)=>i).filter(i=>ok(k,i,st)),fix=()=>{for(const k in st){if(k=='case'||ok(k,st[k],st))continue;const V=vis(k),cur=D[k][st[k]],nm=V.find(i=>D[k][i][0]==cur[0]);st[k]=k=='size'?V.reduce((a,i)=>Math.abs(D[k][i][1]-cur[1])<Math.abs(D[k][a][1]-cur[1])?i:a,V[0]):(nm??(MODELS[mdl(st)]?.def[k]??V[0]))}};
+const MODELS={},mdl=s=>D.case[s.case].m||'',ok=(k,i,s)=>{if(k=='case')return !!D.case[i].m||!Object.keys(MODELS).length;const M=mdl(s),it=D[k][i];return k=='size'&&M?MODELS[M].size.includes(i):k=='strap'&&M?!!it.m:(it.m||'')==M},vis=k=>D[k].map((_,i)=>i).filter(i=>ok(k,i,st)),fix=()=>{for(const k in st){if(k=='case'||ok(k,st[k],st))continue;const V=vis(k),cur=D[k][st[k]],nm=V.find(i=>D[k][i][0]==cur[0]);st[k]=k=='size'?V.reduce((a,i)=>Math.abs(D[k][i][1]-cur[1])<Math.abs(D[k][a][1]-cur[1])?i:a,V[0]):(nm??(MODELS[mdl(st)]?.def[k]??V[0]))}};
 const PQ=[],PS=new Set();let pqOn=0;function prel(u){if(PS.has(u))return;PS.add(u);PQ.push(u);if(!pqOn){pqOn=1;setTimeout(pump,2500)}}function pump(){PQ.splice(0,6).forEach(u=>{new Image().src=u});if(PQ.length)setTimeout(pump,300);else pqOn=0}
 function addModel(id,b,m){const R=o=>({...o,f:b+o.f}),add=(k,a,l)=>{a.m=id;a.l=l;D[k].push(a);return D[k].length-1},
 si=m.size.map(s=>add('size',[s+' мм',s,0],0)),ci=add('case',[m.case.name,m.case.color,m.case.price,m.case.color2],R(m.case.l)),
@@ -177,7 +178,7 @@ hi=m.hands.map(v=>add('hands',[v.name,v.color,1,1,v.price],{h:R(v.h),m:R(v.m),s:
 ri=m.strap.map(v=>add('strap',[v.name,v.color,1,v.price],R(v.l)));
 MODELS[id]={size:si,so:m.strapOffset,du:!!m.dialUnder,def:{case:ci,bezel:bi[0],dial:di[0],hands:hi[0],strap:ri[0]}};
 const ls=[R(m.case.l),...m.bezel.map(v=>R(v.l)),...m.dial.flatMap(v=>v.date&&v.date.cy?[R(v.l),R(v.date.cy)]:[R(v.l)]),...m.strap.map(v=>R(v.l)),...m.hands.flatMap(v=>[R(v.h),R(v.m),R(v.s)])];ls.forEach(l=>prel(l.f))}
-async function loadModels(){for(const id of['submariner-steel','submariner-rolesor','submariner-gold','datejust-steel','datejust-everose','datejust-yellow']){try{const m=await(await fetch('img/'+id+'.json?v=5')).json();addModel(id,'img/',m)}catch(e){console.warn('model '+id,e)}}draw()}
+async function loadModels(){for(const id of['submariner-steel','submariner-rolesor','submariner-gold','datejust-steel','datejust-everose','datejust-yellow']){try{const m=await(await fetch('img/'+id+'.json?v=5')).json();addModel(id,'img/',m)}catch(e){console.warn('model '+id,e)}}if(MODELS['datejust-steel']&&!D.case[st.case].m){const M=MODELS['datejust-steel'];st={...st,...M.def,size:M.size[0]};fix()}draw();renderG()}
 let SCN=0;
 /* ---- кольцо между безелем и циферблатом (рехаут), только Submariner ----
    k  — во сколько раз уменьшены циферблат и стрелки, чтобы освободить место под кольцо
@@ -256,9 +257,18 @@ stg.addEventListener('pointerup',e=>{if(sx==null)return;const dx=e.clientX-sx,dy
 stg.addEventListener('keydown',e=>{if(e.key=='ArrowRight')mv(1);if(e.key=='ArrowLeft')mv(-1)});
 $('#nt').onclick=()=>{night^=1;draw()};$('#sn').onclick=()=>{snd^=1;try{localStorage.setItem('snd',snd)}catch(e){}if(snd)clk(0);draw()};$('#wr').onclick=()=>{wrist^=1;draw()};$('#gn').onclick=()=>{g=g=='m'?'f':'m';draw()};
 let tm=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';$('#th').onclick=()=>{tm=tm=='dark'?'light':'dark';document.documentElement.dataset.theme=tm};
-const G=[['Президент',{case:2,bezel:3,dial:5,hands:2,strap:5}],['Халк',{case:0,bezel:5,dial:6,hands:1,strap:3}],['Дайвер',{case:0,bezel:6,dial:0,hands:1,strap:3}],['Классика Jubilee',{case:0,bezel:1,dial:1,hands:3,strap:4}],['Золотой Jubilee',{case:2,bezel:3,dial:5,hands:2,strap:4}],['Океан Oyster',{case:0,bezel:4,dial:2,hands:1,strap:3}]];
-G.forEach((m,i)=>m[1].size=[3,3,4,2,3,3][i]);
+let G=[];
+const GP=[['Классика синий','datejust-steel',{bezel:'Рифл. белое золото',dial:'Синий',strap:'Jubilee сталь'}],
+['Дайвер','submariner-steel',{bezel:'Чёрная керамика',dial:'Полночь',hands:'Сталь'}],
+['Халк','submariner-steel',{bezel:'Зелёная керамика',dial:'Зелёный',hands:'Сталь'}],
+['Синий Rolesor','submariner-rolesor',{bezel:'Синяя керамика',dial:'Океан',hands:'Золото'}],
+['Золотой дайвер','submariner-gold',{bezel:'Чёрная керамика',dial:'Полночь',hands:'Золото'}],
+['Классика шампань','datejust-yellow',{bezel:'Рифл. жёлтое золото',dial:'Шампань',strap:'Jubilee Rolesor'}],
+['Классика шоколад','datejust-everose',{bezel:'Рифл. Everose',dial:'Шоколад'}],
+['Зелёная классика','datejust-yellow',{bezel:'Рифл. жёлтое золото',dial:'Зелёный · римские',strap:'Jubilee Rolesor'}]];
+function renderG(){G=GP.filter(g=>MODELS[g[1]]).map(([n,id,sel])=>{const M=MODELS[id],o={...M.def,size:M.size[0]};for(const k in sel){const x=D[k].findIndex(v=>v.m==id&&v[0]==sel[k]);if(x>=0)o[k]=x}return[n,o]});
 $('#gl').innerHTML=G.map((m,i)=>`<div class="card">${S(m[1],0)}<div class="lg" style="font-size:24px">${m[0]}</div><div>${f(total(m[1]))}<br><small>${usd(total(m[1]))}</small></div><button class="bt" onclick="st={...G[${i}][1]};draw();location.hash='builder'">Взять за основу</button><button class="bt p" onclick="cart.push({st:{...G[${i}][1]},p:total(G[${i}][1])});rc();cp(1)">Заказать</button></div>`).join('');
+if(typeof tx=='function')tx($('#gallery'))}
 function addC(){cart.push({st:{...st},p:total(st)});step=0;rc();cp(1)}
 function cp(o){$('#cp').classList.toggle('on',!!o);if(o)rc()}
 function ck(){if(!$('#fn').value||!$('#fp').value||!$('#fa').value){$('#er').textContent='Заполните имя, телефон и адрес доставки.';return}
@@ -274,7 +284,13 @@ $('#cp').innerHTML=h;['fn','fp','fa'].forEach((i,k)=>{if($('#'+i))$('#'+i).value
 
 {const t=$('#tabs');let x0,s0,mvd=0;t.addEventListener('pointerdown',e=>{if(e.pointerType!='mouse')return;x0=e.clientX;s0=t.scrollLeft;mvd=0;t.dataset.d=1});addEventListener('pointermove',e=>{if(!t.dataset.d)return;const d=e.clientX-x0;if(Math.abs(d)>4)mvd=1;t.scrollLeft=s0-d});addEventListener('pointerup',()=>{delete t.dataset.d});t.addEventListener('click',e=>{if(mvd){e.stopPropagation();e.preventDefault();mvd=0}},true)}
 
-const TRS=`Серебро · римские|Silver · Roman|Kumush · rim
+const TRS=`Классика синий|Classic blue|Klassika ko‘k
+Синий Rolesor|Blue Rolesor|Ko‘k Rolesor
+Золотой дайвер|Gold diver|Oltin dayver
+Классика шампань|Classic champagne|Klassika shampan
+Классика шоколад|Classic chocolate|Klassika shokolad
+Зелёная классика|Green classic|Yashil klassika
+Серебро · римские|Silver · Roman|Kumush · rim
 Индиго · римские|Indigo · Roman|Indigo · rim
 Бирюзовый · римские|Teal · Roman|Firuza · rim
 Чёрный · римские золото|Black · gold Roman|Qora · oltin rim
