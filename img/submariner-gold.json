@@ -1,11 +1,11 @@
 {
  "id": "submariner-gold",
  "brand": "rolex",
- "name": "Дайвер 41",
+ "name": "Дайвер",
  "size": [41],
  "strapOffset": 90,
  "case": {
-  "name": "Дайвер 41 · Жёлтое золото 18 кт",
+  "name": "Дайвер · Жёлтое золото 18 кт",
   "color": "#c9a44c",
   "price": 420000,
   "l": {"f": "submariner_case_gold_41.avif", "x": 52.68, "y": 131.63, "w": 213.58, "h": 225.08}

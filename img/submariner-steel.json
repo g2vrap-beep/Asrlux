@@ -1,11 +1,11 @@
 {
  "id": "submariner-steel",
  "brand": "rolex",
- "name": "Дайвер 41",
+ "name": "Дайвер",
  "size": [41],
  "strapOffset": 90,
  "case": {
-  "name": "Дайвер 41 · Сталь 904L",
+  "name": "Дайвер · Сталь 904L",
   "color": "#c3c7cd",
   "price": 0,
   "l": {"f": "submariner_case_steel_empty_41.avif", "x": 52.68, "y": 131.63, "w": 213.58, "h": 225.08}

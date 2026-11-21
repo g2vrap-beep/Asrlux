@@ -1,11 +1,11 @@
 {
  "id": "submariner-rolesor",
  "brand": "rolex",
- "name": "Дайвер 41",
+ "name": "Дайвер",
  "size": [41],
  "strapOffset": 90,
  "case": {
-  "name": "Дайвер 41 · Сталь и жёлтое золото",
+  "name": "Дайвер · Сталь и жёлтое золото",
   "color": "#c3c7cd",
   "color2": "#c9a44c",
   "price": 220000,

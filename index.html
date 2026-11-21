@@ -182,9 +182,9 @@ bi=m.bezel.map(v=>add('bezel',[v.name,v.color,2,v.price],R(v.l))),
 di=m.dial.map(v=>add('dial',[v.name,v.bg,v.fg,2,1,v.price],{l:R(v.l),date:v.date&&v.date.cy?{...v.date,cy:R(v.date.cy)}:v.date})),
 hi=m.hands.map(v=>add('hands',[v.name,v.color,1,1,v.price],{h:R(v.h),m:R(v.m),s:R(v.s)})),
 ri=m.strap.map(v=>add('strap',[v.name,v.color,1,v.price],R(v.l)));
-MODELS[id]={size:si,so:m.strapOffset,du:!!m.dialUnder,def:{case:ci,bezel:bi[0],dial:di[0],hands:hi[0],strap:ri[0]}};
+MODELS[id]={size:si,ds:si[m.size.indexOf(41)]??si[si.length-1],so:m.strapOffset,du:!!m.dialUnder,def:{case:ci,bezel:bi[0],dial:di[0],hands:hi[0],strap:ri[0]}};
 const ls=[R(m.case.l),...m.bezel.map(v=>R(v.l)),...m.dial.flatMap(v=>v.date&&v.date.cy?[R(v.l),R(v.date.cy)]:[R(v.l)]),...m.strap.map(v=>R(v.l)),...m.hands.flatMap(v=>[R(v.h),R(v.m),R(v.s)])];ls.forEach(l=>prel(l.f))}
-async function loadModels(){for(const id of['submariner-steel','submariner-rolesor','submariner-gold','datejust-steel','datejust-everose','datejust-yellow']){try{const m=await(await fetch('img/'+id+'.json?v=5')).json();addModel(id,'img/',m)}catch(e){console.warn('model '+id,e)}}if(MODELS['datejust-steel']&&!D.case[st.case].m){const M=MODELS['datejust-steel'];st={...st,...M.def,size:M.size[0]};fix()}draw();renderG()}
+async function loadModels(){for(const id of['submariner-steel','submariner-rolesor','submariner-gold','datejust-steel','datejust-everose','datejust-yellow']){try{const m=await(await fetch('img/'+id+'.json?v=5')).json();addModel(id,'img/',m)}catch(e){console.warn('model '+id,e)}}if(MODELS['datejust-steel']&&!D.case[st.case].m){const M=MODELS['datejust-steel'];st={...st,...M.def,size:M.ds};fix()}draw();renderG()}
 let SCN=0;
 /* ---- кольцо между безелем и циферблатом (рехаут), только Submariner ----
    k  — во сколько раз уменьшены циферблат и стрелки, чтобы освободить место под кольцо
@@ -272,7 +272,7 @@ const GP=[['Классика синий','datejust-steel',{bezel:'Рифл. бе
 ['Классика шампань','datejust-yellow',{bezel:'Рифл. жёлтое золото',dial:'Шампань',strap:'Пятизвенный, сталь и золото'}],
 ['Классика шоколад','datejust-everose',{bezel:'Рифл. розовое золото',dial:'Шоколад'}],
 ['Зелёная классика','datejust-yellow',{bezel:'Рифл. жёлтое золото',dial:'Зелёный · римские',strap:'Пятизвенный, сталь и золото'}]];
-function renderG(){G=GP.filter(g=>MODELS[g[1]]).map(([n,id,sel])=>{const M=MODELS[id],o={...M.def,size:M.size[0]};for(const k in sel){const x=D[k].findIndex(v=>v.m==id&&v[0]==sel[k]);if(x>=0)o[k]=x}return[n,o]});
+function renderG(){G=GP.filter(g=>MODELS[g[1]]).map(([n,id,sel])=>{const M=MODELS[id],o={...M.def,size:M.ds};for(const k in sel){const x=D[k].findIndex(v=>v.m==id&&v[0]==sel[k]);if(x>=0)o[k]=x}return[n,o]});
 $('#gl').innerHTML=G.map((m,i)=>`<div class="card">${S(m[1],0)}<div class="lg" style="font-size:24px">${m[0]}</div><div>${f(total(m[1]))}</div><button class="bt" onclick="st={...G[${i}][1]};draw();location.hash='builder'">Взять за основу</button><button class="bt p" onclick="cart.push({st:{...G[${i}][1]},p:total(G[${i}][1])});rc();cp(1)">Заказать</button></div>`).join('');
 if(typeof tx=='function')tx($('#gallery'))}
 const PG=[['Доставка и оплата','По Ташкенту доставляем курьером, в регионы Узбекистана — службой доставки. Сроки и стоимость менеджер назовёт при подтверждении заказа.','Оплата через Payme, Click, Uzum или банковской картой. Сейчас онлайн-оплата работает в тестовом режиме.'],
@@ -290,7 +290,7 @@ function rc(){const v=['fn','fp','fa'].map(i=>$('#'+i)?.value||''),t=cart.reduce
 let h='<button class="bt" onclick="cp(0)" style="float:right">Закрыть</button><h2>Корзина</h2>';
 if(step==2)h+=`<p class="lg" style="font-size:28px">Заказ № ASR-${oid} принят</p><p>Тестовый режим: платёжный модуль пока заглушка, деньги не списаны.</p><button class="bt p" onclick="cart=[];step=0;cp(0);rc()">Готово</button>`;
 else if(!cart.length)h+='<p>В корзине пусто. Соберите часы в конструкторе или выберите готовую модель.</p>';
-else{h+=cart.map((c,i)=>`<div class="ci">${S(c.st,0)}<div><b>${D.case[c.st.case][0]}</b><br>${D.bezel[c.st.bezel][0]} · ${D.dial[c.st.dial][0]}<br>${D.strap[c.st.strap][0]}<br>${f(c.p)}<br><a class="rm" href="#" onclick="cart.splice(${i},1);step=0;rc();return false">Убрать</a></div></div>`).join('')+`<p class="lg" style="font-size:26px">Итого ${f(t)}</p>`;
+else{h+=cart.map((c,i)=>`<div class="ci">${S(c.st,0)}<div><b>${D.case[c.st.case][0]}, ${D.size[c.st.size??3][1]} мм</b><br>${D.bezel[c.st.bezel][0]} · ${D.dial[c.st.dial][0]}<br>${D.strap[c.st.strap][0]}<br>${f(c.p)}<br><a class="rm" href="#" onclick="cart.splice(${i},1);step=0;rc();return false">Убрать</a></div></div>`).join('')+`<p class="lg" style="font-size:26px">Итого ${f(t)}</p>`;
 if(!step)h+='<button class="bt p" onclick="step=1;rc()">Оформить заказ</button>';
 else h+=`<input class="in" id="fn" placeholder="Имя"><input class="in" id="fp" placeholder="Телефон" inputmode="tel"><input class="in" id="fa" placeholder="Город и адрес доставки"><p>Способ оплаты</p><div>${['Payme','Click','Uzum','Картой'].map(p=>`<button class="chip${p==pay?' on':''}" onclick="pay='${p}';rc()">${p}</button>`).join('')}</div><p id="er" style="color:#d9534f"></p><button class="bt p" id="pb" onclick="ck()">Оплатить ${f(t)}</button>`}
 $('#cp').innerHTML=h;['fn','fp','fa'].forEach((i,k)=>{if($('#'+i))$('#'+i).value=v[k]})}
@@ -310,12 +310,12 @@ const TRS=`Жёлтое золото 18 кт|18 ct yellow gold|18 karat sariq ol
 Документ готовится и скоро будет опубликован.|This document is being prepared and will be published soon.|Hujjat tayyorlanmoqda va tez orada e’lon qilinadi.
 Данные из форм на сайте используются только для связи с вами по заказу.|Data from the forms on this site is used only to contact you about your order.|Saytdagi shakllardagi ma’lumotlar faqat buyurtma bo‘yicha siz bilan bog‘lanish uchun ishlatiladi.
 Полукруглый|Semi-round link|Yarim dumaloq
-Классика 41 · Сталь и розовое золото|Classic 41 · Steel and rose gold|Klassika 41 · Po‘lat va pushti oltin
-Классика 41 · Сталь и жёлтое золото|Classic 41 · Steel and yellow gold|Klassika 41 · Po‘lat va sariq oltin
-Дайвер 41 · Сталь и жёлтое золото|Diver 41 · Steel and yellow gold|Dayver 41 · Po‘lat va sariq oltin
-Дайвер 41 · Жёлтое золото 18 кт|Diver 41 · 18 ct yellow gold|Dayver 41 · 18 karat sariq oltin
-Классика 41 · Сталь 904L|Classic 41 · 904L steel|Klassika 41 · 904L po‘lat
-Дайвер 41 · Сталь 904L|Diver 41 · 904L steel|Dayver 41 · 904L po‘lat
+Классика · Сталь и розовое золото|Classic · Steel and rose gold|Klassika · Po‘lat va pushti oltin
+Классика · Сталь и жёлтое золото|Classic · Steel and yellow gold|Klassika · Po‘lat va sariq oltin
+Дайвер · Сталь и жёлтое золото|Diver · Steel and yellow gold|Dayver · Po‘lat va sariq oltin
+Дайвер · Жёлтое золото 18 кт|Diver · 18 ct yellow gold|Dayver · 18 karat sariq oltin
+Классика · Сталь 904L|Classic · 904L steel|Klassika · 904L po‘lat
+Дайвер · Сталь 904L|Diver · 904L steel|Dayver · 904L po‘lat
 Пятизвенный, розовое золото|Five-link, rose gold|Besh bo‘g‘inli, pushti oltin
 Пятизвенный, сталь и золото|Five-link, steel and gold|Besh bo‘g‘inli, po‘lat va oltin
 Пятизвенный, сталь|Five-link, steel|Besh bo‘g‘inli, po‘lat

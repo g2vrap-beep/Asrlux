@@ -1,13 +1,11 @@
 {
  "id": "datejust-steel",
  "brand": "rolex",
- "name": "Классика 41",
- "size": [
-  41
- ],
+ "name": "Классика",
+ "size": [31, 36, 41],
  "strapOffset": 90,
  "case": {
-  "name": "Классика 41 · Сталь 904L",
+  "name": "Классика · Сталь 904L",
   "color": "#c3c7cd",
   "price": 0,
   "l": {
