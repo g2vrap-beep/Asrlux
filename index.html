@@ -174,17 +174,17 @@ const PI={size:2,case:2,bezel:3,dial:5,hands:4,strap:3},CL={size:'Размер',
 const P=(r,a)=>[150+r*Math.sin(a*Math.PI/180),240-r*Math.cos(a*Math.PI/180)];
 const T=(r1,r2,a,c,w)=>{const[x1,y1]=P(r1,a),[x2,y2]=P(r2,a);return`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="${w}"/>`};
 /* ---- фото-модели: img/rolex/<модель>/model.json ---- */
-const WDAY=()=>{const L=typeof lang=='string'?lang:'ru';try{return new Date().toLocaleDateString(L=='en'?'en-US':L=='uz'?'uz-Latn-UZ':'ru-RU',{weekday:'long'}).toUpperCase()}catch(e){return ''}},MODELS={},mdl=s=>D.case[s.case].m||'',ok=(k,i,s)=>{if(k=='case')return !!D.case[i].m||!Object.keys(MODELS).length;const M=mdl(s),it=D[k][i];return k=='size'&&M?MODELS[M].size.includes(i):k=='strap'&&M?!!it.m:(it.m||'')==M},vis=k=>D[k].map((_,i)=>i).filter(i=>ok(k,i,st)),fix=()=>{for(const k in st){if(k=='case'||ok(k,st[k],st))continue;const V=vis(k),cur=D[k][st[k]],nm=V.find(i=>D[k][i][0]==cur[0]);st[k]=k=='size'?V.reduce((a,i)=>Math.abs(D[k][i][1]-cur[1])<Math.abs(D[k][a][1]-cur[1])?i:a,V[0]):(nm??(MODELS[mdl(st)]?.def[k]??V[0]))}};
+const MODELS={},mdl=s=>D.case[s.case].m||'',ok=(k,i,s)=>{if(k=='case')return !!D.case[i].m||!Object.keys(MODELS).length;const M=mdl(s),it=D[k][i];return k=='size'&&M?MODELS[M].size.includes(i):k=='strap'&&M?!!it.m:(it.m||'')==M},vis=k=>D[k].map((_,i)=>i).filter(i=>ok(k,i,st)),fix=()=>{for(const k in st){if(k=='case'||ok(k,st[k],st))continue;const V=vis(k),cur=D[k][st[k]],nm=V.find(i=>D[k][i][0]==cur[0]);st[k]=k=='size'?V.reduce((a,i)=>Math.abs(D[k][i][1]-cur[1])<Math.abs(D[k][a][1]-cur[1])?i:a,V[0]):(nm??(MODELS[mdl(st)]?.def[k]??V[0]))}};
 const PQ=[],PS=new Set();let pqOn=0;function prel(u){if(PS.has(u))return;PS.add(u);PQ.push(u);if(!pqOn){pqOn=1;setTimeout(pump,2500)}}function pump(){PQ.splice(0,6).forEach(u=>{new Image().src=u});if(PQ.length)setTimeout(pump,300);else pqOn=0}
 function addModel(id,b,m){const R=o=>({...o,f:b+o.f}),add=(k,a,l)=>{a.m=id;a.l=l;D[k].push(a);return D[k].length-1},
 si=m.size.map(s=>add('size',[s+' мм',s,0],0)),ci=add('case',[m.case.name,m.case.color,m.case.price,m.case.color2],R(m.case.l)),
 bi=m.bezel.map(v=>add('bezel',[v.name,v.color,2,v.price],R(v.l))),
-di=m.dial.map(v=>add('dial',[v.name,v.bg,v.fg,2,1,v.price],{l:R(v.l),date:v.date&&v.date.cy?{...v.date,cy:R(v.date.cy)}:v.date,day:v.day})),
-hi=m.hands.map(v=>add('hands',[v.name,v.color,1,1,v.price],{h:R(v.h),m:R(v.m),s:R(v.s),...(v.g?{g:R(v.g)}:{})})),
+di=m.dial.map(v=>add('dial',[v.name,v.bg,v.fg,2,1,v.price],{l:R(v.l),date:v.date&&v.date.cy?{...v.date,cy:R(v.date.cy)}:v.date})),
+hi=m.hands.map(v=>add('hands',[v.name,v.color,1,1,v.price],{h:R(v.h),m:R(v.m),s:R(v.s)})),
 ri=m.strap.map(v=>add('strap',[v.name,v.color,1,v.price],R(v.l)));
 MODELS[id]={size:si,ds:si[m.size.indexOf(41)]??si[si.length-1],so:m.strapOffset,du:!!m.dialUnder,def:{case:ci,bezel:bi[0],dial:di[0],hands:hi[0],strap:ri[0]}};
-const ls=[R(m.case.l),...m.bezel.map(v=>R(v.l)),...m.dial.flatMap(v=>v.date&&v.date.cy?[R(v.l),R(v.date.cy)]:[R(v.l)]),...m.strap.map(v=>R(v.l)),...m.hands.flatMap(v=>[R(v.h),R(v.m),R(v.s),...(v.g?[R(v.g)]:[])])];ls.forEach(l=>prel(l.f))}
-async function loadModels(){for(const id of['submariner-steel','submariner-rolesor','submariner-gold','datejust-steel','datejust-everose','datejust-yellow','gmt-steel','gmt-yellow','gmt-rose','chrono-steel','chrono-yellow','chrono-rose','daydate-yellow','daydate-white','daydate-rose']){try{const m=await(await fetch('img/'+id+'.json?v=5')).json();addModel(id,'img/',m)}catch(e){console.warn('model '+id,e)}}if(MODELS['datejust-steel']&&!D.case[st.case].m){const M=MODELS['datejust-steel'];st={...st,...M.def,size:M.ds};fix()}draw();renderG()}
+const ls=[R(m.case.l),...m.bezel.map(v=>R(v.l)),...m.dial.flatMap(v=>v.date&&v.date.cy?[R(v.l),R(v.date.cy)]:[R(v.l)]),...m.strap.map(v=>R(v.l)),...m.hands.flatMap(v=>[R(v.h),R(v.m),R(v.s)])];ls.forEach(l=>prel(l.f))}
+async function loadModels(){for(const id of['submariner-steel','submariner-rolesor','submariner-gold','datejust-steel','datejust-everose','datejust-yellow']){try{const m=await(await fetch('img/'+id+'.json?v=5')).json();addModel(id,'img/',m)}catch(e){console.warn('model '+id,e)}}if(MODELS['datejust-steel']&&!D.case[st.case].m){const M=MODELS['datejust-steel'];st={...st,...M.def,size:M.ds};fix()}draw();renderG()}
 let SCN=0;
 /* ---- кольцо между безелем и циферблатом (рехаут), только Submariner ----
    k  — во сколько раз уменьшены циферблат и стрелки, чтобы освободить место под кольцо
@@ -203,11 +203,11 @@ im=r=>`<image href="${r.f}" x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}"
 let o=`<g transform="translate(150 240) scale(${sz}) translate(-150 -240)"><g class="b">`;
 if(A('strap')){const r=Pk('strap'),sm=D.strap[st.strap].m,fam=m=>String(m).split('-')[0],SL=Math.min(...D.strap.filter(v=>v.m&&fam(v.m)==fam(sm)).map(v=>v.l.y+v.l.h))-r.y,id='sc'+(++SCN),s=`<g clip-path="url(#${id})">${im(r)}</g>`;o+=`<clipPath id="${id}"><rect x="${r.x-1}" y="${r.y}" width="${r.w+2}" height="${SL}"/></clipPath><g class="spt"><g transform="translate(0 ${480-so}) scale(1 -1)">${s}</g></g><g class="spb"><g transform="translate(0 ${so})">${s}</g></g>`}
 if(A('case')&&!M.du)o+=im(c.l);
-if(A('dial'))o+=RGdial(sub,d.l,c[1],(d.date?`<rect x="${d.date.x-d.date.w/2-1}" y="${d.date.y-d.date.h/2-1}" width="${d.date.w+2}" height="${d.date.h+2}" fill="#f4f1ea"/>`:'')+im(d.l)+(d.date?`<text x="${d.date.x}" y="${d.date.y}" font-size="${d.date.h*.85}" text-anchor="middle" dominant-baseline="central" font-family="Arial,Helvetica,sans-serif" font-weight="700" fill="#111">${new Date().getDate()}</text>`:'')+(d.day?`<text x="${d.day.x}" y="${d.day.y}" font-size="${d.day.h*.62}" letter-spacing=".6" text-anchor="middle" dominant-baseline="central" font-family="Arial,Helvetica,sans-serif" font-weight="700" fill="#111">${WDAY()}</text>`:'')+(d.date&&d.date.cy?im(d.date.cy):''));
+if(A('dial'))o+=RGdial(sub,d.l,c[1],(d.date?`<rect x="${d.date.x-d.date.w/2-1}" y="${d.date.y-d.date.h/2-1}" width="${d.date.w+2}" height="${d.date.h+2}" fill="#f4f1ea"/>`:'')+im(d.l)+(d.date?`<text x="${d.date.x}" y="${d.date.y}" font-size="${d.date.h*.85}" text-anchor="middle" dominant-baseline="central" font-family="Arial,Helvetica,sans-serif" font-weight="700" fill="#111">${new Date().getDate()}</text>`:'')+(d.date&&d.date.cy?im(d.date.cy):''));
 if(A('case')&&M.du)o+=im(c.l);
 if(A('bezel'))o+='<g class="bz">'+im(Pk('bezel'))+'</g>';
 o+='</g>';
-if(A('hands'))o+=(x=='hands'?'<circle cx="150" cy="240" r="84" fill="#0d1110"/>':'')+'<g class="b"'+RGhands(sub)+'>'+[['h',305],['m',60],...(hs.g?[['g',125]]:[]),['s',200]].map(([k,a])=>`<g transform="rotate(${a} 150 240)">${im(hs[k])}</g>`).join('')+'</g>';
+if(A('hands'))o+=(x=='hands'?'<circle cx="150" cy="240" r="84" fill="#0d1110"/>':'')+'<g class="b"'+RGhands(sub)+'>'+[['h',305],['m',60],['s',200]].map(([k,a])=>`<g transform="rotate(${a} 150 240)">${im(hs[k])}</g>`).join('')+'</g>';
 return o+(x?'':'<ellipse cx="125" cy="190" rx="40" ry="22" fill="#fff" opacity=".05" transform="rotate(-30 125 190)"/>')+'</g>'}
 function W(st,x){if(D.case[st.case].m)return WP(st,x);const gx=k=>{const v=D[k][st[k]];return v.m?D[k].find(z=>!z.m):v},A=k=>!x||x==k,c=D.case[st.case],b=gx('bezel'),d=gx('dial'),h=gx('hands'),s=gx('strap');let o=`<g transform="translate(150 240) scale(${D.size[st.size??3][1]/40}) translate(-150 -240)"><g class="b">`;
 if(A('strap'))for(const y of[8,330]){o+=`<rect x="104" y="${y}" width="92" height="142" fill="${s[1]}"/>`;const ac=c[3]&&[0,[135,30],0,[141,18],[128,44]][s[2]];if(ac)o+=`<rect x="${ac[0]}" y="${y}" width="${ac[1]}" height="142" fill="${c[3]}"/>`;
@@ -272,19 +272,6 @@ const GP=[['Классика синий','datejust-steel',{bezel:'Рифл. бе
 ['Классика шампань','datejust-yellow',{bezel:'Рифл. жёлтое золото',dial:'Шампань',strap:'Пятизвенный, сталь и золото'}],
 ['Классика шоколад','datejust-everose',{bezel:'Рифл. розовое золото',dial:'Шоколад'}],
 ['Зелёная классика','datejust-yellow',{bezel:'Рифл. жёлтое золото',dial:'Зелёный · римские',strap:'Пятизвенный, сталь и золото'}],
-['Пилот GMT сине-чёрный','gmt-steel',{bezel:'Сине-чёрная керамика'}],
-['Пилот GMT красно-синий','gmt-steel',{bezel:'Красно-синяя керамика'}],
-['Пилот GMT биколор','gmt-yellow',{hands:'Золото'}],
-['Пилот GMT розовое золото','gmt-rose',{}],
-['Хронограф белый','chrono-steel',{}],
-['Хронограф чёрный керамика','chrono-steel',{bezel:'Чёрная керамика',dial:'Чёрный · белые счётчики'}],
-['Хронограф синий','chrono-steel',{dial:'Синий'}],
-['Хронограф золотой','chrono-yellow',{dial:'Шампань'}],
-['Хронограф розовое золото','chrono-rose',{dial:'Чёрный · белые счётчики'}],
-['Календарь шампань','daydate-yellow',{}],
-['Календарь ледяной голубой','daydate-white',{dial:'Ледяной голубой'}],
-['Календарь зелёный','daydate-yellow',{dial:'Зелёный'}],
-['Календарь розовый чёрный','daydate-rose',{dial:'Чёрный'}],
 ['Женская розовая 28','datejust-everose',{bezel:'Рифл. розовое золото',dial:'Розовый'},28],
 ['Женская с бриллиантами 31','datejust-yellow',{bezel:'Рифл. жёлтое золото',dial:'Серебро · бриллианты',strap:'Пятизвенный, сталь и золото'},31],
 ['Женская шоколад 31','datejust-everose',{bezel:'Рифл. розовое золото',dial:'Шоколад'},31],
@@ -314,45 +301,7 @@ $('#cp').innerHTML=h;['fn','fp','fa'].forEach((i,k)=>{if($('#'+i))$('#'+i).value
 
 {const t=$('#tabs');let x0,s0,mvd=0;t.addEventListener('pointerdown',e=>{if(e.pointerType!='mouse')return;x0=e.clientX;s0=t.scrollLeft;mvd=0;t.dataset.d=1});addEventListener('pointermove',e=>{if(!t.dataset.d)return;const d=e.clientX-x0;if(Math.abs(d)>4)mvd=1;t.scrollLeft=s0-d});addEventListener('pointerup',()=>{delete t.dataset.d});t.addEventListener('click',e=>{if(mvd){e.stopPropagation();e.preventDefault();mvd=0}},true)}
 
-const TRS=`Хронограф · Розовое золото 18 кт|Chronograph · 18 ct rose gold|Xronograf · 18 karat pushti oltin
-Хронограф розовое золото|Chronograph rose gold|Xronograf pushti oltin
-Тахиметр, розовое золото|Tachymeter, rose gold|Taxometr, pushti oltin
-Календарь · Жёлтое золото 18 кт|Day-Date · 18 ct yellow gold|Kalendar · 18 karat sariq oltin
-Календарь · Белое золото 18 кт|Day-Date · 18 ct white gold|Kalendar · 18 karat oq oltin
-Календарь · Розовое золото 18 кт|Day-Date · 18 ct rose gold|Kalendar · 18 karat pushti oltin
-Календарь ледяной голубой|Day-Date ice blue|Kalendar muz ko‘k
-Календарь розовый чёрный|Day-Date rose black|Kalendar pushti qora
-Календарь шампань|Day-Date champagne|Kalendar shampan
-Календарь зелёный|Day-Date green|Kalendar yashil
-Полукруглый, жёлтое золото|Semi-round, yellow gold|Yarim dumaloq, sariq oltin
-Полукруглый, белое золото|Semi-round, white gold|Yarim dumaloq, oq oltin
-Полукруглый, розовое золото|Semi-round, rose gold|Yarim dumaloq, pushti oltin
-Ледяной голубой|Ice blue|Muz ko‘k
-Белое золото|White gold|Oq oltin
-Хронограф · Жёлтое золото 18 кт|Chronograph · 18 ct yellow gold|Xronograf · 18 karat sariq oltin
-Хронограф · Сталь 904L|Chronograph · 904L steel|Xronograf · 904L po‘lat
-Хронограф чёрный керамика|Chronograph black ceramic|Xronograf qora keramika
-Хронограф белый|Chronograph white|Xronograf oq
-Хронограф синий|Chronograph blue|Xronograf ko‘k
-Хронограф золотой|Chronograph gold|Xronograf oltin
-Белый · чёрные счётчики|White · black counters|Oq · qora hisoblagichlar
-Чёрный · белые счётчики|Black · white counters|Qora · oq hisoblagichlar
-Стальной тахиметр|Steel tachymeter|Po‘lat taxometr
-Золотой тахиметр|Gold tachymeter|Oltin taxometr
-Пилот GMT сине-чёрный|GMT Pilot blue-black|GMT Pilot ko‘k-qora
-Пилот GMT красно-синий|GMT Pilot red-blue|GMT Pilot qizil-ko‘k
-Пилот GMT биколор|GMT Pilot two-tone|GMT Pilot ikki rangli
-Пилот GMT розовое золото|GMT Pilot rose gold|GMT Pilot pushti oltin
-Пилот GMT · Розовое золото 18 кт|GMT Pilot · 18 ct rose gold|GMT Pilot · 18 karat pushti oltin
-Пилот GMT · Сталь и жёлтое золото|GMT Pilot · Steel and yellow gold|GMT Pilot · Po‘lat va sariq oltin
-Пилот GMT · Сталь 904L|GMT Pilot · 904L steel|GMT Pilot · 904L po‘lat
-Сине-чёрная керамика|Blue-black ceramic|Ko‘k-qora keramika
-Красно-синяя керамика|Red-blue ceramic|Qizil-ko‘k keramika
-Чёрно-серая керамика|Black-grey ceramic|Qora-kulrang keramika
-Зелёно-чёрная керамика|Green-black ceramic|Yashil-qora keramika
-Чёрно-коричневая керамика|Black-brown ceramic|Qora-jigarrang keramika
-Трёхзвенный, розовое золото|Three-link, rose gold|Uch bo‘g‘inli, pushti oltin
-Женская розовая 28|Women’s rose 28|Ayollar pushti 28
+const TRS=`Женская розовая 28|Women’s rose 28|Ayollar pushti 28
 Женская с бриллиантами 31|Women’s diamond 31|Ayollar brilliantli 31
 Женская шоколад 31|Women’s chocolate 31|Ayollar shokolad 31
 Женская синяя 28|Women’s blue 28|Ayollar ko‘k 28
@@ -554,8 +503,7 @@ Payme, Click, Uzum или картой. Сейчас оплата тестова
 Угол|Angle|Burchak
 Фото руки пока не добавлено|Hand photo not added yet|Qo‘l surati hali qo‘shilmagan
 Перетащите часы на запястье|Drag the watch onto the wrist|Soatni bilakka suring
-Часы можно подвинуть пальцем|You can move the watch with your finger|Soatni barmoq bilan siljitishingiz mumkin
-Чёрный|Black|Qora`.split('\n').map(l=>l.split('|'));
+Часы можно подвинуть пальцем|You can move the watch with your finger|Soatni barmoq bilan siljitishingiz mumkin`.split('\n').map(l=>l.split('|'));
 let lang='ru';try{lang=localStorage.getItem('lg')||'ru'}catch(e){}
 const TD={en:[],uz:[]},TT={ru:'ASRLUX — конструктор часов',en:'ASRLUX — watch builder',uz:'ASRLUX — soat konstruktori'};TRS.forEach(r=>{TD.en.push([r[0],r[1]]);TD.uz.push([r[0],r[2]])});for(const k in TD)TD[k].sort((a,b)=>b[0].length-a[0].length);
 const tr=v=>{if(lang=='ru')return v;let o=v;for(const[a,b]of TD[lang])if(o.includes(a))o=o.split(a).join(b);return o},OT=new WeakMap(),OA=new WeakMap();
