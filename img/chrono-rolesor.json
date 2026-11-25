@@ -1,0 +1,106 @@
+{
+ "id": "chrono-rolesor",
+ "brand": "asrlux",
+ "name": "Хронограф",
+ "size": [
+  40
+ ],
+ "strapOffset": 90,
+ "case": {
+  "name": "Хронограф · Сталь и жёлтое золото",
+  "color": "#c3c7cd",
+  "price": 0,
+  "l": {
+   "f": "asr_case_09_40.avif",
+   "x": 51.83,
+   "y": 130.81,
+   "w": 217.19,
+   "h": 230.01
+  },
+  "color2": "#c9a44c"
+ },
+ "bezel": [
+  {
+   "name": "Тахиметр, жёлтое золото",
+   "color": "#c9a44c",
+   "price": 0,
+   "l": {
+    "f": "asr_bezel_b9_40.avif",
+    "x": 52.0,
+    "y": 141.93,
+    "w": 196.0,
+    "h": 196.58
+   }
+  }
+ ],
+ "dial": [
+  {
+   "name": "Шампань",
+   "bg": "#d8c9a6",
+   "fg": "#2a2418",
+   "price": 0,
+   "l": {
+    "f": "asr_dial_06_40.avif",
+    "x": 71.69,
+    "y": 161.75,
+    "w": 156.61,
+    "h": 156.49
+   }
+  },
+  {
+   "name": "Полночь",
+   "bg": "#0f1014",
+   "fg": "#f1eee8",
+   "price": 0,
+   "l": {
+    "f": "asr_dial_05_40.avif",
+    "x": 71.69,
+    "y": 161.75,
+    "w": 156.61,
+    "h": 156.49
+   }
+  }
+ ],
+ "hands": [
+  {
+   "name": "Жёлтое золото",
+   "color": "#d8d8d8",
+   "price": 0,
+   "h": {
+    "f": "datejust_hands_yellow_hour_41.avif",
+    "x": 144.9,
+    "y": 199.44,
+    "w": 10.25,
+    "h": 52.8
+   },
+   "m": {
+    "f": "datejust_hands_yellow_minute_41.avif",
+    "x": 145.16,
+    "y": 176.68,
+    "w": 9.69,
+    "h": 76.46
+   },
+   "s": {
+    "f": "datejust_hands_yellow_second_41.avif",
+    "x": 146.64,
+    "y": 175.31,
+    "w": 6.78,
+    "h": 83.28
+   }
+  }
+ ],
+ "strap": [
+  {
+   "name": "Трёхзвенный, сталь и золото",
+   "color": "#b4b8bf",
+   "price": 0,
+   "l": {
+    "f": "submariner_strap_oyster-rolesor_41.avif",
+    "x": 100.61,
+    "y": 221.63,
+    "w": 99.21,
+    "h": 246.89
+   }
+  }
+ ]
+}
